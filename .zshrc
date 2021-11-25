@@ -105,8 +105,15 @@ if [[ ! -d $ZSH_CACHE_DIR ]]; then
 fi
 
 source $ZSH/oh-my-zsh.sh
+
+# zsh plugins
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+# QT program scale
 export QT_AUTO_SCREEN_SCALE_FACTOR=1
-
+export QT_IM_MODULE=fcitx5
+# user default editor
+export EDITOR='vim'
+# nvm init shell
+source /usr/share/nvm/init-nvm.sh

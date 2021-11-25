@@ -1,0 +1,10 @@
+set showmode
+set clipboard+=unnamed
+set number
+set relativenumber
+set nocompatible
+set cursorline
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
