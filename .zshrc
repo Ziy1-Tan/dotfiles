@@ -99,6 +99,9 @@ plugins=(git)
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# upgrade the manjaro
+alias u="sudo pacman -Syyu"
+
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
   mkdir $ZSH_CACHE_DIR
@@ -112,8 +115,11 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # QT program scale
 export QT_AUTO_SCREEN_SCALE_FACTOR=1
+export PLASMA_USE_QT_SCALING=1
 export QT_IM_MODULE=fcitx5
+
 # user default editor
 export EDITOR='vim'
+
 # nvm init shell
 source /usr/share/nvm/init-nvm.sh
