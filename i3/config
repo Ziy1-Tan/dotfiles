@@ -43,8 +43,8 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 10 
-bindsym XF86MonBrightnessDown exec xbacklight -dec 10 
+bindsym XF86MonBrightnessUp exec xbacklight +10 
+bindsym XF86MonBrightnessDown exec xbacklight -10 
 
 
 # Use Mouse+$mod to drag floating windows to their wanted position
@@ -200,16 +200,22 @@ bindsym $mod+r mode "resize"
 gaps inner 4
 gaps outer 3
 
-exec --no-startup-id feh --randomize --bg-fill ~/.local/share/wallpapers
+#exec --no-startup-id feh --randomize --bg-fill ~/.local/share/wallpapers
+exec_always --no-startup-id $HOME/.local/share/wallpapers/chg-bg.sh
 
 exec_always --no-startup-id picom -b
 exec_always --no-startup-id fcitx5 &
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh --forest
+
+# lock screen
+bindsym Mod4+l exec i3lock -i $HOME/lock_bg/far-cry.png --nofork --greeter-text="input your password" --indicator -k --date-str="%d / %m / %Y " --blur=0.5 --date-color="#ffffff" --time-color="#ffffff"
+# screenshor
+bindsym Print --release exec flameshot gui
 
 default_border none
 default_floating_border none
 
-# toggle particular apps floating
+# toggle apps floating
 for_window [class="yakuake"] floating enable
 for_window [title="Dolphin"] floating enable
 for_window [class="systemsettings"] floating enable
@@ -223,6 +229,10 @@ for_window [class="(?i)*nextcloud*"] floating disable
 for_window [class="plasmashell" window_type="notification"] floating enable, border none, move position 30px 40px, no_focus
 for_window [title="Desktop — Plasma"] kill; floating enable; border none
 for_window [instance="tim.exe"] floating enable; border none;
+for_window [class="wemeetapp"] floating enable; border none;
 for_window [title="WeChat"] floating enable; border none;
 for_window [class="netease-cloud-music"] floating enable; border none;
+for_window [class="Mailspring"] floating enable; border none;
+for_window [class="flameshot"] floating enable; 
+for_window [class="icalingua"] floating enable; 
 
