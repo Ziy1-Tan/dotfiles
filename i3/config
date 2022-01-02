@@ -200,7 +200,7 @@ bindsym $mod+r mode "resize"
 gaps inner 4
 gaps outer 3
 
-#exec --no-startup-id feh --randomize --bg-fill ~/.local/share/wallpapers
+#exec --no-startup-id feh ~/.local/share/wallpapers/wallhaven-3z91ey,jpg
 exec_always --no-startup-id $HOME/.local/share/wallpapers/chg-bg.sh
 
 exec_always --no-startup-id picom -b
@@ -208,7 +208,7 @@ exec_always --no-startup-id fcitx5 &
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh --forest
 
 # lock screen
-bindsym Mod4+l exec i3lock -i $HOME/lock_bg/far-cry.png --nofork --greeter-text="input your password" --indicator -k --date-str="%d / %m / %Y " --blur=0.5 --date-color="#ffffff" --time-color="#ffffff"
+bindsym Mod4+l exec i3lock  --nofork --greeter-text="input your password" --indicator -k --date-str="%d / %m / %Y " --blur=0.1 --date-color="#ffffff" --time-color="#ffffff" --greeter-color="#ffffff"
 # screenshor
 bindsym Print --release exec flameshot gui
 
