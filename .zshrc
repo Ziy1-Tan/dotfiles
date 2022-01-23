@@ -107,8 +107,8 @@ plugins=(git)
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # upgrade the manjaro
-alias u="sudo pacman -Syyu"
-alias s="neofetch | lolcat"
+alias u="sudo pacman -Syu"
+alias s="neofetch "
 alias cl="clear"
 alias sz="source ~/.zshrc"
 alias r="sudo pacman -Rsc"
@@ -138,3 +138,6 @@ source /usr/share/nvm/init-nvm.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# go env
+export PATH="$PATH:$HOME/go/bin"
