@@ -126,8 +126,8 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 
 # QT program scale
-export QT_AUTO_SCREEN_SCALE_FACTOR=1
-export PLASMA_USE_QT_SCALING=1
+# export QT_AUTO_SCREEN_SCALE_FACTOR=1
+# export PLASMA_USE_QT_SCALING=1
 export QT_IM_MODULE=fcitx5
 
 # user default editor
@@ -140,4 +140,5 @@ source /usr/share/nvm/init-nvm.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # go env
-export PATH="$PATH:$HOME/go/bin"
+export GOPATH=$HOME/windows/code/go
+export PATH=$PATH:$GOPATH/bin

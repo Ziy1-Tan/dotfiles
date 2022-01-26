@@ -12,3 +12,13 @@
 |     **`i3`**     | **i3wm配置**        |
 |  **`polybar`**   | **polybar配置**     |
 
+## 高分屏下WPS字体发虚
+
+- 编辑`/usr/bin/{wps、wpspdf、et、wpp}`
+- 文件首行加入
+
+```shell
+export QT_SCREEN_SCALE_FACTORS=1
+export QT_FONT_DPI=168
+```
+
