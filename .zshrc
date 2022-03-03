@@ -126,9 +126,10 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 
 # QT program scale
-# export QT_AUTO_SCREEN_SCALE_FACTOR=1
+export QT_AUTO_SCREEN_SCALE_FACTOR=1
 # export PLASMA_USE_QT_SCALING=1
 export QT_IM_MODULE=fcitx5
+export QT_SCREEN_SCALE_FACTORS=1
 
 # user default editor
 export EDITOR='vim'

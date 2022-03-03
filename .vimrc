@@ -29,4 +29,12 @@ call plug#end()
 
 " key mapping
 
-noremap t :NERDTree<CR>
+let mapleader=" "
+
+nmap <leader>wq :wq<CR> 
+nmap nh :nohlsearch<CR>
+
+noremap tt :NERDTreeToggle<CR>
+nnoremap <leader>n :NERDTreeFocus<CR>
+
+inoremap jj <esc>

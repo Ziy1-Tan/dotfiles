@@ -23,15 +23,15 @@
   #TERM: alacritty
 
 window:
-  opacity: 0.97
+  opacity: 0.99
   # Window dimensions (changes require restart)
   #
   # Number of lines/columns (not pixels) in the terminal. The number of columns
   # must be at least `2`, while using a value of `0` for columns and lines will
   # fall back to the window manager's recommended size.
   dimensions:
-    columns: 85
-    lines: 30
+   columns: 85
+   lines: 30
 
   # Window position (changes require restart)
   #
@@ -91,7 +91,7 @@ window:
   #
   # Override the variant of the GTK theme. Commonly supported values are `dark`
   # and `light`. Set this to `None` to use the default theme variant.
-  #gtk_theme_variant: None
+  #gtk_theme_variant: dark
 
 #scrolling:
   # Maximum number of lines in the scrollback buffer.
@@ -111,8 +111,8 @@ font:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    family: MesloLGS Nerd Font
-    #family: SauceCodePro Nerd Font Mono
+    #family: MesloLGS Nerd Font
+    family: SauceCodePro Nerd Font Mono
     #family: FiraCode Nerd Font Mono
 
     # The `style` can be specified to pick a specific face.
@@ -152,7 +152,7 @@ font:
     style: Bold Italic
 
   # Point size
-  size: 14.0
+  size: 14
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
