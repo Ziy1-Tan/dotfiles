@@ -106,12 +106,12 @@ plugins=(git)
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# upgrade the manjaro
-alias u="sudo pacman -Syu"
-alias s="neofetch "
+alias u="sudo pacman -Syyu"
+alias s="neofetch"
 alias cl="clear"
 alias sz="source ~/.zshrc"
-alias r="sudo pacman -Rsc"
+alias l1="gsettings set org.gnome.desktop.interface text-scaling-factor 1"
+alias l5="gsettings set org.gnome.desktop.interface text-scaling-factor 1.5"
 
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
@@ -123,13 +123,11 @@ source $ZSH/oh-my-zsh.sh
 # zsh plugins
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-
+[[ -s /etc/profile.d/autojump.sh ]] && source /etc/profile.d/autojump.sh
 
 # QT program scale
 export QT_AUTO_SCREEN_SCALE_FACTOR=1
-# export PLASMA_USE_QT_SCALING=1
 export QT_IM_MODULE=fcitx5
-export QT_SCREEN_SCALE_FACTORS=1
 
 # user default editor
 export EDITOR='vim'
@@ -139,7 +137,7 @@ source /usr/share/nvm/init-nvm.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
 # go env
+export GOPROXY=https://proxy.golang.com.cn,direct
 export GOPATH=$HOME/windows/code/go
 export PATH=$PATH:$GOPATH/bin
