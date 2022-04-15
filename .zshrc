@@ -112,6 +112,7 @@ alias cl="clear"
 alias sz="source ~/.zshrc"
 alias l1="gsettings set org.gnome.desktop.interface text-scaling-factor 1"
 alias l5="gsettings set org.gnome.desktop.interface text-scaling-factor 1.5"
+alias l75="gsettings set org.gnome.desktop.interface text-scaling-factor 1.75"
 
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
@@ -123,7 +124,6 @@ source $ZSH/oh-my-zsh.sh
 # zsh plugins
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-[[ -s /etc/profile.d/autojump.sh ]] && source /etc/profile.d/autojump.sh
 
 # QT program scale
 export QT_AUTO_SCREEN_SCALE_FACTOR=1

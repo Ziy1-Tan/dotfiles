@@ -1,5 +1,5 @@
 window:
-  opacity: .95
+  opacity: 1
   dimensions:
     columns: 100
     lines: 30
@@ -22,9 +22,10 @@ window:
 
 font:
   normal:
-    family: SauceCodePro Nerd Font Mono
+    family: SauceCodePro Nerd Font Mono 
     #family: MesloLGS Nerd Font
-    style: regular
+    #family: FiraCode Nerd Font Mono
+    style: Regular
 
   bold:
     style: Bold
