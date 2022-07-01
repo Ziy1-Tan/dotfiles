@@ -1,3 +1,5 @@
+env:
+  TERM: xterm-256color
 window:
   opacity: 1
   dimensions:
@@ -9,7 +11,7 @@ window:
     y: 250
 
   padding:
-    x: 0
+    x: 2
     y: 2
 
   decorations: full
@@ -18,14 +20,15 @@ window:
 
   scrolling:
     history: 10000
-    multiplier: 3
+    multiplier: 5
 
 font:
   normal:
-    family: SauceCodePro Nerd Font Mono 
+    family: SauceCodePro Nerd Font Mono
     #family: MesloLGS Nerd Font
-    #family: FiraCode Nerd Font Mono
+    #family: FiraCode Nerd Font
     style: Regular
+    #style: Medium
 
   bold:
     style: Bold
@@ -36,7 +39,7 @@ font:
   bold_italic:
     style: Bold Italic
 
-  size: 16
+  size: 14
 
 draw_bold_text_with_bright_colors: true
 
@@ -46,7 +49,7 @@ selection:
 
 cursor:
   style:
-    shape: Block
+    shape: block
     blinking: On
 
   vi_mode_style: None
@@ -59,28 +62,28 @@ live_config_reload: true
 colors:
   # Default colors
   primary:
-    background: '#000000'
-    foreground: '#eaeaea'
+    background: '#282a36'
+    foreground: '#eff0eb'
 
   # Normal colors
   normal:
-    black: '#000000'
-    red: '#d54e53'
-    green: '#b9ca4a'
-    yellow: '#e6c547'
-    blue: '#7aa6da'
-    magenta: '#c397d8'
-    cyan: '#70c0ba'
-    white: '#424242'
+    black: '#282a36'
+    red: '#ff5c57'
+    green: '#5af78e'
+    yellow: '#f3f99d'
+    blue: '#57c7ff'
+    magenta: '#ff6ac1'
+    cyan: '#9aedfe'
+    white: '#f1f1f0'
 
   # Bright colors
   bright:
-    black: '#666666'
-    red: '#ff3334'
-    green: '#9ec400'
-    yellow: '#e7c547'
-    blue: '#7aa6da'
-    magenta: '#b77ee0'
-    cyan: '#54ced6'
-    white: '#2a2a2a'
-theme: Tomorrow-Night-Bright
+    black: '#686868'
+    red: '#ff5c57'
+    green: '#5af78e'
+    yellow: '#f3f99d'
+    blue: '#57c7ff'
+    magenta: '#ff6ac1'
+    cyan: '#9aedfe'
+    white: '#f1f1f0'
+theme: Snazzy

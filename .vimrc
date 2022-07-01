@@ -18,7 +18,6 @@ set softtabstop=2
 set shiftwidth=4
 
 
-syntax on
 filetype indent on
 
 " plugins
@@ -34,12 +33,8 @@ call plug#end()
 
 " key mapping
 
-let mapleader=" "
-
 nmap <leader>wq :wq<CR> 
 nmap <leader>q :q<CR>
-"nmap <leader>v :vsplit 
-"nmap <leader>s :split
 nmap nh :nohlsearch<CR>
 
 noremap tt :NERDTreeToggle<CR>
@@ -62,3 +57,6 @@ imap <leader>v <esc>"+p
 " airline conf
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
+" tmuxline conf
+let g:airline#extensions#tmuxline#enabled = 1
+let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"

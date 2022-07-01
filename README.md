@@ -22,5 +22,5 @@ export QT_SCREEN_SCALE_FACTORS=1
 export QT_FONT_DPI=168
 ```
 
-> GNOME只需在`.zshrc`加入`export QT_SCREEN_SCALE_FACTOR=1`
+> GNOME在`.zshrc`加入`export QT_AUTO_SCREEN_SCALE_FACTOR=1`
 

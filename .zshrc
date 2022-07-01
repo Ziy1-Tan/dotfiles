@@ -16,6 +16,7 @@ ZSH=/usr/share/oh-my-zsh/
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
+#ZSH_THEME=""
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -77,7 +78,14 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+
+# zsh plugins
+plugins=(sudo git z colored-man-pages conda-zsh-completion)
+
+autoload -U compinit && compinit
+
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 
 # User configuration
@@ -107,12 +115,22 @@ plugins=(git)
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias u="sudo pacman -Syyu"
+alias y="yay -Syua"
 alias s="neofetch"
 alias cl="clear"
 alias sz="source ~/.zshrc"
-alias l1="gsettings set org.gnome.desktop.interface text-scaling-factor 1"
-alias l5="gsettings set org.gnome.desktop.interface text-scaling-factor 1.5"
-alias l75="gsettings set org.gnome.desktop.interface text-scaling-factor 1.75"
+alias mans="tldr"
+alias bl="xbacklight -set 100"
+
+# display
+alias sc="sh /home/simp1e/single.sh"
+alias ue="sh /home/simp1e/close_laptop.sh"
+alias ar="autorandr"
+
+# tmux
+alias t="tmux"
+alias ta="tmux a -t 0"
+alias td="tmux detach"
 
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
@@ -121,9 +139,6 @@ fi
 
 source $ZSH/oh-my-zsh.sh
 
-# zsh plugins
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # QT program scale
 export QT_AUTO_SCREEN_SCALE_FACTOR=1
@@ -135,9 +150,20 @@ export EDITOR='vim'
 # nvm init shell
 source /usr/share/nvm/init-nvm.sh
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 # go env
 export GOPROXY=https://proxy.golang.com.cn,direct
 export GOPATH=$HOME/windows/code/go
 export PATH=$PATH:$GOPATH/bin
+
+# miniconda
+source /opt/miniconda/etc/profile.d/conda.sh
+
+# fzf conf
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_COMPLETION_TRIGGER='\'
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=23'
