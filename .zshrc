@@ -9,7 +9,7 @@ fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-ZSH=/usr/share/oh-my-zsh/
+ZSH=/home/simp1e/.oh-my-zsh
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -80,7 +80,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Add wisely, as too many plugins slow down shell startup.
 
 # zsh plugins
-plugins=(sudo git z colored-man-pages conda-zsh-completion)
+plugins=(sudo git z colored-man-pages)
 
 autoload -U compinit && compinit
 
@@ -115,12 +115,11 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias u="sudo pacman -Syyu"
-alias y="yay -Syua"
 alias s="neofetch"
 alias cl="clear"
 alias sz="source ~/.zshrc"
-alias mans="tldr"
 alias bl="xbacklight -set 100"
+alias sd="systemctl start docker.service"
 
 # display
 alias sc="sh /home/simp1e/single.sh"
@@ -148,7 +147,7 @@ export QT_IM_MODULE=fcitx5
 export EDITOR='vim'
 
 # nvm init shell
-source /usr/share/nvm/init-nvm.sh
+#source /usr/share/nvm/init-nvm.sh
 
 # go env
 export GOPROXY=https://proxy.golang.com.cn,direct
@@ -156,7 +155,7 @@ export GOPATH=$HOME/windows/code/go
 export PATH=$PATH:$GOPATH/bin
 
 # miniconda
-source /opt/miniconda/etc/profile.d/conda.sh
+#source /opt/miniconda/etc/profile.d/conda.sh
 
 # fzf conf
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
@@ -166,4 +165,4 @@ export FZF_COMPLETION_TRIGGER='\'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-# ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=23'
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=23'
