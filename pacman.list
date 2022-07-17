@@ -24,6 +24,7 @@ dmraid
 docker
 dolphin
 dosfstools
+doxygen
 e2fsprogs
 efibootmgr
 fakeroot
@@ -32,12 +33,14 @@ fcitx5-chinese-addons
 fcitx5-configtool
 fcitx5-gtk
 fcitx5-qt
+firewalld
 flameshot
 flex
 gcc
 gdb
 gdm
 gnome-desktop
+gnome-keyring
 gnome-screenshot
 gnome-shell
 gnome-shell-extension-appindicator
@@ -48,10 +51,12 @@ gpm
 gptfdisk
 grub
 imagemagick
+inetutils
 intel-ucode
 jre11-openjdk
 kate
 konsole
+libgnome-keyring
 linux
 linux-firmware
 lldb
@@ -66,6 +71,8 @@ mlocate
 nano
 neofetch
 nerd-fonts-complete
+net-tools
+network-manager-applet
 networkmanager
 nilfs-utils
 nodejs
@@ -90,6 +97,7 @@ unrar
 usbmuxd
 v2ray
 v2raya
+valgrind
 vim
 vlc
 wireless_tools
