@@ -1,9 +1,7 @@
 #!/bin/sh
-
-SRC_PATH=~/MyConfig
+SRC_PATH=~
 CONFIG_PATH=.config
-DIST_PATH=~
-
+DIST_PATH=~/MyConfig
 
 cp $SRC_PATH/.vimrc $DIST_PATH
 cp $SRC_PATH/.ideavimrc $DIST_PATH
@@ -15,4 +13,6 @@ cp -r $SRC_PATH/$CONFIG_PATH/alacritty $DIST_PATH/$CONFIG_PATH
 cp -r $SRC_PATH/$CONFIG_PATH/i3 $DIST_PATH/$CONFIG_PATH
 cp -r $SRC_PATH/$CONFIG_PATH/tmux $DIST_PATH/$CONFIG_PATH
 
-ln -s $DIST_PATH/$CONFIG_PATH/tmux/.tmux.conf $DIST_PATH/
+
+pacman -Qqen > $DIST_PATH/pacman.list
+pacman -Qqem > $DIST_PATH/aur.list
