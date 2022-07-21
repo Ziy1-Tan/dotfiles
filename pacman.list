@@ -24,6 +24,8 @@ bluez-utils
 btrfs-progs
 btrfsmaintenance
 bzip2
+clion
+clion-jre
 cmake
 coreutils
 cpupower
@@ -78,6 +80,7 @@ gnome-tweaks
 gnome-wallpapers
 gnome-weather
 go
+goland
 gparted
 grep
 grilo-plugins
@@ -90,8 +93,11 @@ gzip
 haveged
 htop
 ibus
+imwheel
 inetutils
 intel-ucode
+intellij-idea-ultimate-edition
+intellij-idea-ultimate-edition-jre
 inxi
 iproute2
 iputils
@@ -223,6 +229,7 @@ xfsprogs
 xorg-mkfontscale
 xorg-server
 xorg-twm
+xorg-xbacklight
 xorg-xinit
 xz
 yay
