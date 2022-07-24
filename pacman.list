@@ -174,13 +174,16 @@ ppp
 procps-ng
 psmisc
 python-pip
+python2
 qgnomeplatform-qt5
 qgnomeplatform-qt6
 reiserfsprogs
 rsync
 s-nail
+sassc
 sed
 shadow
+slack-desktop
 sof-firmware
 spectre-meltdown-checker
 sudo
