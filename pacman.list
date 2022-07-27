@@ -50,6 +50,7 @@ fcitx5
 fcitx5-chinese-addons
 fcitx5-configtool
 fcitx5-gtk
+fcitx5-pinyin-moegirl
 fcitx5-qt
 file
 filesystem
@@ -78,10 +79,8 @@ gnome-system-monitor
 gnome-themes-extra
 gnome-tweaks
 gnome-wallpapers
-gnome-weather
 go
 goland
-gparted
 grep
 grilo-plugins
 grub
@@ -91,7 +90,6 @@ gvfs
 gwenview
 gzip
 haveged
-htop
 ibus
 imwheel
 inetutils
