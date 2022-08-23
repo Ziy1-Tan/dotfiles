@@ -8,3 +8,5 @@ set incsearch
 set hlsearch
 set ignorecase
 set smartcase
+
+inoremap jj <esc>

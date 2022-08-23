@@ -9,14 +9,13 @@ fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-ZSH=/home/simple/.oh-my-zsh
+ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
-#ZSH_THEME=""
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -80,13 +79,9 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Add wisely, as too many plugins slow down shell startup.
 
 # zsh plugins
-plugins=(sudo git z colored-man-pages)
+plugins=(sudo git z zsh-syntax-highlighting zsh-autosuggestions docker docker-compose)
 
 autoload -U compinit && compinit
-
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-
 
 # User configuration
 
@@ -118,13 +113,6 @@ alias u="sudo pacman -Syyu"
 alias s="neofetch"
 alias cl="clear"
 alias sz="source ~/.zshrc"
-alias bl="xbacklight -set 100"
-alias sd="systemctl start docker.service"
-
-# display
-alias sc="sh /home/simp1e/single.sh"
-alias ue="sh /home/simp1e/close_laptop.sh"
-alias ar="autorandr"
 
 # tmux
 alias t="tmux"
@@ -151,7 +139,7 @@ export EDITOR='vim'
 
 # go env
 export GOPROXY=https://proxy.golang.com.cn,direct
-export GOPATH=$HOME/windows/code/go
+export GOPATH=$HOME/code/go
 export PATH=$PATH:$GOPATH/bin
 
 # miniconda
@@ -166,3 +154,4 @@ export FZF_COMPLETION_TRIGGER='\'
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=23'
+export https_proxy=http://127.0.0.1:7890;export http_proxy=http://127.0.0.1:7890;export all_proxy=socks5://127.0.0.1:7890
