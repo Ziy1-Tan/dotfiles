@@ -19,8 +19,7 @@ cp -r $SRC_PATH/$CONFIG_PATH/tmux $DIST_PATH/$CONFIG_PATH
 
 ln -s $DIST_PATH/$CONFIG_PATH/tmux/.tmux.conf $DIST_PATH/
 
-uname=$(uname -s)
-OS=${uname:0:5}
-if [ "$OS" == "Linux" ]; then
-    backup_linux_conf
+os=$(uname)
+if [ "$os"=="Linux" ];then
+    install_linux_conf
 fi

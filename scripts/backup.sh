@@ -19,8 +19,7 @@ cp $SRC_PATH/.zshrc $DIST_PATH
 cp -r $SRC_PATH/$CONFIG_PATH/alacritty $DIST_PATH/$CONFIG_PATH
 cp -r $SRC_PATH/$CONFIG_PATH/tmux $DIST_PATH/$CONFIG_PATH
 
-uname=$(uname -s)
-OS=${uname:0:5}
-if [ "$OS" == "Linux" ]; then
+os=${uname}
+if [ "$os"=="Linux" ]; then
     backup_linux_conf
 fi
