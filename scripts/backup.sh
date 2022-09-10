@@ -9,8 +9,8 @@ backup_linux_conf() {
     cp $SRC_PATH/$CONFIG_PATH/libinput-gestures.conf $DIST_PATH/$CONFIG_PATH
     cp -r $SRC_PATH/$CONFIG_PATH/i3 $DIST_PATH/$CONFIG_PATH
 
-    pacman -Qqen >$DIST_PATH/pacman.list
-    pacman -Qqem >$DIST_PATH/aur.list
+    #pacman -Qqen >$DIST_PATH/pacman.list
+    #pacman -Qqem >$DIST_PATH/aur.list
 }
 
 cp $SRC_PATH/.vimrc $DIST_PATH

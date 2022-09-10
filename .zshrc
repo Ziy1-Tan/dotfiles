@@ -142,9 +142,6 @@ export GOPROXY=https://proxy.golang.com.cn,direct
 export GOPATH=$HOME/code/go
 export PATH=$PATH:$GOPATH/bin
 
-# miniconda
-#source /opt/miniconda/etc/profile.d/conda.sh
-
 # fzf conf
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 export FZF_DEFAULT_COMMAND='fd --type f'
