@@ -9,8 +9,11 @@ backup_linux_conf() {
     cp $SRC_PATH/$CONFIG_PATH/libinput-gestures.conf $DIST_PATH/$CONFIG_PATH
     cp -r $SRC_PATH/$CONFIG_PATH/i3 $DIST_PATH/$CONFIG_PATH
 
-    #pacman -Qqen >$DIST_PATH/pacman.list
-    #pacman -Qqem >$DIST_PATH/aur.list
+}
+
+backup_arch(){
+    pacman -Qqen >$DIST_PATH/pacman.list
+    pacman -Qqem >$DIST_PATH/aur.list
 }
 
 cp $SRC_PATH/.vimrc $DIST_PATH
@@ -22,4 +25,10 @@ cp -r $SRC_PATH/$CONFIG_PATH/tmux $DIST_PATH/$CONFIG_PATH
 os=${uname}
 if [ "$os"=="Linux" ]; then
     backup_linux_conf
+fi
+
+/usr/bin/which pacman
+
+if [ $? -eq 0 ]; then
+    backup_arch
 fi

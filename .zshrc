@@ -151,3 +151,7 @@ export FZF_COMPLETION_TRIGGER='\'
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=23'
+export CC=/usr/bin/clang-13
+export CXX=/usr/bin/clang++-13
+
+export PATH=/root/.tiup/bin:$PATH
