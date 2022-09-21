@@ -134,13 +134,8 @@ export QT_IM_MODULE=fcitx5
 # user default editor
 export EDITOR='vim'
 
-# nvm init shell
-#source /usr/share/nvm/init-nvm.sh
-
 # go env
 export GOPROXY=https://proxy.golang.com.cn,direct
-export GOPATH=$HOME/code/go
-export PATH=$PATH:$GOPATH/bin
 
 # fzf conf
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
@@ -154,4 +149,8 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=23'
 export CC=/usr/bin/clang-13
 export CXX=/usr/bin/clang++-13
 
-export PATH=/root/.tiup/bin:$PATH
+export PATH=/home/simple/.tiup/bin:$PATH
+
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/code//go
+export PATH=$GOROOT:$GOROOT/bin:$PATH
