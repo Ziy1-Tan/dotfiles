@@ -23,3 +23,6 @@ export QT_FONT_DPI=168
 ```
 
 > GNOME 在`.zshrc`加入`export QT_AUTO_SCREEN_SCALE_FACTOR=1`
+
+1. git clone git clone https://github.com/Ziy1-Tan/dotfiles.git --recurse-submodules
+2. cd dotfiles/script && ./install && ./vim-plug
