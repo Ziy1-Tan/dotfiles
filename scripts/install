@@ -1,0 +1,36 @@
+#!/bin/sh
+
+if [ $(dirname $0) != "." ]; then
+    echo "must be executed in dir script"
+    exit 1
+fi
+
+src_path=..
+conf_path=.config
+
+install_linux_conf() {
+    cp $src_path/.Xresources $HOME
+    cp $src_path/.xprofile $HOME
+    cp $src_path/$conf_path/libinput-gestures.conf $HOME/$conf_path
+    cp -r $src_path/$conf_path/i3 $HOME/$conf_path
+}
+
+cp $src_path/.vimrc $HOME
+cp $src_path/.ideavimrc $HOME
+cp $src_path/.zshrc $HOME
+cp -r $src_path/$conf_path/alacritty $HOME/$conf_path
+cp -r $src_path/$conf_path/tmux $HOME/$conf_path
+
+ln -snf $HOME/$conf_path/tmux/.tmux.conf $HOME/
+
+/usr/bin/which rsync
+if [ $? -eq 0 ]; then
+    rsync -av ../zsh/ $HOME/.zsh/
+else
+    cp -r ../zsh $HOME/.zsh
+fi
+
+os=$(uname)
+if [ "$os"=="Linux" ]; then
+    install_linux_conf
+fi

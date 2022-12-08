@@ -1,0 +1,40 @@
+#!/bin/sh
+
+if [ $(dirname $0) != "." ]; then
+    echo "must be executed in dir script"
+    exit 1
+fi
+
+conf_path=.config
+dist_path=..
+
+backup_linux_conf() {
+    cp $HOME/.Xresources $dist_path
+    cp $HOME/.xprofile $dist_path
+    cp $HOME/$conf_path/libinput-gestures.conf $dist_path/$conf_path
+    cp -r $HOME/$conf_path/i3 $dist_path/$conf_path
+    cp -r $HOME/$conf_path/zsh $dist_path/$conf_path
+
+}
+
+backup_arch() {
+    pacman -Qqen >$dist_path/pacman.list
+    pacman -Qqem >$dist_path/aur.list
+}
+
+cp $HOME/.vimrc $dist_path
+cp $HOME/.ideavimrc $dist_path
+cp $HOME/.zshrc $dist_path
+cp -r $HOME/$conf_path/alacritty $dist_path/$conf_path
+cp -r $HOME/$conf_path/zsh $dist_path/$conf_path
+cp -r $HOME/$conf_path/tmux $dist_path/$conf_path
+
+os=${uname}
+if [ "$os"=="Linux" ]; then
+    backup_linux_conf
+fi
+
+/usr/bin/which pacman
+if [ $? -eq 0 ]; then
+    backup_arch
+fi
