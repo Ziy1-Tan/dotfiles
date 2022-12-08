@@ -1,21 +1,17 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-ZSH=$HOME/.oh-my-zsh
+ZSH=$HOME/.zsh/ohmyzsh
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
+ZSH_THEME=""
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -79,7 +75,10 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Add wisely, as too many plugins slow down shell startup.
 
 # zsh plugins
-plugins=(sudo git z zsh-syntax-highlighting zsh-autosuggestions docker docker-compose)
+plugins=(sudo git z)
+
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 autoload -U compinit && compinit
 
@@ -108,49 +107,17 @@ autoload -U compinit && compinit
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-alias u="sudo pacman -Syyu"
-alias s="neofetch"
-alias cl="clear"
-alias sz="source ~/.zshrc"
-
-# tmux
-alias t="tmux"
-alias ta="tmux a -t 0"
-alias td="tmux detach"
-
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
   mkdir $ZSH_CACHE_DIR
 fi
 
+source $HOME/.config/zsh/alias.zsh
+source $HOME/.config/zsh/env.zsh
 source $ZSH/oh-my-zsh.sh
 
 
-# QT program scale
-export QT_AUTO_SCREEN_SCALE_FACTOR=1
-export QT_IM_MODULE=fcitx5
-
-# user default editor
-export EDITOR='vim'
-
-# go env
-export GOPROXY=https://proxy.golang.com.cn,direct
-
-# fzf conf
-export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
-export FZF_DEFAULT_COMMAND='fd --type f'
-export FZF_COMPLETION_TRIGGER='\'
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=23'
-export CC=/usr/bin/clang-13
-export CXX=/usr/bin/clang++-13
-
-export PATH=/home/simple/.tiup/bin:$PATH
-
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/code//go
-export PATH=$GOROOT:$GOROOT/bin:$PATH
+fpath+=($HOME/.zsh/pure)
+autoload -U promptinit; promptinit
+prompt pure
+PURE_PROMPT_SYMBOL="#"

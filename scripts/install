@@ -13,6 +13,7 @@ install_linux_conf() {
     cp $src_path/.xprofile $HOME
     cp $src_path/$conf_path/libinput-gestures.conf $HOME/$conf_path
     cp -r $src_path/$conf_path/i3 $HOME/$conf_path
+    cp -r $src_path/$conf_path/zsh $HOME/$conf_path
 }
 
 cp $src_path/.vimrc $HOME
