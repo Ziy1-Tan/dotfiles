@@ -11,6 +11,15 @@ export EDITOR='vim'
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=23'
 export LANG=en_US.UTF-8
 
+host_ip=$(cat /etc/resolv.conf | grep "nameserver" | cut -f 2 -d " ")
+export https_proxy=http://${host_ip}:7890
+export http_proxy=http://${host_ip}:7890
+export all_proxy=socks5://${host_ip}:7890
+
+export PATH=/usr/local/cuda-11.8/bin${PATH:+:${PATH}}
+export LD_LIBRARY_PATH=/usr/local/cuda-11.8/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+export GIT=git@github.com:Ziy1-Tan
+
 conda_bin=$HOME/miniconda3/bin/conda
 __conda_setup="$(${conda_bin} 'shell.zsh' 'hook' 2>/dev/null)"
 if [ $? -eq 0 ]; then
