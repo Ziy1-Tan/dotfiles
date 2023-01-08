@@ -121,3 +121,5 @@ fpath+=($HOME/.zsh/pure)
 autoload -U promptinit; promptinit
 prompt pure
 PURE_PROMPT_SYMBOL="#"
+
+fpath+=($HOME/.zsh/zsh-completions/src)
