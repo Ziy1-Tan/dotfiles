@@ -79,6 +79,7 @@ plugins=(sudo git z)
 
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fpath+=($HOME/.zsh/zsh-completions/src)
 
 autoload -U compinit && compinit
 
@@ -122,4 +123,3 @@ autoload -U promptinit; promptinit
 prompt pure
 PURE_PROMPT_SYMBOL="#"
 
-fpath+=($HOME/.zsh/zsh-completions/src)
