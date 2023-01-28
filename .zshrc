@@ -80,6 +80,7 @@ plugins=(sudo git z)
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fpath+=($HOME/.zsh/zsh-completions/src)
+fpath+=($HOME/.zsh/conda-zsh-completion)
 
 autoload -U compinit && compinit
 
