@@ -13,6 +13,7 @@ cd dotfiles/script && ./install && ./vim-plug
 |    `.ideavimrc`    | vim plugins 配置 |
 |        `i3`         | i3wm 配置        |
 | `aur[pacmanc.list]` | 软件列表         |
+| `zsh` | zsh插件         |
 
 ## 高分屏下 KDE-WPS 字体发虚
 
