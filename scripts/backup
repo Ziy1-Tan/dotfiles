@@ -5,29 +5,29 @@ if [ $(dirname $0) != "." ]; then
     exit 1
 fi
 
-conf_path=.config
-dist_path=..
+CONF=.config
+DIST=..
 
 backup_linux_conf() {
-    cp $HOME/.Xresources $dist_path
-    cp $HOME/.xprofile $dist_path
-    cp $HOME/$conf_path/libinput-gestures.conf $dist_path/$conf_path
-    cp -r $HOME/$conf_path/i3 $dist_path/$conf_path
-    cp -r $HOME/$conf_path/zsh $dist_path/$conf_path
+    cp $HOME/.Xresources $DIST
+    cp $HOME/.xprofile $DIST
+    cp $HOME/$CONF/libinput-gestures.conf $DIST/$CONF
+    cp -r $HOME/$CONF/i3 $DIST/$CONF
+    cp -r $HOME/$CONF/zsh $DIST/$CONF
 
 }
 
 backup_arch() {
-    pacman -Qqen >$dist_path/pacman.list
-    pacman -Qqem >$dist_path/aur.list
+    pacman -Qqen >$DIST/pacman.list
+    pacman -Qqem >$DIST/aur.list
 }
 
-cp $HOME/.vimrc $dist_path
-cp $HOME/.ideavimrc $dist_path
-cp $HOME/.zshrc $dist_path
-cp -r $HOME/$conf_path/alacritty $dist_path/$conf_path
-cp -r $HOME/$conf_path/zsh $dist_path/$conf_path
-cp -r $HOME/$conf_path/tmux $dist_path/$conf_path
+cp $HOME/.vimrc $DIST
+cp $HOME/.ideavimrc $DIST
+cp $HOME/.zshrc $DIST
+cp -r $HOME/$CONF/alacritty $DIST/$CONF
+cp -r $HOME/$CONF/zsh $DIST/$CONF
+cp -r $HOME/$CONF/tmux $DIST/$CONF
 
 os=${uname}
 if [ "$os"=="Linux" ]; then
