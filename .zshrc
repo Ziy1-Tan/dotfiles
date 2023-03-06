@@ -14,7 +14,7 @@ ZSH=$HOME/.zsh/ohmyzsh
 
 ZSH_THEME=""
 
-plugins=(sudo git z)
+plugins=(sudo git z colored-man-pages)
 
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -41,3 +41,4 @@ source $HOME/.config/zsh/prompt.zsh
 # prompt pure
 # PURE_PROMPT_SYMBOL="#"
 
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
