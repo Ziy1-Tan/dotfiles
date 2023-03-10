@@ -1,12 +1,11 @@
 # kernel
 os=`uname`
+host_ip=$(cat /etc/resolv.conf | grep "nameserver" | cut -f 2 -d " ")
 if [ "$os" = "Darwin" ]; then
     host_ip="127.0.0.1"
     export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
     export PATH=/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH
 fi
-
-host_ip=$(cat /etc/resolv.conf | grep "nameserver" | cut -f 2 -d " ")
 export https_proxy=http://${host_ip}:7890
 export http_proxy=http://${host_ip}:7890
 export all_proxy=socks5://${host_ip}:7890
