@@ -25,7 +25,7 @@ export LANG=en_US.UTF-8
 
 export PATH=/usr/local/cuda-11.8/bin${PATH:+:${PATH}}
 export LD_LIBRARY_PATH=/usr/local/cuda-11.8/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
-export GIT=git@github.com:Ziy1-Tan
+export PATH=$HOME/.local/bin:$PATH
 
 conda_bin=$HOME/miniconda3/bin/conda
 __conda_setup="$(${conda_bin} 'shell.zsh' 'hook' 2>/dev/null)"
