@@ -25,7 +25,6 @@ backup_arch() {
 cp $HOME/.vimrc $DIST
 cp $HOME/.ideavimrc $DIST
 cp $HOME/.zshrc $DIST
-cp $HOME/.wakatime.cfg $DIST
 cp -r $HOME/$CONF/alacritty $DIST/$CONF
 cp -r $HOME/$CONF/zsh $DIST/$CONF
 cp -r $HOME/$CONF/tmux $DIST/$CONF
