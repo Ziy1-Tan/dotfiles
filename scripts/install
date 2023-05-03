@@ -19,6 +19,7 @@ install_linux_conf() {
 cp $SRC/.vimrc $HOME
 cp $SRC/.ideavimrc $HOME
 cp $SRC/.zshrc $HOME
+cp $SRC/.wakatime.cfg $HOME
 cp -r $SRC/$CONF/alacritty $HOME/$CONF
 cp -r $SRC/$CONF/tmux $HOME/$CONF
 

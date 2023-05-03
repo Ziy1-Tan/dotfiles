@@ -16,3 +16,6 @@
 [submodule "zsh/conda-zsh-completion"]
 	path = zsh/conda-zsh-completion
 	url = https://github.com/conda-incubator/conda-zsh-completion.git
+[submodule "zsh/wakatime"]
+	path = zsh/wakatime
+	url = https://github.com/sobolevn/wakatime-zsh-plugin.git

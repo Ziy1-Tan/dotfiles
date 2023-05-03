@@ -14,7 +14,7 @@ ZSH=$HOME/.zsh/ohmyzsh
 
 ZSH_THEME=""
 
-plugins=(sudo git z colored-man-pages)
+plugins=(sudo git z colored-man-pages wakatime)
 
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
