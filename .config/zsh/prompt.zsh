@@ -41,5 +41,5 @@ function _collapsed_pwd() {
     echo "${elements[*]}"
 }
 setopt PROMPT_SUBST
-export PROMPT='%F{green}%n@%m:%F{cyan}$(_collapsed_pwd)%F{green}$(_git_branch)%F{white}> '
+export PROMPT='%F{green}%n@%F{white}%m:%F{cyan}$(_collapsed_pwd)%F{green}$(_git_branch)%F{white}> '
 export RPROMPT="%F{red}%(?..%?)%f"

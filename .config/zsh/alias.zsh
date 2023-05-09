@@ -2,6 +2,7 @@ alias u="sudo apt update && sudo apt upgrade"
 alias s="neofetch"
 alias cl="clear"
 alias sz="source ~/.zshrc"
+alias lg="lazygit"
 
 # tmux
 alias t="tmux"
