@@ -1,12 +1,12 @@
 #!/bin/sh
 
 if [ $(dirname $0) != "." ]; then
-    echo "must be executed in dir script"
+    echo "must be executed in root"
     exit 1
 fi
 
 CONF=.config
-DIST=..
+DIST=.
 
 backup_linux_conf() {
     cp $HOME/.Xresources $DIST
