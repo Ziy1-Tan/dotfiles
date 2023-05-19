@@ -1,0 +1,7 @@
+# This is Git's per-user configuration file.
+[user]
+# Please adapt and uncomment the following lines:
+name = Ziy1-Tan
+email = ajb459684460@gmail.com
+[open "https://ssh.github.com"]
+	domain = github.com

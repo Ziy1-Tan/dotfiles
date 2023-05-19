@@ -1,21 +1,21 @@
-[submodule "zsh/pure"]
-	path = zsh/pure
+[submodule ".zsh/pure"]
+	path = .zsh/pure
 	url = https://github.com/Ziy1-Tan/pure.git
-[submodule "zsh/ohmyzsh"]
-	path = zsh/ohmyzsh
+[submodule ".zsh/ohmyzsh"]
+	path = .zsh/ohmyzsh
 	url = https://github.com/ohmyzsh/ohmyzsh.git
-[submodule "zsh/zsh-syntax-highlighting"]
-	path = zsh/zsh-syntax-highlighting
+[submodule ".zsh/zsh-syntax-highlighting"]
+	path = .zsh/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
-[submodule "zsh/zsh-autosuggestions"]
-	path = zsh/zsh-autosuggestions
+[submodule ".zsh/zsh-autosuggestions"]
+	path = .zsh/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
-[submodule "zsh/zsh-completions"]
-	path = zsh/zsh-completions
+[submodule ".zsh/zsh-completions"]
+	path = .zsh/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions.git
-[submodule "zsh/conda-zsh-completion"]
-	path = zsh/conda-zsh-completion
+[submodule ".zsh/conda-zsh-completion"]
+	path = .zsh/conda-zsh-completion
 	url = https://github.com/conda-incubator/conda-zsh-completion.git
-[submodule "zsh/git-open"]
-	path = zsh/git-open
+[submodule ".zsh/git-open"]
+	path = .zsh/git-open
 	url = https://github.com/paulirish/git-open.git

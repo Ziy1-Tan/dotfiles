@@ -1,38 +1,54 @@
 #!/bin/sh
+green='\033[1;32m'
+red='\033[1;31m'
+nc='\033[0m'
 
-if [ $(dirname $0) != "." ]; then
-    echo "must be executed in root"
+if [ "." != "$(dirname "$0")" ]; then
+    echo "${red}Install aborted${nc}"
     exit 1
 fi
 
-SRC=.
-CONF=.config
-
-install_linux_conf() {
-    cp $SRC/.Xresources $HOME
-    cp $SRC/.xprofile $HOME
-    cp $SRC/$CONF/libinput-gestures.conf $HOME/$CONF
-    cp -r $SRC/$CONF/i3 $HOME/$CONF
-}
-
-cp $SRC/.vimrc $HOME
-cp $SRC/.ideavimrc $HOME
-cp $SRC/.zshrc $HOME
-cp -r $SRC/$CONF/alacritty $HOME/$CONF
-cp -r $SRC/$CONF/tmux $HOME/$CONF
-cp -r $SRC/$CONF/zsh $HOME/$CONF
-
-ln -snf $HOME/$CONF/tmux/.tmux.conf $HOME/
-
-/usr/bin/which rsync
-if [ $? -eq 0 ]; then
-    rsync --exclude '.git' -av $SRC/zsh/ $HOME/.zsh/
-else
-    echo '`rsync` is not available!'
+if ! command -v rsync >/dev/null 2>&1; then
+    echo "${red}$(rsync) is not installed${nc}"
     exit 1
 fi
 
-os=$(uname)
-if [ "$os"=="Linux" ]; then
-    install_linux_conf
+install_dir=${1:-$HOME}
+
+read -p "Install to $install_dir? [y/n] " c
+
+if [ "$c" != "y" ]; then
+    echo "${red}Install aborted${nc}"
+    exit 1
 fi
+
+if [ ! -d $install_dir ]; then
+    echo "${red}Dir $install_dir does not exist${nc}"
+    exit 1
+fi
+
+echo "Install start..."
+
+plug_path=$HOME/.vim/autoload/plug.vim
+if [ ! -f "$plug_path" ]; then
+    echo "Install vim-plug..."
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    echo "${green}vim-plug installed${nc}"
+fi
+
+cp $(pwd)/.vimrc $install_dir/
+cp $(pwd)/.ideavimrc $install_dir/
+cp $(pwd)/.zshrc $install_dir/
+cp $(pwd)/.gitconfig $install_dir/
+mkdir -p $install_dir/.ssh && cp $(pwd)/.ssh/config $install_dir/.ssh/
+cp -r $(pwd)/.config/alacritty $install_dir/.config
+cp -r $(pwd)/.config/tmux $install_dir/.config
+
+# zsh & plugins
+cp -r $(pwd)/.config/zsh $install_dir/.config
+rsync --exclude '.git' -av $(pwd)/.zsh/ $install_dir/.zsh/
+
+ln -snf $install_dir/.config/tmux/.tmux.conf $install_dir/
+
+echo "${green}Finished${nc}"

@@ -1,40 +1,31 @@
 #!/bin/sh
+green='\033[1;32m'
+red='\033[1;31m'
+nc='\033[0m'
 
-if [ $(dirname $0) != "." ]; then
-    echo "must be executed in root"
+backup_dir=${1:-$(pwd)}
+
+read -p "Backup to $backup_dir? [y/n] " c
+
+if [ "$c" != "y" ]; then
+    echo "${red}Backup aborted${nc}"
     exit 1
 fi
 
-CONF=.config
-DIST=.
-
-backup_linux_conf() {
-    cp $HOME/.Xresources $DIST
-    cp $HOME/.xprofile $DIST
-    cp $HOME/$CONF/libinput-gestures.conf $DIST/$CONF
-    cp -r $HOME/$CONF/i3 $DIST/$CONF
-    cp -r $HOME/$CONF/zsh $DIST/$CONF
-
-}
-
-backup_arch() {
-    pacman -Qqen >$DIST/pacman.list
-    pacman -Qqem >$DIST/aur.list
-}
-
-cp $HOME/.vimrc $DIST
-cp $HOME/.ideavimrc $DIST
-cp $HOME/.zshrc $DIST
-cp -r $HOME/$CONF/alacritty $DIST/$CONF
-cp -r $HOME/$CONF/zsh $DIST/$CONF
-cp -r $HOME/$CONF/tmux $DIST/$CONF
-
-os=${uname}
-if [ "$os"=="Linux" ]; then
-    backup_linux_conf
+if [ ! -d $backup_dir ]; then
+    echo "${red}Dir $backup_dir does not exist${nc}"
+    exit 1
 fi
 
-/usr/bin/which pacman
-if [ $? -eq 0 ]; then
-    backup_arch
-fi
+echo "Backup start..."
+
+cp $HOME/.vimrc $backup_dir
+cp $HOME/.ideavimrc $backup_dir
+cp $HOME/.zshrc $backup_dir
+cp $HOME/.gitconfig $backup_dir
+cp $HOME/.ssh/config $backup_dir/.ssh/
+cp -r $HOME/.config/alacritty $backup_dir/.config
+cp -r $HOME/.config/zsh $backup_dir/.config
+cp -r $HOME/.config/tmux $backup_dir/.config
+
+echo "${green}Finished${nc}"

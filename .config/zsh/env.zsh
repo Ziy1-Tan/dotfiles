@@ -1,11 +1,9 @@
-# kernel
-os=`uname`
-host_ip=$(cat /etc/resolv.conf | grep "nameserver" | cut -f 2 -d " ")
-if [ "$os" = "Darwin" ]; then
-    host_ip="127.0.0.1"
-    export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
-    export PATH=/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH
+# proxy
+host_ip="127.0.0.1"
+if [ "$(uname -s)" = "Linux" ] && $(grep -qi "Microsoft" /proc/version); then
+    host_ip=$(cat /etc/resolv.conf | grep "nameserver" | cut -f 2 -d " ")
 fi
+
 export https_proxy=http://${host_ip}:7890
 export http_proxy=http://${host_ip}:7890
 export all_proxy=socks5://${host_ip}:7890
@@ -15,16 +13,23 @@ export GOPROXY=https://proxy.golang.com.cn,direct
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/code/go
 export PATH=$GOROOT:$GOROOT/bin:$PATH
-# QT program scale
-export QT_AUTO_SCREEN_SCALE_FACTOR=1
-export QT_IM_MODULE=fcitx5
 
 export EDITOR='vim'
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=23'
 export LANG=en_US.UTF-8
 
+if [ "$(uname -s)" = "Darwin" ]; then
+    export PATH=/opt/homebrew/opt/openjdk@11/bin:$PATH
+    export PATH=/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH
+    export JAVA_HOME=$(/usr/libexec/java_home)
+    export PATH=$JAVA_HOME/bin:$PATH
+fi
+
+if [ "$(uname -s)" = "Linux" ]; then
+    export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+    export LD_LIBRARY_PATH=/usr/local/cuda-11.8/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+fi
+
 export PATH=/usr/local/cuda-11.8/bin${PATH:+:${PATH}}
-export LD_LIBRARY_PATH=/usr/local/cuda-11.8/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 export PATH=$HOME/.local/bin:$PATH
 
 conda_bin=$HOME/miniconda3/bin/conda
@@ -40,4 +45,3 @@ else
 fi
 
 unset __conda_setup
-
