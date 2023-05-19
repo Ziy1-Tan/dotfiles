@@ -21,6 +21,9 @@ $ cd dotfiles
 $ sh ./install.sh
 
 Install to /Users/simple? [y/n] y
+Install start...
+Install vim-plug...
+vim-plug installed 
 ...
 Finished
 ```
