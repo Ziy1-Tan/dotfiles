@@ -5,3 +5,5 @@ name = Ziy1-Tan
 email = ajb459684460@gmail.com
 [open "https://ssh.github.com"]
 	domain = github.com
+[safe]
+	diretory = *
