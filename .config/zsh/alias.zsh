@@ -9,8 +9,8 @@ alias t="tmux"
 alias ta="tmux a -t 0"
 alias td="tmux detach"
 
-if [ "$(uname -a)" = "Darwin" ]; then
-    alias u="brew upgrade"
+if [ "$(uname -s)" = "Darwin" ]; then
+    alias u="brew update && brew upgrade"
 fi
 
 if command -v exa >/dev/null 2>&1; then

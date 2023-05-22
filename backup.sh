@@ -17,7 +17,7 @@ if [ ! -d $backup_dir ]; then
     exit 1
 fi
 
-echo "Backup start..."
+echo "Backup..."
 
 cp $HOME/.vimrc $backup_dir
 cp $HOME/.ideavimrc $backup_dir
@@ -27,5 +27,10 @@ cp $HOME/.ssh/config $backup_dir/.ssh/
 cp -r $HOME/.config/alacritty $backup_dir/.config
 cp -r $HOME/.config/zsh $backup_dir/.config
 cp -r $HOME/.config/tmux $backup_dir/.config
+
+if [ "$(uname -s)" = "Darwin" ]; then
+    echo "Backup brew..."
+    brew bundle dump -f
+fi
 
 echo "${green}Finished${nc}"
