@@ -126,9 +126,9 @@ scrolling:
 # Font configuration
 font:
   normal:
-    #family: SauceCodePro Nerd Font Mono
+    family: SauceCodePro Nerd Font Mono
     #family: MesloLGS Nerd Font Mono
-    family: Office Code Pro
+    #family: Office Code Pro
     #family: FiraCode Nerd Font
     style: Regular
 

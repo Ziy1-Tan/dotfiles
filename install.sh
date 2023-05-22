@@ -39,15 +39,15 @@ fi
 
 cp $(pwd)/.vimrc $install_dir/
 cp $(pwd)/.ideavimrc $install_dir/
-cp $(pwd)/.zshrc $install_dir/
 cp $(pwd)/.gitconfig $install_dir/
 mkdir -p $install_dir/.ssh && cp $(pwd)/.ssh/config $install_dir/.ssh/
 cp -r $(pwd)/.config/alacritty $install_dir/.config
 cp -r $(pwd)/.config/tmux $install_dir/.config
 
 # zsh & plugins
+cp $(pwd)/.zshrc $install_dir/
 cp -r $(pwd)/.config/zsh $install_dir/.config
-rsync --exclude '.git' -av $(pwd)/.zsh/ $install_dir/.zsh/
+rsync --exclude '.git' -auvhP $(pwd)/.zsh/ $install_dir/.zsh/
 
 ln -snf $install_dir/.config/tmux/.tmux.conf $install_dir/
 

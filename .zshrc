@@ -19,7 +19,7 @@ plugins=(sudo git z colored-man-pages)
 source ~/.zsh/git-open/git-open.plugin.zsh
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=23'
+# export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=23'
 
 if command -v brew >/dev/null 2>&1; then
   FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}" # brew comp
