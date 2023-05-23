@@ -20,6 +20,7 @@ export LANG=en_US.UTF-8
 if [ "$(uname -s)" = "Darwin" ]; then
     export PATH=/opt/homebrew/opt/openjdk@11/bin:$PATH
     export PATH=/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH
+    export PATH=$HOME/Library/Python/3.9/bin:$PATH
     export JAVA_HOME=$(/usr/libexec/java_home)
     export PATH=$JAVA_HOME/bin:$PATH
 fi
@@ -37,11 +38,11 @@ __conda_setup="$(${conda_bin} 'shell.zsh' 'hook' 2>/dev/null)"
 # if [ $? -eq 0 ]; then
 #     eval "$__conda_setup"
 # else
-    if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "$HOME/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="$HOME/miniconda3/bin:$PATH"
-    fi
+if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+    . "$HOME/miniconda3/etc/profile.d/conda.sh"
+else
+    export PATH="$HOME/miniconda3/bin:$PATH"
+fi
 # fi
 
 unset __conda_setup
