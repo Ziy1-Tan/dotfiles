@@ -22,6 +22,8 @@ echo "Backup..."
 cp $HOME/.vimrc $backup_dir
 cp $HOME/.ideavimrc $backup_dir
 cp $HOME/.zshrc $backup_dir
+cp $HOME/.zprofile $backup_dir
+cp $HOME/.fzf.zsh $backup_dir
 cp $HOME/.gitconfig $backup_dir
 cp $HOME/.ssh/config $backup_dir/.ssh/
 cp -r $HOME/.config/alacritty $backup_dir/.config

@@ -38,6 +38,7 @@ if [[ ! -d $ZSH_CACHE_DIR ]]; then
 fi
 
 source $HOME/.config/zsh/env
+source $HOME/.config/zsh/fzf
 source $ZSH/oh-my-zsh.sh
 source $HOME/.config/zsh/prompt
 source $HOME/.config/zsh/alias
