@@ -5,9 +5,9 @@ nc='\033[0m'
 
 backup_dir=${1:-$(pwd)}
 
-read -p "Backup to $backup_dir? [y/n] " c
+read -p "Backup to $backup_dir? ([y]/n) " c
 
-if [ "$c" != "y" ]; then
+if [ "$c" != "y" ] && [ -n "$c" ]; then
     echo "${red}Backup aborted${nc}"
     exit 1
 fi

@@ -15,9 +15,9 @@ fi
 
 install_dir=${1:-$HOME}
 
-read -p "Install to $install_dir? [y/n] " c
+read -p "Install to $install_dir? ([y]/n) " c
 
-if [ "$c" != "y" ]; then
+if [ "$c" != "y" ] && [ -n "$c" ]; then
     echo "${red}Install aborted${nc}"
     exit 1
 fi
@@ -29,14 +29,6 @@ fi
 
 echo "Install..."
 
-plug_path=$HOME/.vim/autoload/plug.vim
-if [ ! -f "$plug_path" ]; then
-    echo "Install vim-plug..."
-    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    echo "${green}vim-plug installed${nc}"
-fi
-
 cp $(pwd)/.vimrc $install_dir/
 cp $(pwd)/.zshrc $install_dir/
 cp $(pwd)/.ideavimrc $install_dir/
@@ -46,13 +38,27 @@ cp -r $(pwd)/.config/alacritty $install_dir/.config
 cp -r $(pwd)/.config/zsh $install_dir/.config/
 cp -r $(pwd)/.config/tmux $install_dir/.config
 
+ln -snf $install_dir/.config/tmux/.tmux.conf $install_dir/
+
 # zsh plugins
-if [ -z "$(git submodule status)" ]; then
+if git submodule status | grep -q "^[-+]"; then
     echo "Install zsh plugins..."
     git submodule update --init --recursive
-    rsync --exclude '.git' -auvhP $(pwd)/.zsh/ $install_dir/.zsh/
+fi
+rsync --exclude '.git' -auvhP $(pwd)/.zsh/ $install_dir/.zsh/
+
+plug_path=$HOME/.vim/autoload/plug.vim
+if [ ! -f "$plug_path" ]; then
+    echo "Install vim-plug..."
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    echo "${green}vim-plug installed${nc}"
 fi
 
-ln -snf $install_dir/.config/tmux/.tmux.conf $install_dir/
+if ! command -v fzf >/dev/null 2>&1; then
+    echo "Install fzf..."
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install
+fi
 
 echo "${green}Finished${nc}"

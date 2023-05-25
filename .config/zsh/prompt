@@ -43,3 +43,9 @@ function _collapsed_pwd() {
 setopt PROMPT_SUBST
 export PROMPT='%F{green}%n@%F{white}%m:%F{cyan}$(_collapsed_pwd)%F{green}$(_git_branch)%F{white}> '
 export RPROMPT="%F{red}%(?..%?)%f"
+
+# enable pure prompt
+# fpath+=($HOME/.zsh/pure)
+# autoload -U promptinit; promptinit
+# prompt pure
+# PURE_PROMPT_SYMBOL="#"
