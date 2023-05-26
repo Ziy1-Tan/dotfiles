@@ -1,2 +1,7 @@
-brew_path=$(command -v brew)
-eval "$(${brew_path} shellenv)"
+if [ "$(uname -s)" = "Darwin" ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+if [ "$(uname -s)" = "Linux" ]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
