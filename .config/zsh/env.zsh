@@ -29,10 +29,14 @@ fi
 if [ "$(uname -s)" = "Linux" ]; then
     export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
     export LD_LIBRARY_PATH=/usr/local/cuda-11.8/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+    export M2_HOME=/usr/share/maven
+    export MAVEN_HOME=/usr/share/maven
+    export PATH=${M2_HOME}/bin:${PATH}
 fi
 
 export PATH=/usr/local/cuda-11.8/bin${PATH:+:${PATH}}
 export PATH=$HOME/.local/bin:$PATH
+export GAR_TEST_DATA=$HOME/code/cpp/GraphAr/testing/
 
 conda_bin=$HOME/miniconda3/bin/conda
 __conda_setup="$(${conda_bin} 'shell.zsh' 'hook' 2>/dev/null)"

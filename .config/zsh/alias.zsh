@@ -3,6 +3,7 @@ alias s="neofetch"
 alias cl="clear"
 alias sz="source ~/.zshrc"
 alias lg="lazygit"
+alias cmb="cmake --build build --parallel 12"
 
 # tmux
 alias t="tmux"
@@ -16,4 +17,8 @@ fi
 if command -v exa >/dev/null 2>&1; then
     alias ll="exa -l -g"
     alias la="exa -l -a -g"
+fi
+
+if command -v batcat >/dev/null 2>&1; then
+    alias cat="batcat --number"
 fi

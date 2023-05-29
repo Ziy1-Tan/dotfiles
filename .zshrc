@@ -37,10 +37,10 @@ if [[ ! -d $ZSH_CACHE_DIR ]]; then
   mkdir -p $ZSH_CACHE_DIR
 fi
 
-source $HOME/.config/zsh/env
-source $HOME/.config/zsh/fzf
+source $HOME/.config/zsh/env.zsh
+source $HOME/.config/zsh/fzf.zsh
 source $ZSH/oh-my-zsh.sh
-source $HOME/.config/zsh/prompt
-source $HOME/.config/zsh/alias
+source $HOME/.config/zsh/prompt.zsh
+source $HOME/.config/zsh/alias.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
