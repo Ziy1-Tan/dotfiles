@@ -44,3 +44,4 @@ source $HOME/.config/zsh/prompt.zsh
 source $HOME/.config/zsh/alias.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+bindkey "ç" fzf-cd-widget
