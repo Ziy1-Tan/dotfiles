@@ -33,6 +33,7 @@ cp -r $HOME/.config/tmux $backup_dir/.config
 if [ "$(uname -s)" = "Darwin" ]; then
     echo "Backup brew..."
     brew bundle dump -f
+    mv Brewfile Brewfile.mac
 fi
 
 echo "${green}Finished${nc}"

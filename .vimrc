@@ -32,11 +32,11 @@ call plug#end()
 
 " key mapping
 
-nmap <leader>wq :wq<CR> 
-nmap <leader>q :q<CR>
-nmap nh :nohlsearch<CR>
+nnoremap <leader>wq :wq<CR>
+nnoremap <leader>q :q<CR>
+nnoremap <Backspace> :nohl<CR>
 
-noremap tt :NERDTreeToggle<CR>
+nnoremap tt :NERDTreeToggle<CR>
 nnoremap <leader>n :NERDTreeFocus<CR>
 
 inoremap jj <esc>
@@ -47,11 +47,13 @@ nnoremap <leader>j <c-w>j
 nnoremap <leader>k <c-w>k
 nnoremap <leader>l <c-w>l
 
-" copy & paste
-vmap <leader>c "+y
+" split
+nnoremap <leader>sv :vsplit<CR>
+nnoremap <leader>sh :split<CR>
 
-nmap <leader>v "+p
-imap <leader>v <esc>"+p
+" copy & paste
+vnoremap <C-y> "+y
+nnoremap <C-p> "*p
 
 " airline conf
 let g:airline_powerline_fonts = 1
@@ -59,3 +61,4 @@ let g:airline#extensions#tabline#enabled = 1
 " tmuxline conf
 let g:airline#extensions#tmuxline#enabled = 1
 let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"
+
