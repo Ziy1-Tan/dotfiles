@@ -49,6 +49,7 @@ if git submodule status | grep -q "^[-+]"; then
 fi
 rsync --exclude '.git' -auvhP $(pwd)/.zsh/ $install_dir/.zsh/
 
+# vim plugins
 plug_path=$HOME/.vim/autoload/plug.vim
 if [ ! -f "$plug_path" ]; then
     echo "Install vim-plug..."
@@ -57,10 +58,16 @@ if [ ! -f "$plug_path" ]; then
     echo "${green}vim-plug installed${nc}"
 fi
 
+# fzf
 if ! command -v fzf >/dev/null 2>&1; then
     echo "Install fzf..."
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
     ~/.fzf/install
+fi
+
+# brew
+if ! command -v brew >/dev/null 2>&1; then
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
 echo "${green}Finished${nc}"

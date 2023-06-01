@@ -30,10 +30,10 @@ cp -r $HOME/.config/alacritty $backup_dir/.config
 cp -r $HOME/.config/zsh $backup_dir/.config
 cp -r $HOME/.config/tmux $backup_dir/.config
 
-if [ "$(uname -s)" = "Darwin" ]; then
-    echo "Backup brew..."
+if command -v brew >/dev/null 2>&1; then
+    echo "Backup Brewfile."$(uname -s)"..."
     brew bundle dump -f
-    mv Brewfile Brewfile.mac
+    mv Brewfile Brewfile."$(uname -s)"
 fi
 
 echo "${green}Finished${nc}"
