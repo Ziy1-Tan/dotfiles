@@ -16,6 +16,7 @@ set t_Co=256
 set tabstop=2
 set softtabstop=2
 set shiftwidth=4
+let mapleader=' '
 
 
 filetype indent on
@@ -27,6 +28,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'preservim/nerdtree'
 Plug 'edkolev/tmuxline.vim'
+Plug 'tpope/vim-surround'
+Plug 'Lokaltog/vim-easymotion'
 
 call plug#end()
 
