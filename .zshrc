@@ -24,10 +24,6 @@ fpath+=($HOME/.zsh/zsh-completions/src)
 fpath+=($HOME/.zsh/conda-zsh-completion)
 autoload -U compinit && compinit
 
-# must after compinit & before zsh-syntax-highlighting
-source ~/.zsh/fzf-tab/fzf-tab.plugin.zsh
-
-source ~/.zsh/git-open/git-open.plugin.zsh
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=23'

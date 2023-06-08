@@ -47,7 +47,7 @@ if git submodule status | grep -q "^[-+]"; then
     echo "Install zsh plugins..."
     git submodule update --init --recursive
 fi
-rsync --exclude '.git' -auvhP $(pwd)/.zsh/ $install_dir/.zsh/
+rsync --exclude '.git' -auvhP --delete $(pwd)/.zsh/ $install_dir/.zsh/
 
 # vim plugins
 plug_path=$HOME/.vim/autoload/plug.vim

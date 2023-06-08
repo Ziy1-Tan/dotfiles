@@ -1,9 +1,7 @@
-excludes="--exclude .git --exclude .cache --exclude .vscode --exclude .idea --exclude .DS_Store --exclude node_modules --exclude .conan --exclude .m2 --exclude .vim"
-
-export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden --follow ${excludes}"
+export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden --follow --exclude .git"
 
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND="fd --type d --hidden --follow ${excludes} . $HOME"
+export FZF_ALT_C_COMMAND="fd --type d --hidden --exclude .git . $HOME"
 
 export FZF_COMPLETION_TRIGGER='\'
 

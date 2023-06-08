@@ -10,8 +10,9 @@
 - zsh config
 - alacritty config
 - tmux config
-- ssh host config
+- ssh config
 - git config
+- fzf config
 
 # Setup
 
@@ -23,7 +24,7 @@ $ sh ./install.sh
 Install to /Users/simple? [y/n] y
 Install start...
 Install vim-plug...
-vim-plug installed 
+vim-plug installed
 ...
 Finished
 ```
@@ -33,4 +34,4 @@ Enjoy!
 # TBD
 
 - [ ] Powered by [yadm](https://github.com/TheLocehiliosan/yadm)
-- [ ] Encrypt SSH key 
+- [ ] Encrypt SSH key
