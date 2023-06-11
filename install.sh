@@ -58,6 +58,14 @@ if [ ! -f "$plug_path" ]; then
     echo "${green}vim-plug installed${nc}"
 fi
 
+cht_bin=$HOME/.local/bin/cht
+if [ ! -x "$cht_bin" ]; then
+    echo "Install cht.sh..."
+    /usr/bin/curl https://cht.sh/:cht.sh > $cht_bin
+    chmod +x $cht_bin
+    echo "${green}cht.sh installed${nc}"
+fi
+
 # fzf
 if ! command -v fzf >/dev/null 2>&1; then
     echo "Install fzf..."

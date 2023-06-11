@@ -7,3 +7,11 @@ email = ajb459684460@gmail.com
 	domain = github.com
 [safe]
 	diretory = *
+[color]
+	ui = auto
+[core]
+	editor = vim
+[alias]
+	cm = commit
+	co = checkout
+	ac = !git add -A && git commit
