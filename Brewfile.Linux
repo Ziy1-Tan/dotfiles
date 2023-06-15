@@ -1,3 +1,2 @@
 tap "homebrew/bundle"
-brew "exa"
 brew "fd"

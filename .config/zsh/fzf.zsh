@@ -1,11 +1,11 @@
-export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden --follow --exclude .git"
+export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden --follow --exclude={.git,.idea,.vscode,node_modules,.cache,.conan}"
 
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --type d --hidden --exclude .git . $HOME"
 
 export FZF_COMPLETION_TRIGGER='\'
 
-export FZF_DEFAULT_OPTS='--height 40% --info=inline --layout=reverse'
+export FZF_DEFAULT_OPTS='--height 80% --info=inline --layout=reverse'
 
 # Use fd (https://github.com/sharkdp/fd) instead of the default find
 # command for listing path candidates.

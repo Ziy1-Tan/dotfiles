@@ -19,16 +19,15 @@ fi
 
 echo "Backup..."
 
-cp $HOME/.vimrc $backup_dir
-cp $HOME/.ideavimrc $backup_dir
-cp $HOME/.zshrc $backup_dir
-cp $HOME/.zprofile $backup_dir
-cp $HOME/.fzf.zsh $backup_dir
-cp $HOME/.gitconfig $backup_dir
-cp $HOME/.ssh/config $backup_dir/.ssh/
-cp -r $HOME/.config/alacritty $backup_dir/.config
-cp -r $HOME/.config/zsh $backup_dir/.config
-cp -r $HOME/.config/tmux $backup_dir/.config
+cp $HOME/.vimrc $backup_dir &&
+    cp $HOME/.ideavimrc $backup_dir &&
+    cp $HOME/.zshrc $backup_dir &&
+    cp $HOME/.zprofile $backup_dir &&
+    cp $HOME/.gitconfig $backup_dir &&
+    cp $HOME/.ssh/config $backup_dir/.ssh/ &&
+    cp -r $HOME/.config/alacritty $backup_dir/.config &&
+    cp -r $HOME/.config/zsh $backup_dir/.config &&
+    cp -r $HOME/.config/tmux $backup_dir/.config
 
 if command -v brew >/dev/null 2>&1; then
     echo "Backup Brewfile."$(uname -s)"..."

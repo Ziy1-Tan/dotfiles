@@ -14,11 +14,6 @@ if [ "$(uname -s)" = "Darwin" ]; then
     alias u="brew update && brew upgrade"
 fi
 
-if command -v exa >/dev/null 2>&1; then
-    alias ll="exa -l -g"
-    alias la="exa -l -a -g"
-fi
-
 if command -v batcat >/dev/null 2>&1; then
     alias cat="batcat --number"
 fi

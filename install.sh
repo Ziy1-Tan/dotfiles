@@ -29,18 +29,16 @@ fi
 
 echo "Install..."
 
-cp $(pwd)/.vimrc $install_dir/
-cp $(pwd)/.zshrc $install_dir/
-cp $(pwd)/.zprofile $install_dir/
-cp $(pwd)/.ideavimrc $install_dir/
-cp $(pwd)/.gitconfig $install_dir/
-cp $(pwd)/.fzf.zsh $install_dir/
-mkdir -p $install_dir/.ssh && cp $(pwd)/.ssh/config $install_dir/.ssh/
-cp -r $(pwd)/.config/alacritty $install_dir/.config/
-cp -r $(pwd)/.config/zsh $install_dir/.config/
-cp -r $(pwd)/.config/tmux $install_dir/.config/
-
-ln -snf $install_dir/.config/tmux/.tmux.conf $install_dir/
+cp $(pwd)/.vimrc $install_dir/ &&
+    cp $(pwd)/.zshrc $install_dir/ &&
+    cp $(pwd)/.zprofile $install_dir/ &&
+    cp $(pwd)/.ideavimrc $install_dir/ &&
+    cp $(pwd)/.gitconfig $install_dir/ &&
+    mkdir -p $install_dir/.ssh && cp $(pwd)/.ssh/config $install_dir/.ssh/ &&
+    cp -r $(pwd)/.config/alacritty $install_dir/.config/ &&
+    cp -r $(pwd)/.config/zsh $install_dir/.config/ &&
+    cp -r $(pwd)/.config/tmux $install_dir/.config/ &&
+    ln -snf $install_dir/.config/tmux/.tmux.conf $install_dir/
 
 # zsh plugins
 if git submodule status | grep -q "^[-+]"; then
@@ -55,26 +53,18 @@ if [ ! -f "$plug_path" ]; then
     echo "Install vim-plug..."
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    echo "${green}vim-plug installed${nc}"
-fi
-
-cht_bin=$HOME/.local/bin/cht
-if [ ! -x "$cht_bin" ]; then
-    echo "Install cht.sh..."
-    /usr/bin/curl https://cht.sh/:cht.sh > $cht_bin
-    chmod +x $cht_bin
-    echo "${green}cht.sh installed${nc}"
 fi
 
 # fzf
 if ! command -v fzf >/dev/null 2>&1; then
     echo "Install fzf..."
-    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-    ~/.fzf/install
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf &&
+        ~/.fzf/install
 fi
 
 # brew
 if ! command -v brew >/dev/null 2>&1; then
+    echo "Install homebrew..."
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 

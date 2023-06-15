@@ -1,4 +1,6 @@
-![screen](images/screenshot.png)
+![screen1](images/sc1.png)
+![screen2](images/sc2.png)
+![screen3](images/sc3.png)
 
 # Ziy1-Tan dotfiles
 
@@ -17,14 +19,15 @@
 # Setup
 
 ```shell
-$ git clone https://github.com/Ziy1-Tan/dotfiles.git
-$ cd dotfiles
-$ sh ./install.sh
+git clone https://github.com/Ziy1-Tan/dotfiles.git
+cd dotfiles
+sh ./install.sh
 
-Install to /Users/simple? [y/n] y
+Install to /Users/simple? ([y]/n) y
 Install start...
 Install vim-plug...
-vim-plug installed
+Install fzf...
+Install homebrew...
 ...
 Finished
 ```
