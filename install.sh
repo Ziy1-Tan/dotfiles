@@ -30,7 +30,8 @@ fi
 echo "Install..."
 
 cp $(pwd)/.vimrc $install_dir/ &&
-    cp $(pwd)/.zshrc $install_dir/ &&
+    cp $(pwd)/.zshrc $install_dir/ && 
+    source $install_dir/.zshrc&&
     cp $(pwd)/.zprofile $install_dir/ &&
     cp $(pwd)/.ideavimrc $install_dir/ &&
     cp $(pwd)/.gitconfig $install_dir/ &&
