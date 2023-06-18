@@ -3,7 +3,9 @@ alias s="neofetch"
 alias cl="clear"
 alias sz="source ~/.zshrc"
 alias lg="lazygit"
-alias cmb="cmake --build build --parallel 12"
+alias cmb="cmake --build build -j 12"
+alias setproxy="export http_proxy https_proxy all_proxy"
+alias unsetproxy="unset http_proxy https_proxy all_proxy"
 
 # tmux
 alias t="tmux"

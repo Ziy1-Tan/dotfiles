@@ -4,9 +4,10 @@ if [ "$(uname -s)" = "Linux" ] && $(grep -qi "Microsoft" /proc/version); then
     host_ip=$(cat /etc/resolv.conf | grep "nameserver" | cut -f 2 -d " ")
 fi
 
-export https_proxy=http://${host_ip}:7890
-export http_proxy=http://${host_ip}:7890
-export all_proxy=socks5://${host_ip}:7890
+https_proxy=http://${host_ip}:7890
+http_proxy=http://${host_ip}:7890
+all_proxy=socks5://${host_ip}:7890
+export http_proxy https_proxy all_proxy
 
 # go env
 export GOPROXY=https://proxy.golang.com.cn,direct
