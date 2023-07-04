@@ -31,7 +31,6 @@ echo "Install..."
 
 cp $(pwd)/.vimrc $install_dir/ &&
     cp $(pwd)/.zshrc $install_dir/ && 
-    source $install_dir/.zshrc&&
     cp $(pwd)/.zprofile $install_dir/ &&
     cp $(pwd)/.ideavimrc $install_dir/ &&
     cp $(pwd)/.gitconfig $install_dir/ &&
@@ -50,6 +49,7 @@ rsync --exclude '.git' -auvhP --delete $(pwd)/.zsh/ $install_dir/.zsh/
 
 # vim plugins
 plug_path=$HOME/.vim/autoload/plug.vim
+source $install_dir/.config/zsh/env.zsh
 if [ ! -f "$plug_path" ]; then
     echo "Install vim-plug..."
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs \

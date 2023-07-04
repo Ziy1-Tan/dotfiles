@@ -1,3 +1,7 @@
+# disable oh my zsh update
+DISABLE_AUTO_UPDATE="true"
+DISABLE UPDATE PROMPT="true"
+
 pasteinit() {
   OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
   zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
