@@ -55,6 +55,9 @@ nnoremap <leader>wq :wq<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <Backspace> :nohl<CR>
 
+nnoremap J 5j
+nnoremap K 5k
+
 " navigate
 nnoremap <leader>w <c-w>w
 nnoremap <leader>h <c-w>h
@@ -76,6 +79,8 @@ nnoremap <leader>n :NERDTreeFocus<CR>
 " airline
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
+let g:airline_left_sep=''
+let g:airline_right_sep=''
 " tmuxline
 let g:airline#extensions#tmuxline#enabled = 1
 let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"
