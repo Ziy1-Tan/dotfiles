@@ -8,5 +8,18 @@ set incsearch
 set hlsearch
 set ignorecase
 set smartcase
+set scrolloff=10
+
+let mapleader=' '
+
+Plug 'easymotion/vim-easymotion'
+Plug 'tpope/vim-surround'
 
 inoremap jj <esc>
+nnoremap <Backspace> :nohl<CR>
+
+nnoremap J 5j
+nnoremap K 5k
+
+nnoremap <leader>sv :vsplit<CR>
+nnoremap <leader>sh :split<CR>

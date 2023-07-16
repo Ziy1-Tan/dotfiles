@@ -19,12 +19,12 @@ export EDITOR='vim'
 export LANG=en_US.UTF-8
 
 if [ "$(uname -s)" = "Darwin" ]; then
-    export PATH=/opt/homebrew/opt/openjdk@11/bin:$PATH
     export PATH=/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH
     export PATH=/opt/homebrew/bin:$PATH
     export PATH=$HOME/Library/Python/3.9/bin:$PATH
-    export JAVA_HOME=$(/usr/libexec/java_home)
+    export JAVA_HOME=/opt/homebrew/opt/openjdk@11:$PATH
     export PATH=$JAVA_HOME/bin:$PATH
+    export PATH=/opt/homebrew/opt/scala@2.12/bin:$PATH
 fi
 
 if [ "$(uname -s)" = "Linux" ]; then
