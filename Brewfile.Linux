@@ -1,8 +1,0 @@
-tap "homebrew/bundle"
-brew "bat"
-brew "fd"
-brew "lazygit"
-brew "mycli"
-brew "neofetch"
-brew "ripgrep"
-brew "tldr"
