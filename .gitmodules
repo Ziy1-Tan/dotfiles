@@ -1,6 +1,3 @@
-[submodule ".zsh/pure"]
-	path = .zsh/pure
-	url = https://github.com/Ziy1-Tan/pure.git
 [submodule ".zsh/ohmyzsh"]
 	path = .zsh/ohmyzsh
 	url = https://github.com/ohmyzsh/ohmyzsh.git
@@ -16,9 +13,3 @@
 [submodule ".zsh/conda-zsh-completion"]
 	path = .zsh/conda-zsh-completion
 	url = https://github.com/conda-incubator/conda-zsh-completion.git
-[submodule ".zsh/git-open"]
-	path = .zsh/git-open
-	url = https://github.com/paulirish/git-open.git
-[submodule ".zsh/fzf-tab"]
-	path = .zsh/fzf-tab
-	url = https://github.com/Aloxaf/fzf-tab.git
