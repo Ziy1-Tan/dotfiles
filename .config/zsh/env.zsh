@@ -22,13 +22,13 @@ if [ "$(uname -s)" = "Darwin" ]; then
     export PATH=/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH
     export PATH=/opt/homebrew/bin:$PATH
     export PATH=$HOME/Library/Python/3.9/bin:$PATH
-    export JAVA_HOME=/opt/homebrew/opt/openjdk@11:$PATH
+    export JAVA_HOME=/opt/homebrew/opt/java11
     export PATH=$JAVA_HOME/bin:$PATH
-    export PATH=/opt/homebrew/opt/scala@2.12/bin:$PATH
 fi
 
 if [ "$(uname -s)" = "Linux" ]; then
     export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+    export PATH=$JAVA_HOME/bin:$PATH
     export LD_LIBRARY_PATH=/usr/local/cuda-11.8/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
     export M2_HOME=/usr/share/maven
     export MAVEN_HOME=/usr/share/maven
