@@ -34,7 +34,7 @@ cp $(pwd)/.vimrc $install_dir/ &&
     cp $(pwd)/.zprofile $install_dir/ &&
     cp $(pwd)/.ideavimrc $install_dir/ &&
     cp $(pwd)/.gitconfig $install_dir/ &&
-    cp $(pwd)/.m2/settings.xml $install_dir/ &&
+    cp $(pwd)/.m2/settings.xml $install_dir/.m2/ &&
     mkdir -p $install_dir/.ssh && cp $(pwd)/.ssh/config $install_dir/.ssh/ &&
     cp -r $(pwd)/.config/alacritty $install_dir/.config/ &&
     cp -r $(pwd)/.config/zsh $install_dir/.config/ &&
