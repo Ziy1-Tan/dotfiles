@@ -1,4 +1,3 @@
-tap "homebrew/bundle"
 brew install bat
 brew install fd
 brew install lazygit
