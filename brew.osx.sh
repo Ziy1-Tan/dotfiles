@@ -14,6 +14,7 @@ brew install tmux
 brew install rsync
 brew install tree
 brew install wget
+brew install tldr
 
 brew install alacritty
 brew install itsycal
