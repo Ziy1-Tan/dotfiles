@@ -41,7 +41,6 @@ brew install ccache
 brew install coreutils
 
 # dev tool
-brew install rectangle
 brew install clang-format@8
 brew install cmake
 brew install doxygen
@@ -56,6 +55,7 @@ brew install intellij-idea
 brew install pycharm
 
 # app
+brew install rectangle
 brew install obsidian
 brew install onedrive
 brew install bitwarden
