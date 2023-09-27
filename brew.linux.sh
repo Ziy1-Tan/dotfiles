@@ -1,4 +1,3 @@
-brew install bat
 brew install fd
 brew install lazygit
 brew install neofetch

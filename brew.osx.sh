@@ -9,7 +9,6 @@ brew install neofetch
 brew install grep
 brew install lazygit
 brew install curl
-brew install bat
 brew install tmux
 brew install rsync
 brew install tree
@@ -55,7 +54,6 @@ brew install intellij-idea
 brew install pycharm
 
 # app
-brew install rectangle
 brew install obsidian
 brew install onedrive
 brew install bitwarden
