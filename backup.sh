@@ -5,7 +5,6 @@ nc='\033[0m'
 
 backup_dir=$(pwd)
 
-
 if [ ! -d $backup_dir ]; then
     echo "${red}Dir $backup_dir does not exist${nc}"
     exit 1

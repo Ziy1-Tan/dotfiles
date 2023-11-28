@@ -55,7 +55,6 @@ brew install intellij-idea
 brew install pycharm
 
 # app
-brew install rectangle
 brew install obsidian
 brew install onedrive
 brew install bitwarden

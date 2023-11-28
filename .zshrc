@@ -45,5 +45,3 @@ source $HOME/.config/zsh/alias.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 bindkey "ç" fzf-cd-widget
-export NAMESRV_ADDR=localhost:9876
-export ROCKETMQ_HOME=/home/simple/code/java/rocketmq/distribution/target/rocketmq-5.1.3-SNAPSHOT/rocketmq-5.1.3-SNAPSHOT
