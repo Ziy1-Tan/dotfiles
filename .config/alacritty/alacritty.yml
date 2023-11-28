@@ -127,8 +127,8 @@ scrolling:
 font:
   normal:
     #family: SauceCodePro Nerd Font Mono
-    family: MesloLGS Nerd Font Mono
-    #family: FiraCode Nerd Font
+    #family: MesloLGS Nerd Font Mono
+    family: FiraCode Nerd Font
     style: Regular
 
   bold:

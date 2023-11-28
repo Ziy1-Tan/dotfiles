@@ -1,16 +1,22 @@
+set nocompatible
+filetype on
+filetype indent on
+filetype plugin on
+filetype plugin indent on
+
+set encoding=utf-8
 set number
 set relativenumber
 
 set autoindent
 set showmatch
 set cursorline
-" transform tab to whitespace
-set expandtab
 set wrap
 
 set showcmd
 set showmode
 set wildmenu
+set laststatus=2
 
 " search
 set hlsearch
@@ -24,14 +30,15 @@ set encoding=utf-8
 " enable 256 colors
 set t_Co=256
 
+" transform tab to whitespace
+set expandtab
 set tabstop=2
 set softtabstop=2
-set shiftwidth=4
+set shiftwidth=2
 
 set scrolloff=10
 
 let mapleader=' '
-filetype plugin indent on
 syntax on
 
 
@@ -50,6 +57,9 @@ call plug#end()
 
 " key mapping
 inoremap jj <esc>
+
+nnoremap J 5j
+nnoremap K 5k
 
 nnoremap <leader>wq :wq<CR>
 nnoremap <leader>q :q<CR>
@@ -75,12 +85,13 @@ nnoremap <C-p> "*p
 
 " nerdtree
 nnoremap tt :NERDTreeToggle<CR>
-nnoremap <leader>n :NERDTreeFocus<CR>
+
 " airline
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_left_sep=''
 let g:airline_right_sep=''
+let g:airline#extensions#tabline#formatter = 'default'
 " tmuxline
 let g:airline#extensions#tmuxline#enabled = 1
 let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"
