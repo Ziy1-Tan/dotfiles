@@ -21,20 +21,14 @@
 ```shell
 git clone https://github.com/Ziy1-Tan/dotfiles.git
 cd dotfiles
-sh ./install.sh
+bash ./install.sh
 
 Install to /Users/simple? ([y]/n) y
-Install start...
+Install...
 Install vim-plug...
 Install fzf...
 Install homebrew...
-...
 Finished
 ```
 
 Enjoy!
-
-# TBD
-
-- [ ] Powered by [yadm](https://github.com/TheLocehiliosan/yadm)
-- [ ] Encrypt SSH key

@@ -48,7 +48,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'preservim/nerdtree'
-Plug 'edkolev/tmuxline.vim'
 Plug 'tpope/vim-surround'
 Plug 'Lokaltog/vim-easymotion'
 

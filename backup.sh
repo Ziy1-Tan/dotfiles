@@ -17,10 +17,10 @@ cp $HOME/.vimrc $backup_dir &&
     cp $HOME/.zshrc $backup_dir &&
     cp $HOME/.zprofile $backup_dir &&
     cp $HOME/.gitconfig $backup_dir &&
+    cp $HOME/.tmux.conf $backup_dir/ &&
     cp $HOME/.ssh/config $backup_dir/.ssh/ &&
     cp -r $HOME/.config/alacritty $backup_dir/.config &&
     cp -r $HOME/.config/zsh $backup_dir/.config &&
-    cp -r $HOME/.config/tmux $backup_dir/.config &&
     cp -r $HOME/.m2/settings.xml .m2/
 
 echo "${green}Finished${nc}"
