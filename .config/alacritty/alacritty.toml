@@ -1,9 +1,6 @@
-theme = "Tomorrow.dark"
 
 [colors]
-author = "Chris Kempson"
 draw_bold_text_with_bright_colors = false
-name = "Tomorrow (dark)"
 
 [colors.bright]
 black = "#969896"
