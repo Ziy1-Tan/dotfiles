@@ -1,0 +1,86 @@
+theme = "Tomorrow.dark"
+
+[colors]
+author = "Chris Kempson"
+draw_bold_text_with_bright_colors = false
+name = "Tomorrow (dark)"
+
+[colors.bright]
+black = "#969896"
+blue = "#81a2be"
+cyan = "#8abeb7"
+green = "#b5bd68"
+magenta = "#b294bb"
+red = "#cc6666"
+white = "#ffffff"
+yellow = "#f0c674"
+
+[colors.cursor]
+cursor = "#c5c8c6"
+text = "#1d1f21"
+
+[colors.normal]
+black = "#1d1f21"
+blue = "#81a2be"
+cyan = "#8abeb7"
+green = "#b5bd68"
+magenta = "#b294bb"
+red = "#cc6666"
+white = "#c5c8c6"
+yellow = "#f0c674"
+
+[colors.primary]
+background = "#1d1f21"
+foreground = "#c5c8c6"
+
+[cursor]
+blink_interval = 750
+unfocused_hollow = true
+
+[cursor.style]
+blinking = "On"
+shape = "Block"
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 20
+
+[font.bold]
+style = "Bold"
+
+[font.bold_italic]
+style = "Bold Italic"
+
+[font.italic]
+style = "Italic"
+
+[font.normal]
+family = "SauceCodePro Nerd Font Mono"
+style = "Regular"
+
+[scrolling]
+history = 10000
+multiplier = 5
+
+[selection]
+save_to_clipboard = false
+semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
+
+[window]
+decorations = "full"
+opacity = 0.9
+startup_mode = "Windowed"
+
+[window.dimensions]
+columns = 100
+lines = 30
+
+[window.padding]
+x = 2
+y = 2
+
+[window.position]
+x = 600
+y = 250
