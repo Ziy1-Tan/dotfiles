@@ -13,3 +13,7 @@
 [submodule ".zsh/conda-zsh-completion"]
 	path = .zsh/conda-zsh-completion
 	url = https://github.com/conda-incubator/conda-zsh-completion.git
+[submodule "dotbot"]
+	path = dotbot
+	url = https://github.com/anishathalye/dotbot
+	ignore = dirty

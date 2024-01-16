@@ -1,0 +1,31 @@
+- defaults:
+    link:
+      create: true
+      relink: true
+
+- clean: ["~", "~/.config"]
+
+- create:
+    - ~/.m2
+    - ~/.ssh
+    - ~/.zsh
+
+- link:
+    ~/.zshrc:
+      path: zshrc
+    ~/.zprofile:
+      path: zprofile
+    ~/.ideavimrc:
+      path: ideavimrc
+    ~/.vimrc:
+      path: vimrc
+    ~/.tmux.conf:
+      path: tmux.conf
+    ~/.config/:
+      glob: true
+      path: config/*
+      relink: true
+    ~/.zsh/:
+      glob: true
+      path: zsh/*
+      relink: true
