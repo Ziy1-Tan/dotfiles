@@ -4,8 +4,6 @@
 
 # Ziy1-Tan dotfiles
 
-**Warning:** Don’t blindly use my settings unless you know what that entails. Use at your own risk!
-
 # Contents
 
 - vim config
@@ -21,14 +19,21 @@
 ```shell
 git clone https://github.com/Ziy1-Tan/dotfiles.git
 cd dotfiles
-bash ./install.sh
+git submodule update --init --recursive
+./install
 
-Install to /Users/simple? ([y]/n) y
-Install...
-Install vim-plug...
-Install fzf...
-Install homebrew...
-Finished
+All targets have been cleaned
+...
+All paths have been set up
+...
+All paths have been set up
+...
+All links have been set up
+Install vim-plug (y/[n])
+
+Install fzf
+Install brew
+All commands have been executed
 ```
 
 Enjoy!
