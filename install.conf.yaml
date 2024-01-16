@@ -2,6 +2,8 @@
     link:
       create: true
       relink: true
+    shell:
+      quiet: true
 
 - clean: ["~", "~/.config"]
 
@@ -12,19 +14,44 @@
     ~/.zsh:
       mode: 0755
 
+- shell:
+    - [git submodule update --init --recursive, Installing submodules]
+    - description: Installing vim-plug (y/[n])
+      stdin: true
+      stdout: true
+      stderr: true
+      command: |
+        read c
+        if [ "$c" = "y" ];
+        then
+          curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        fi
+    - description: Installing fzf
+      stdout: true
+      stderr: true
+      command: |
+        if ! command -v fzf >/dev/null 2>&1
+        then
+          git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
+        fi
+    - description: Installing brew
+      stdout: true
+      stderr: true
+      command: |
+        if ! command -v brew >/dev/null 2>&1
+        then
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+        fi
+
 - link:
-    ~/.zshrc:
-      path: zshrc
-    ~/.zprofile:
-      path: zprofile
-    ~/.ideavimrc:
-      path: ideavimrc
-    ~/.vimrc:
-      path: vimrc
-    ~/.tmux.conf:
-      path: tmux.conf
-    ~/.gitconfig:
-      path: gitconfig
+    ~/.zshrc: zshrc
+    ~/.zprofile: zprofile
+    ~/.ideavimrc: ideavimrc
+    ~/.vimrc: vimrc
+    ~/.tmux.conf: tmux.conf
+    ~/.gitconfig: gitconfig
+    ~/.ssh/config: .ssh/config
+    ~/.m2/settings.xml: .m2/settings.xml
     ~/.config/:
       glob: true
       path: config/*
@@ -33,40 +60,3 @@
       glob: true
       path: .zsh/*
       relink: true
-    ~/.ssh/config:
-      path: .ssh/config
-    ~/.m2/settings.xml:
-      path: .m2/settings.xml
-
-- shell:
-    - description: Install vim-plug (y/[n])
-      stdin: true
-      stdout: true
-      quiet: true
-      stderr: true
-      command: |
-        read c
-        if [ "$c" = "y" ];
-        then
-          curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        fi
-    - description: Install fzf
-      stdin: true
-      stdout: true
-      quiet: true
-      stderr: true
-      command: |
-        if ! command -v fzf >/dev/null 2>&1
-        then
-          git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
-        fi
-    - description: Install brew
-      stdin: true
-      stdout: true
-      quiet: true
-      stderr: true
-      command: |
-        if ! command -v brew >/dev/null 2>&1
-        then
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-        fi
