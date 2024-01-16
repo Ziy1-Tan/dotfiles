@@ -8,7 +8,9 @@
 - create:
     - ~/.m2
     - ~/.ssh
-    - ~/.zsh
+- create:
+    ~/.zsh:
+      mode: 0755
 
 - link:
     ~/.zshrc:
@@ -27,5 +29,5 @@
       relink: true
     ~/.zsh/:
       glob: true
-      path: zsh/*
+      path: .zsh/*
       relink: true
