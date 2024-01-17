@@ -4,6 +4,8 @@
       relink: true
     shell:
       quiet: true
+      stdout: true
+      stderr: true
 
 - clean: ["~", "~/.config"]
 
@@ -18,8 +20,6 @@
     - [git submodule update --init --recursive, Installing submodules]
     - description: Installing vim-plug (y/[n])
       stdin: true
-      stdout: true
-      stderr: true
       command: |
         read c
         if [ "$c" = "y" ];
@@ -27,16 +27,12 @@
           curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
         fi
     - description: Installing fzf
-      stdout: true
-      stderr: true
       command: |
         if ! command -v fzf >/dev/null 2>&1
         then
           git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
         fi
     - description: Installing brew
-      stdout: true
-      stderr: true
       command: |
         if ! command -v brew >/dev/null 2>&1
         then
@@ -51,7 +47,7 @@
     ~/.tmux.conf: tmux.conf
     ~/.gitconfig: gitconfig
     ~/.ssh/config: .ssh/config
-    ~/.m2/settings.xml: .m2/settings.xml
+    ~/.m2/settings.xml: settings.xml
     ~/.config/:
       glob: true
       path: config/*

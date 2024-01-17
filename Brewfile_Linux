@@ -1,0 +1,5 @@
+brew "fd"
+brew "neofetch"
+brew "ripgrep"
+brew "tldr"
+brew "bat"

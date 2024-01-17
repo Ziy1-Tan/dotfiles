@@ -1,0 +1,6 @@
+#!/bin/bash
+if [ "$(uname -s)" = "Darwin" ]; then
+    brew bundle dump --brews --cask --tap --mas -f --file Brewfile_Mac
+elif [ "$(uname -s)" = "Linux" ]; then
+    brew bundle dump --brews --cask --tap- f --file Brewfile_Linux
+fi
