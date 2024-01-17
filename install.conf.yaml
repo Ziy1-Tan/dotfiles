@@ -7,7 +7,13 @@
       stdout: true
       stderr: true
 
-- clean: ["~", "~/.config"]
+- clean: ["~"]
+
+- clean:
+    ~/:
+      force: true
+    ~/.config:
+      recursive: true
 
 - create:
     - ~/.m2
@@ -15,6 +21,24 @@
 - create:
     ~/.zsh:
       mode: 0755
+
+- link:
+    ~/.zshrc: zshrc
+    ~/.zprofile: zprofile
+    ~/.ideavimrc: ideavimrc
+    ~/.vimrc: vimrc
+    ~/.tmux.conf: tmux.conf
+    ~/.gitconfig: gitconfig
+    ~/.ssh/config: .ssh/config
+    ~/.m2/settings.xml: settings.xml
+    ~/.config/:
+      glob: true
+      path: config/*
+      relink: true
+    ~/.zsh/:
+      glob: true
+      path: .zsh/*
+      relink: true
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
@@ -38,21 +62,3 @@
         then
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
         fi
-
-- link:
-    ~/.zshrc: zshrc
-    ~/.zprofile: zprofile
-    ~/.ideavimrc: ideavimrc
-    ~/.vimrc: vimrc
-    ~/.tmux.conf: tmux.conf
-    ~/.gitconfig: gitconfig
-    ~/.ssh/config: .ssh/config
-    ~/.m2/settings.xml: settings.xml
-    ~/.config/:
-      glob: true
-      path: config/*
-      relink: true
-    ~/.zsh/:
-      glob: true
-      path: .zsh/*
-      relink: true
