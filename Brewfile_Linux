@@ -1,5 +1,6 @@
+tap "homebrew/bundle"
 brew "fd"
 brew "neofetch"
+brew "perl"
 brew "ripgrep"
 brew "tldr"
-brew "bat"
