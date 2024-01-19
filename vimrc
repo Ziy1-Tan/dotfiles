@@ -47,7 +47,6 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'preservim/nerdtree'
 Plug 'tpope/vim-surround'
 Plug 'Lokaltog/vim-easymotion'
 
@@ -82,16 +81,10 @@ nnoremap <leader>sh :split<CR>
 vnoremap <C-y> "+y
 nnoremap <C-p> "*p
 
-" nerdtree
-nnoremap tt :NERDTreeToggle<CR>
-
 " airline
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 let g:airline#extensions#tabline#formatter = 'default'
-" tmuxline
-let g:airline#extensions#tmuxline#enabled = 1
-let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"
 
