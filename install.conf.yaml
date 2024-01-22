@@ -6,6 +6,8 @@
       quiet: true
       stdout: true
       stderr: true
+    create:
+      mode: 0755
 
 - clean: ["~"]
 
@@ -18,9 +20,8 @@
 - create:
     - ~/.m2
     - ~/.ssh
-- create:
-    ~/.zsh:
-      mode: 0755
+    - ~/.zsh
+    - ~/.config
 
 - link:
     ~/.zshrc: zshrc
