@@ -1,8 +1,10 @@
+# My Linux/Mac Config... ️
+
+Powered by [dotbot](https://github.com/anishathalye/dotbot) ⚡
+
 ![screen1](images/sc1.png)
 ![screen2](images/sc2.png)
 ![screen3](images/sc3.png)
-
-# Ziy1-Tan dotfiles
 
 # Contents
 
