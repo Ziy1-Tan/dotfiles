@@ -11,6 +11,6 @@ alias ta="tmux a -d -t 0"
 alias td="tmux detach"
 
 alias u="sudo apt update && sudo apt upgrade"
-if [ "$(uname -s)" = "Darwin" ]; then
+if [ $(uname) = "Darwin" ]; then
     alias u="brew update && brew upgrade"
 fi
