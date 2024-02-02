@@ -1,4 +1,4 @@
-# My Linux/Mac Config... ️
+# My Linux / Mac Config... ️
 
 Powered by [dotbot](https://github.com/anishathalye/dotbot) ⚡
 
