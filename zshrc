@@ -32,6 +32,7 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=23'
 source ~/.zsh/zsh-you-should-use/you-should-use.plugin.zsh
+export YSU_MODE=BESTMATCH
 
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
