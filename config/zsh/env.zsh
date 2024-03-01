@@ -1,9 +1,5 @@
 # proxy
 host_ip="127.0.0.1"
-#if [ $(uname) = "Linux" ] && $(grep -qi "Microsoft" /proc/version); then
-#    host_ip=$(cat /etc/resolv.conf | grep "nameserver" | cut -f 2 -d " ")
-#fi
-
 https_proxy=http://$host_ip:7890
 http_proxy=http://$host_ip:7890
 all_proxy=socks5://$host_ip:7890
