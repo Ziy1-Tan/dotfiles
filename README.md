@@ -8,15 +8,17 @@ Powered by [dotbot](https://github.com/anishathalye/dotbot) ⚡
 
 # Contents
 
-- vim config
-- zsh config
-- alacritty config
-- tmux config
-- ssh config
-- git config
-- fzf config
+| item             | config           |
+| ---------------- | ---------------- |
+| vim config       | `vimrc`          |
+| zsh config       | `zshrc`          |
+| tmux config      | `tmux.conf`      |
+| ssh config       | `.ssh/config`    |
+| git config       | `gitconfig`      |
+| fzf config       | `zsh/fzf.zsh`    |
+| alacritty config | `alacritty.tmol` |
 
-# Setup
+# Quick Start
 
 ```shell
 git clone https://github.com/Ziy1-Tan/dotfiles.git
