@@ -14,3 +14,6 @@ alias u="sudo apt update && sudo apt upgrade"
 if [ $(uname) = "Darwin" ]; then
     alias u="brew update && brew upgrade"
 fi
+
+alias bc="brew cleanup --prune=all; brew autoremove"
+
