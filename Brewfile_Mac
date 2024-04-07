@@ -21,13 +21,14 @@ brew "gnutls"
 brew "gnupg"
 brew "grep"
 brew "im-select"
-brew "pkg-config"
+brew "mas"
 brew "maven"
 brew "neofetch"
 brew "ninja"
 brew "node"
 brew "openjdk@11"
 brew "perl"
+brew "pkg-config"
 brew "python@3.11"
 brew "python@3.9"
 brew "ripgrep"
@@ -73,3 +74,14 @@ cask "tencent-meeting"
 cask "vlc"
 cask "wechat"
 cask "zotero"
+mas "Bitwarden", id: 1352778147
+mas "Hidden Bar", id: 1452453066
+mas "Microsoft Excel", id: 462058435
+mas "Microsoft Outlook", id: 985367838
+mas "Microsoft PowerPoint", id: 462062816
+mas "Microsoft To Do", id: 1274495053
+mas "Microsoft Word", id: 462054704
+mas "OneDrive", id: 823766827
+mas "The Unarchiver", id: 425424353
+mas "网易云音乐", id: 944848654
+mas "超级右键", id: 1497428978
