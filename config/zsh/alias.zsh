@@ -10,10 +10,9 @@ alias t="tmux"
 alias ta="tmux a -d -t 0"
 alias td="tmux detach"
 
-alias u="sudo apt update && sudo apt upgrade"
-if [ $(uname) = "Darwin" ]; then
-    alias u="brew update && brew upgrade"
-fi
+alias au="sudo apt update && sudo apt upgrade"
+alias ac="sudo apt autoremove"
 
+alias bu="brew update && brew upgrade"
 alias bc="brew cleanup --prune=all; brew autoremove"
 
