@@ -49,3 +49,5 @@ fi
 # fi
 
 unset __conda_setup
+
+source $HOME/.cargo/env

@@ -6,7 +6,7 @@ email = ajb459684460@gmail.com
 [open "https://ssh.github.com"]
 	domain = github.com
 [safe]
-	diretory = *
+	directory = *
 [color]
 	ui = auto
 [core]
@@ -15,3 +15,10 @@ email = ajb459684460@gmail.com
 	cm = commit
 	co = checkout
 	ac = !git add -A && git commit
+	lo = log --oneline
+	sh = stash
+	shp = stash pop
+[http]
+	proxy = http://127.0.0.1:7890
+[https]
+	proxy = http://127.0.0.1:7890

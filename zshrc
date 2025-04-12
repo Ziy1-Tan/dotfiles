@@ -1,6 +1,7 @@
 # disable oh my zsh update
 DISABLE_AUTO_UPDATE="true"
 DISABLE_UPDATE_PROMPT="true"
+ZSH_DISABLE_COMPFIX="true"
 
 pasteinit() {
   OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
