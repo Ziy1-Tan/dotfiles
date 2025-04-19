@@ -51,3 +51,5 @@ fi
 unset __conda_setup
 
 source $HOME/.cargo/env
+HISDUP=erase
+setopt sharehistory
