@@ -18,8 +18,7 @@ ZSH=$HOME/.zsh/ohmyzsh
 
 ZSH_THEME=""
 
-plugins=(sudo git z colored-man-pages docker)
-
+plugins=(sudo git colored-man-pages docker)
 
 if command -v brew >/dev/null 2>&1; then
   FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}" # brew comp
@@ -48,3 +47,4 @@ source $HOME/.config/zsh/alias.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 bindkey "ç" fzf-cd-widget
+eval "$(zoxide init --cmd cd zsh)"
