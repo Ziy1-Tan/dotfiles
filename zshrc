@@ -17,7 +17,6 @@ if command -v brew >/dev/null 2>&1; then
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-eval "$(zoxide init --cmd cd zsh)"
 
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=23'
 export YSU_MODE=BESTMATCH
@@ -27,12 +26,34 @@ source $HOME/.config/zsh/fzf.zsh
 source $HOME/.config/zsh/prompt.zsh
 source $HOME/.config/zsh/alias.zsh
 
-zinit light zsh-users/zsh-autosuggestions
+zinit ice blockf
 zinit light zsh-users/zsh-completions
-zinit light conda-incubator/conda-zsh-completion
-zinit light zsh-users/zsh-syntax-highlighting
-zinit light MichaelAquilina/zsh-you-should-use
-zinit light ael-code/zsh-colored-man-pages
 
-zinit snippet OMZ::plugins/sudo/sudo.plugin.zsh
-zinit snippet OMZ::lib/git.zsh
+zinit ice lucid wait="0" atload="_zsh_autosuggest_start"
+zinit light zsh-users/zsh-autosuggestions
+
+zinit ice lucid wait='0' atinit='zpcompinit'
+zinit light zdharma/fast-syntax-highlighting
+
+zinit light conda-incubator/conda-zsh-completion
+zinit light MichaelAquilina/zsh-you-should-use
+
+zinit snippet OMZP::sudo/sudo.plugin.zsh
+zinit snippet OMZP::colored-man-pages/colored-man-pages.plugin.zsh
+
+zinit snippet OMZL::git.zsh
+zinit snippet OMZL::completion.zsh
+zinit snippet OMZL::completion.zsh
+zinit snippet OMZL::history.zsh
+zinit snippet OMZL::key-bindings.zsh
+zinit snippet OMZL::theme-and-appearance.zsh
+
+eval "$(zoxide init --cmd cd zsh)"
+
+autoload -Uz compinit
+compinit
+
+zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
+    atpull'%atclone' pick"clrs.zsh" nocompile'!' \
+    atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
+zinit light trapd00r/LS_COLORS

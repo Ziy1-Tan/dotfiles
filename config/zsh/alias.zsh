@@ -1,4 +1,5 @@
 alias s="neofetch"
+alias ll="ls -lh --color=auto"
 alias cl="clear"
 alias sz="source ~/.zshrc"
 alias cmb="cmake --build build -j 12"
