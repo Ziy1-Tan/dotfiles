@@ -40,6 +40,7 @@ zinit light MichaelAquilina/zsh-you-should-use
 
 zinit snippet OMZP::sudo/sudo.plugin.zsh
 zinit snippet OMZP::colored-man-pages/colored-man-pages.plugin.zsh
+zinit snippet OMZP::git/git.plugin.zsh
 
 zinit snippet OMZL::git.zsh
 zinit snippet OMZL::completion.zsh
