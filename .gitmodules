@@ -1,22 +1,4 @@
-[submodule ".zsh/ohmyzsh"]
-	path = .zsh/ohmyzsh
-	url = https://github.com/ohmyzsh/ohmyzsh.git
-[submodule ".zsh/zsh-syntax-highlighting"]
-	path = .zsh/zsh-syntax-highlighting
-	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
-[submodule ".zsh/zsh-autosuggestions"]
-	path = .zsh/zsh-autosuggestions
-	url = https://github.com/zsh-users/zsh-autosuggestions.git
-[submodule ".zsh/zsh-completions"]
-	path = .zsh/zsh-completions
-	url = https://github.com/zsh-users/zsh-completions.git
-[submodule ".zsh/conda-zsh-completion"]
-	path = .zsh/conda-zsh-completion
-	url = https://github.com/conda-incubator/conda-zsh-completion.git
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
 	ignore = dirty
-[submodule ".zsh/zsh-you-should-use"]
-	path = .zsh/zsh-you-should-use
-	url = https://github.com/MichaelAquilina/zsh-you-should-use.git

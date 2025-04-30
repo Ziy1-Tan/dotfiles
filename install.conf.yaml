@@ -36,13 +36,16 @@
       glob: true
       path: config/*
       relink: true
-    ~/.zsh/:
-      glob: true
-      path: .zsh/*
-      relink: true
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
+    - description: Installing zinit
+      command: |
+        if ! command -v fzf >/dev/null 2>&1
+        then
+          bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
+        fi
+        source ~/.zshrc
     - description: Installing vim-plug
       command: |
         if [ ! -f ~/.vim/autoload/plug.vim ];
@@ -63,4 +66,8 @@
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
         fi
     - description: Installing zoxide
-      command: curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+      command: |
+        if ! command -v zoxide >/dev/null 2>&1
+        then
+          curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+        fi

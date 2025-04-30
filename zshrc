@@ -1,50 +1,38 @@
-# disable oh my zsh update
-DISABLE_AUTO_UPDATE="true"
-DISABLE_UPDATE_PROMPT="true"
-ZSH_DISABLE_COMPFIX="true"
+### Added by Zinit's installer
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} The clone has failed.%f%b"
+fi
 
-pasteinit() {
-  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
-  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
-}
-
-pastefinish() {
-  zle -N self-insert $OLD_SELF_INSERT
-}
-
-zstyle :bracketed-paste-magic paste-init pasteinit
-zstyle :bracketed-paste-magic paste-finish pastefinish
-ZSH=$HOME/.zsh/ohmyzsh
-
-ZSH_THEME=""
-
-plugins=(sudo git colored-man-pages docker)
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+### End of Zinit's installer chunk
 
 if command -v brew >/dev/null 2>&1; then
   FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}" # brew comp
 fi
 
-fpath+=($HOME/.zsh/zsh-completions/src)
-fpath+=($HOME/.zsh/conda-zsh-completion)
-autoload -U compinit && compinit
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+eval "$(zoxide init --cmd cd zsh)"
 
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=23'
-source ~/.zsh/zsh-you-should-use/you-should-use.plugin.zsh
 export YSU_MODE=BESTMATCH
 
-ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
-if [[ ! -d $ZSH_CACHE_DIR ]]; then
-  mkdir -p $ZSH_CACHE_DIR
-fi
-
-source $ZSH/oh-my-zsh.sh
 source $HOME/.config/zsh/env.zsh
 source $HOME/.config/zsh/fzf.zsh
 source $HOME/.config/zsh/prompt.zsh
 source $HOME/.config/zsh/alias.zsh
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-bindkey "ç" fzf-cd-widget
-eval "$(zoxide init --cmd cd zsh)"
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-completions
+zinit light conda-incubator/conda-zsh-completion
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light MichaelAquilina/zsh-you-should-use
+zinit light ael-code/zsh-colored-man-pages
+
+zinit snippet OMZ::plugins/sudo/sudo.plugin.zsh
+zinit snippet OMZ::lib/git.zsh
