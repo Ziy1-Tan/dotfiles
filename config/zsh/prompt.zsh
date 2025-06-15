@@ -24,7 +24,13 @@ function _collapsed_pwd() {
         for ((i=0;i<length-1;i++)); do
             local elem=${elements[$i]}
             if [[ ${#elem} -gt 1 ]]; then
-                elements[$i]=${elem:0:1}
+                if [[ "$elem" == .* ]]; then
+                    # 取第一个非.字符
+                    local non_dot=${elem//./}
+                    elements[$i]=${non_dot:0:1}
+                else
+                    elements[$i]=${elem:0:1}
+                fi
             fi
         done
     else
@@ -33,13 +39,20 @@ function _collapsed_pwd() {
         for i in {1..$((length-1))}; do
             local elem=${elements[$i]}
             if [[ ${#elem} > 1 ]]; then
-                elements[$i]=${elem[1]}
+                if [[ "$elem" == .* ]]; then
+                    # 取第一个非.字符
+                    local non_dot=${elem//./}
+                    elements[$i]=${non_dot[1]}
+                else
+                    elements[$i]=${elem[1]}
+                fi
             fi
         done
     fi
     local IFS="/"
     echo "${elements[*]}"
 }
+
 setopt PROMPT_SUBST
 export PROMPT='%F{green}%n@%F{white}%m:%F{cyan}$(_collapsed_pwd)%F{green}$(_git_branch)%F{white}> '
 export RPROMPT="%F{red}%(?..%?)%f"

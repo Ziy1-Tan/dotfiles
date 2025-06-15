@@ -1,12 +1,12 @@
 # proxy
-host_ip="127.0.0.1"
-https_proxy=http://$host_ip:7890
-http_proxy=http://$host_ip:7890
-all_proxy=socks5://$host_ip:7890
-export http_proxy https_proxy all_proxy
+# host_ip="127.0.0.1"
+# https_proxy=http://$host_ip:7890
+# http_proxy=http://$host_ip:7890
+# all_proxy=socks5://$host_ip:7890
+# export http_proxy https_proxy all_proxy
 
 # go env
-export GOPROXY=https://proxy.golang.com.cn,direct
+export GOPROXY=https://mirrors.aliyun.com/goproxy/,direct
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/code/go
 export PATH=$GOROOT:$GOROOT/bin:$PATH

@@ -31,9 +31,8 @@ zinit light zsh-users/zsh-completions
 
 zinit ice lucid wait="0" atload="_zsh_autosuggest_start"
 zinit light zsh-users/zsh-autosuggestions
-
 zinit ice lucid wait='0' atinit='zpcompinit'
-zinit light zdharma/fast-syntax-highlighting
+zinit light zsh-users/zsh-syntax-highlighting
 
 zinit light conda-incubator/conda-zsh-completion
 zinit light MichaelAquilina/zsh-you-should-use
@@ -49,12 +48,9 @@ zinit snippet OMZL::history.zsh
 zinit snippet OMZL::key-bindings.zsh
 zinit snippet OMZL::theme-and-appearance.zsh
 
-eval "$(zoxide init --cmd cd zsh)"
-
 autoload -Uz compinit
 compinit
 
-zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
-    atpull'%atclone' pick"clrs.zsh" nocompile'!' \
-    atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
-zinit light trapd00r/LS_COLORS
+zinit cdreplay -q
+
+eval "$(zoxide init --cmd cd zsh)"
