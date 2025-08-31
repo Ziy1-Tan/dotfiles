@@ -19,6 +19,6 @@ email = ajb459684460@gmail.com
 	sh = stash
 	shp = stash pop
 [http]
-	proxy = http://127.0.0.1:7890
+	postBuffer = 524288000
 [https]
-	proxy = http://127.0.0.1:7890
+	postBuffer = 524288000
