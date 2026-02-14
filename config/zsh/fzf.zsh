@@ -1,7 +1,14 @@
-export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden --follow --exclude={.git,.idea,.vscode,node_modules,.cache,.conan}"
+# Check if fd is installed before using it
+if command -v fd >/dev/null 2>&1; then
+  export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden --follow --exclude={.git,.idea,.vscode,node_modules,.cache,.conan}"
 
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND="fd --type d --hidden --exclude .git . $HOME"
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_ALT_C_COMMAND="fd --type d --hidden --exclude .git . $HOME"
+else
+  export FZF_DEFAULT_COMMAND="find . -type f -not -path '*/.*' 2>/dev/null"
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_ALT_C_COMMAND="find . -type d -not -path '*/.*' 2>/dev/null"
+fi
 
 export FZF_COMPLETION_TRIGGER='\'
 

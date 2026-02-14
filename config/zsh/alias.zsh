@@ -10,10 +10,3 @@ alias unsetproxy="unset http_proxy https_proxy all_proxy"
 alias t="tmux"
 alias ta="tmux a -d -t 0"
 alias td="tmux detach"
-
-alias au="sudo apt update && sudo apt upgrade"
-alias ac="sudo apt autoremove"
-
-alias bu="brew update && brew upgrade"
-alias bc="brew cleanup --prune=all; brew autoremove"
-

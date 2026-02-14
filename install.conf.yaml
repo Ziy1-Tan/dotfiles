@@ -9,8 +9,6 @@
     create:
       mode: 0755
 
-- clean: ["~"]
-
 - clean:
     ~/:
       force: true
@@ -21,6 +19,7 @@
     - ~/.m2
     - ~/.ssh
     - ~/.zsh
+    - ~/.vim/plugged
     - ~/.config
 
 - link:
@@ -39,35 +38,46 @@
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
-    - description: Installing zinit
-      command: |
-        if ! command -v fzf >/dev/null 2>&1
-        then
-          bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
-        fi
-        source ~/.zshrc
-    - description: Installing vim-plug
-      command: |
-        if [ ! -f ~/.vim/autoload/plug.vim ];
-        then
-          curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-          # vim +PlugInstall +qall
-        fi
-    - description: Installing fzf
-      command: |
-        if ! command -v fzf >/dev/null 2>&1
-        then
-          git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
-        fi
     - description: Installing brew
       command: |
-        if ! command -v brew >/dev/null 2>&1
-        then
+        if [ "$(uname)" != "Darwin" ] && [ "$(uname)" != "Linux" ]; then
+          exit 0
+        fi
+        if ! command -v brew >/dev/null 2>&1; then
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
         fi
+
     - description: Installing zoxide
       command: |
-        if ! command -v zoxide >/dev/null 2>&1
-        then
+        if ! command -v zoxide >/dev/null 2>&1; then
           curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+        fi
+
+    - description: Installing fzf
+      command: |
+        if ! command -v fzf >/dev/null 2>&1; then
+          if [ -d ~/.fzf ]; then
+            (cd ~/.fzf && git pull --quiet && ./install --no-bash --no-fish)
+          else
+            git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && (~/.fzf/install --no-bash --no-fish)
+          fi
+        fi
+
+    - description: Installing vim-plug
+      command: |
+        if ! command -v vim >/dev/null 2>&1; then
+          echo "Vim not found, skipping vim-plug installation"
+          exit 0
+        fi
+        if [ ! -f ~/.vim/autoload/plug.vim ]; then
+          mkdir -p ~/.vim/autoload
+          curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        fi
+
+    - description: Installing zinit
+      command: |
+        if [ ! -d ~/.local/share/zinit ]; then
+          bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
+        else
+          echo "zinit is already installed at ~/.local/share/zinit"
         fi

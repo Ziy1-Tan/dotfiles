@@ -25,32 +25,42 @@ Darwin)
     export PATH=$JAVA_HOME/bin:$PATH
     ;;
 Linux)
-    export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
-    export PATH=$JAVA_HOME/bin:$PATH
-    export LD_LIBRARY_PATH=/usr/local/cuda-11.8/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+    if [ -d /usr/lib/jvm/java-11-openjdk-amd64 ]; then
+      export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+    elif [ -d /usr/lib/jvm/java-11-openjdk-amd64 ]; then
+      export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+    else
+      # Fallback: try to find any Java 11 installation
+      export JAVA_HOME=$(update-alternatives --display java 2>/dev/null | grep java-11 | head -1 | awk '{print $3}' | sed 's|/bin/java||' 2>/dev/null || echo "")
+    fi
+    [ -n "$JAVA_HOME" ] && export PATH=$JAVA_HOME/bin:$PATH
+    
+    if [ -d /usr/local/cuda-11.8 ]; then
+      export LD_LIBRARY_PATH=/usr/local/cuda-11.8/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+      export PATH=/usr/local/cuda-11.8/bin${PATH:+:${PATH}}
+    fi
     export M2_HOME=/usr/share/maven
     export MAVEN_HOME=/usr/share/maven
     export PATH=${M2_HOME}/bin:${PATH}
-    export PATH=/usr/local/cuda-11.8/bin${PATH:+:${PATH}}
     ;;
 *) ;;
 esac
 
 conda_bin=$HOME/miniconda3/bin/conda
-__conda_setup="$(${conda_bin} 'shell.zsh' 'hook' 2>/dev/null)"
-# if [ $? -eq 0 ]; then
-#     eval "$__conda_setup"
-# else
-if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+if [ -f "$conda_bin" ]; then
+  __conda_setup="$("$conda_bin" 'shell.zsh' 'hook' 2>/dev/null)"
+  if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+  elif [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
     . "$HOME/miniconda3/etc/profile.d/conda.sh"
-else
+  else
     export PATH="$HOME/miniconda3/bin:$PATH"
+  fi
+  unset __conda_setup
 fi
-# fi
-
-unset __conda_setup
 
 source $HOME/.cargo/env
+
 HISDUP=erase
 setopt sharehistory
 

@@ -63,9 +63,6 @@ nnoremap <leader>wq :wq<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <Backspace> :nohl<CR>
 
-nnoremap J 5j
-nnoremap K 5k
-
 " navigate
 nnoremap <leader>w <c-w>w
 nnoremap <leader>h <c-w>h
@@ -87,4 +84,3 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 let g:airline#extensions#tabline#formatter = 'default'
-

@@ -16,12 +16,14 @@ if command -v brew >/dev/null 2>&1; then
   FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}" # brew comp
 fi
 
+source $HOME/.config/zsh/env.zsh
+
+# Load fzf only if it's installed
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=23'
 export YSU_MODE=BESTMATCH
 
-source $HOME/.config/zsh/env.zsh
 source $HOME/.config/zsh/fzf.zsh
 source $HOME/.config/zsh/prompt.zsh
 source $HOME/.config/zsh/alias.zsh
@@ -43,7 +45,6 @@ zinit snippet OMZP::git/git.plugin.zsh
 
 zinit snippet OMZL::git.zsh
 zinit snippet OMZL::completion.zsh
-zinit snippet OMZL::completion.zsh
 zinit snippet OMZL::history.zsh
 zinit snippet OMZL::key-bindings.zsh
 zinit snippet OMZL::theme-and-appearance.zsh
@@ -54,3 +55,4 @@ compinit
 zinit cdreplay -q
 
 eval "$(zoxide init --cmd cd zsh)"
+### End of Zinit's installer chunk
