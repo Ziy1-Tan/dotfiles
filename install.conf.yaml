@@ -37,16 +37,57 @@
       relink: true
 
 - shell:
-    - [git submodule update --init --recursive, Installing submodules]
-    - description: Installing brew
+    - description: Installing system dependencies (zsh, curl)
       command: |
-        if [ "$(uname)" != "Darwin" ] && [ "$(uname)" != "Linux" ]; then
-          exit 0
-        fi
-        if ! command -v brew >/dev/null 2>&1; then
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+        if [ "$(uname)" = "Darwin" ]; then
+          if ! command -v brew >/dev/null 2>&1; then
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+          fi
+          brew install zsh curl 2>/dev/null || true
+        elif [ "$(uname)" = "Linux" ]; then
+          if ! command -v zsh >/dev/null 2>&1 || ! command -v curl >/dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y zsh curl
+          fi
+          if ! command -v brew >/dev/null 2>&1; then
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+          fi
         fi
 
+    - description: Changing default shell to zsh
+      command: |
+        if [ "$(basename "$SHELL")" = "zsh" ]; then
+          echo "Default shell is already zsh"
+          exit 0
+        fi
+        ZSH_PATH="$(command -v zsh)"
+        if [ -z "$ZSH_PATH" ]; then
+          echo "zsh not found, skipping shell change"
+          exit 0
+        fi
+        echo "Current shell is $SHELL, switching to zsh..."
+        if [ "$(uname)" = "Linux" ]; then
+          sudo usermod -s "$ZSH_PATH" "$USER"
+        else
+          sudo chsh -s "$ZSH_PATH" "$USER"
+        fi
+
+    - description: Installing miniconda
+      command: |
+        if command -v conda >/dev/null 2>&1; then
+          echo "conda is already installed"
+          exit 0
+        fi
+        if [ "$(uname)" = "Darwin" ]; then
+          CONDA_URL="https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-$(uname -m).sh"
+        else
+          CONDA_URL="https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-$(uname -m).sh"
+        fi
+        curl -fsSL "$CONDA_URL" -o /tmp/miniconda.sh
+        bash /tmp/miniconda.sh -b -p "$HOME/miniconda3"
+        rm /tmp/miniconda.sh
+        "$HOME/miniconda3/bin/conda" init zsh
+
+    - [git submodule update --init --recursive, Installing submodules]
     - description: Installing zoxide
       command: |
         if ! command -v zoxide >/dev/null 2>&1; then

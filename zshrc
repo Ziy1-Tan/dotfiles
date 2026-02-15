@@ -66,3 +66,12 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
+
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+alias claude-mem='bun "/home/simple/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'

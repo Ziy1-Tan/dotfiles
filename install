@@ -9,6 +9,13 @@ DOTBOT_BIN="bin/dotbot"
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 cd "${BASEDIR}"
+
+# Cache sudo credentials before dotbot runs (dotbot has no TTY for password input)
+echo "Please enter your sudo password (needed for system setup):"
+sudo -v
+# Keep sudo alive in background until this script finishes
+while true; do sudo -n true; sleep 50; kill -0 "$$" || exit; done 2>/dev/null &
+
 git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
 git submodule update --init --recursive "${DOTBOT_DIR}"
 
