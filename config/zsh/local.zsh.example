@@ -1,0 +1,10 @@
+# Copy this file to ~/.config/zsh/local.zsh for machine-specific settings.
+
+# Example: WSL host home path
+# export HOST_HOME=/mnt/c/Users/yourname
+
+# Example: local proxy
+# host_ip="127.0.0.1"
+# export https_proxy="http://$host_ip:7890"
+# export http_proxy="http://$host_ip:7890"
+# export all_proxy="socks5://$host_ip:7890"

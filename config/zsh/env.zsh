@@ -1,25 +1,25 @@
-# proxy
-#host_ip="127.0.0.1"
-#https_proxy=http://$host_ip:7890
-#http_proxy=http://$host_ip:7890
-#all_proxy=socks5://$host_ip:7890
-#export http_proxy https_proxy all_proxy
-
-# go env
-export GOPROXY=https://mirrors.aliyun.com/goproxy/,direct
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/code/go
-export PATH=$GOROOT:$GOROOT/bin:$PATH
-
-export EDITOR='vim'
+export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
+export EDITOR="vim"
+
+[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
+
+export GOPROXY=https://mirrors.aliyun.com/goproxy/,direct
+if [ -x "$HOME/.local/lib/go/bin/go" ]; then
+  export GOROOT="$HOME/.local/lib/go"
+elif [ -d /usr/lib/go-1.18 ]; then
+  export GOROOT=/usr/lib/go-1.18
+else
+  export GOROOT=/usr/local/go
+fi
+export GOPATH=$HOME/code/go
+export PATH=$GOROOT/bin:$PATH
 
 export PATH=$HOME/.local/bin:$PATH
 
-case $(uname) in
+case "$(uname)" in
 Darwin)
     export PATH=/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH
-    export PATH=/opt/homebrew/bin:$PATH
     export PATH=$HOME/Library/Python/3.9/bin:$PATH
     export JAVA_HOME=/opt/homebrew/opt/java11
     export PATH=$JAVA_HOME/bin:$PATH
@@ -27,14 +27,11 @@ Darwin)
 Linux)
     if [ -d /usr/lib/jvm/java-11-openjdk-amd64 ]; then
       export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
-    elif [ -d /usr/lib/jvm/java-11-openjdk-amd64 ]; then
-      export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
     else
-      # Fallback: try to find any Java 11 installation
       export JAVA_HOME=$(update-alternatives --display java 2>/dev/null | grep java-11 | head -1 | awk '{print $3}' | sed 's|/bin/java||' 2>/dev/null || echo "")
     fi
     [ -n "$JAVA_HOME" ] && export PATH=$JAVA_HOME/bin:$PATH
-    
+
     if [ -d /usr/local/cuda-11.8 ]; then
       export LD_LIBRARY_PATH=/usr/local/cuda-11.8/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
       export PATH=/usr/local/cuda-11.8/bin${PATH:+:${PATH}}
@@ -45,27 +42,3 @@ Linux)
     ;;
 *) ;;
 esac
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$("$HOME/miniconda3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "$HOME/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="$HOME/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
-
-HISDUP=erase
-setopt sharehistory
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

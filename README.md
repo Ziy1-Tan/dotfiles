@@ -6,52 +6,54 @@ Powered by [dotbot](https://github.com/anishathalye/dotbot)
 
 - **Cross-platform**: Ubuntu / macOS
 - **Auto-bootstrap**: zsh, curl, Homebrew, Miniconda
-- **Shell**: zsh + zinit (plugin manager)
+- **Shell**: zsh with layered startup files and zinit plugins
 - **Tools**: fzf, zoxide, vim-plug, zinit
 - **Languages**: Conda (Python), nvm (Node.js), Go, Rust
 - **Editors**: Vim, Alacritty, Tmux, IDEA Vim
 
 ## Directory Structure
 
-```
+```text
 dotfiles/
-├── install              # Bootstrap script
-├── install.conf.yaml    # Dotbot configuration
-├── zshrc               # Main zsh config
-├── zprofile            # Zsh login config
-├── vimrc               # Vim config
-├── tmux.conf           # Tmux config
-├── gitconfig           # Git config
-├── ideavimrc           # IDEA Vim plugin config
-├── settings.xml        # Maven settings
+├── install                 # Bootstrap script
+├── install.conf.yaml       # Dotbot configuration
+├── zprofile                # Login-shell setup
+├── zshrc                   # Interactive shell orchestrator
+├── vimrc                   # Vim config
+├── tmux.conf               # Tmux config
+├── gitconfig               # Git config
+├── ideavimrc               # IDEA Vim plugin config
+├── settings.xml            # Maven settings
 ├── config/
 │   ├── alacritty/
 │   │   └── alacritty.toml
 │   └── zsh/
-│       ├── alias.zsh   # Aliases
-│       ├── env.zsh     # Environment variables
-│       ├── fzf.zsh     # FZF keybindings
-│       └── prompt.zsh  # Prompt theme
+│       ├── alias.zsh           # Aliases only
+│       ├── env.zsh             # Shared environment exports
+│       ├── fzf.zsh             # FZF defaults and helpers
+│       ├── local.zsh.example   # Machine-specific override template
+│       └── prompt.zsh          # Prompt theme
 └── .ssh/
-    └── config          # SSH client config
+    └── config              # SSH client config
 ```
 
 ## Configuration Files
 
 | File | Purpose |
 |------|---------|
-| `zshrc` | Main zsh config, loads zinit plugins |
-| `zprofile` | Login shell configuration |
+| `zprofile` | Login shell setup, mainly Homebrew shellenv |
+| `zshrc` | Interactive shell entrypoint that sources modular config |
 | `vimrc` | Vim editor config |
 | `tmux.conf` | Tmux terminal multiplexer |
 | `gitconfig` | Git aliases and settings |
 | `.ssh/config` | SSH client configuration |
 | `ideavimrc` | IDEA Vim plugin keymappings |
 | `settings.xml` | Maven repository settings |
+| `config/zsh/env.zsh` | Shared environment variables and PATH setup |
+| `config/zsh/fzf.zsh` | FZF defaults and completion helpers |
+| `config/zsh/prompt.zsh` | Prompt theme |
 | `config/zsh/alias.zsh` | Shell aliases |
-| `config/zsh/env.zsh` | Environment variables (PATH, Java, Go, Conda) |
-| `config/zsh/fzf.zsh` | FZF keybindings and completion |
-| `config/zsh/prompt.zsh` | Powerlevel10k prompt theme |
+| `config/zsh/local.zsh.example` | Template for machine-specific overrides |
 | `config/alacritty/alacritty.toml` | Alacritty terminal config |
 
 ## Quick Start
@@ -65,9 +67,15 @@ git submodule update --init --recursive
 
 ## What ./install Does
 
-1. **Cache sudo** — One-time password for system changes
-2. **Bootstrap** — Install zsh, curl, Homebrew
-3. **Setup shell** — Switch default shell to zsh
-4. **Install Conda** — Miniconda with zsh auto-init
-5. **Link configs** — Symlink all config files to home
-6. **Install tools** — zoxide, fzf, vim-plug, zinit
+1. **Cache sudo**: One-time password for system changes
+2. **Bootstrap**: Install zsh, curl, Homebrew
+3. **Setup shell**: Switch default shell to zsh
+4. **Install Conda**: Miniconda with zsh auto-init
+5. **Link configs**: Symlink startup files and `~/.config/*` modules
+6. **Install tools**: zoxide, fzf, vim-plug, zinit
+
+## Zsh Layout
+
+- `zprofile` is for login-shell setup.
+- `zshrc` handles interactive startup in one place, including zinit, compinit, conda, nvm, bun, zoxide, fzf, prompt, aliases, and the local override.
+- Copy `config/zsh/local.zsh.example` to `~/.config/zsh/local.zsh` for machine-specific settings you do not want committed.
