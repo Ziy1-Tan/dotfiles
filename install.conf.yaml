@@ -31,7 +31,6 @@
     ~/.gitconfig: gitconfig
     ~/.ssh/config: .ssh/config
     ~/.m2/settings.xml: settings.xml
-    ~/.wezterm.lua: wezterm.lua
     ~/.config/:
       glob: true
       path: config/*
@@ -71,22 +70,6 @@
         else
           sudo chsh -s "$ZSH_PATH" "$USER"
         fi
-
-    - description: Installing miniconda
-      command: |
-        if command -v conda >/dev/null 2>&1; then
-          echo "conda is already installed"
-          exit 0
-        fi
-        if [ "$(uname)" = "Darwin" ]; then
-          CONDA_URL="https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-$(uname -m).sh"
-        else
-          CONDA_URL="https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-$(uname -m).sh"
-        fi
-        curl -fsSL "$CONDA_URL" -o /tmp/miniconda.sh
-        bash /tmp/miniconda.sh -b -p "$HOME/miniconda3"
-        rm /tmp/miniconda.sh
-        "$HOME/miniconda3/bin/conda" init zsh
 
     - [git submodule update --init --recursive, Installing submodules]
     - description: Installing zoxide
