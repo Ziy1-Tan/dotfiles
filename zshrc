@@ -63,6 +63,24 @@ zinit cdreplay -q
 
 
 export NVM_DIR="$HOME/.nvm"
+
+# Put nvm default node on PATH immediately (reads one file, <1ms).
+# This lets #!/usr/bin/env node shebangs (e.g. claude-internal) work without
+# triggering the full lazy-load. The heavy nvm.sh is still deferred.
+() {
+    local alias_file="$NVM_DIR/alias/default"
+    [[ ! -f "$alias_file" ]] && return
+    local alias_val
+    alias_val=$(<"$alias_file")
+    # Follow one level of indirection (e.g. "default" -> "lts/*" or "22")
+    [[ -f "$NVM_DIR/alias/$alias_val" ]] && alias_val=$(<"$NVM_DIR/alias/$alias_val")
+    alias_val="${alias_val//[[:space:]]/}"
+    # Match versions/node/v<alias_val>* — prefer exact, fall back to prefix
+    local node_bin
+    node_bin=$(ls -d "$NVM_DIR/versions/node/v${alias_val}"*/bin 2>/dev/null | sort -V | tail -1)
+    [[ -n "$node_bin" && -d "$node_bin" ]] && export PATH="$node_bin:$PATH"
+}
+
 _lazy_load_nvm() {
     unset -f _lazy_load_nvm nvm node npm npx pnpm yarn corepack
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
