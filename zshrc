@@ -21,6 +21,13 @@ if command -v brew >/dev/null 2>&1; then
     FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 fi
 
+autoload -Uz compinit
+if [[ -f "$HOME/.zcompdump" && $(( EPOCHSECONDS - $(stat -c %Y "$HOME/.zcompdump" 2>/dev/null || echo 0) )) -lt 86400 ]]; then
+    compinit -C -d "$HOME/.zcompdump"
+else
+    compinit -d "$HOME/.zcompdump"
+fi
+
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=23"
 export YSU_MODE=BESTMATCH
 
@@ -29,10 +36,9 @@ zinit light zsh-users/zsh-completions
 
 zinit ice lucid wait="0" atload="_zsh_autosuggest_start"
 zinit light zsh-users/zsh-autosuggestions
-zinit ice lucid wait="0" atinit="zpcompinit"
+zinit ice lucid wait="0"
 zinit light zsh-users/zsh-syntax-highlighting
 
-zinit light conda-incubator/conda-zsh-completion
 zinit light MichaelAquilina/zsh-you-should-use
 
 zinit snippet OMZP::sudo/sudo.plugin.zsh
@@ -53,6 +59,10 @@ else
 fi
 
 zinit cdreplay -q
+
+# uv - Python 版本和环境管理 (must be after compinit)
+eval "$(uv generate-shell-completion zsh 2>/dev/null)"
+eval "$(uvx --generate-shell-completion zsh 2>/dev/null)"
 
 # Load fzf only if it's installed
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
