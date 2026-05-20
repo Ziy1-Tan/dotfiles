@@ -1,17 +1,24 @@
 autoload -U colors && colors
+autoload -Uz vcs_info
+zmodload zsh/datetime  # 提供 $EPOCHREALTIME（float，微秒精度）
 
-# Command execution time tracking
-cmd_start_time=0
-cmd_elapsed=0
+# vcs_info: only git, only branch name in brackets
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git:*' formats '[%b]'
+zstyle ':vcs_info:git:*' actionformats '[%b|%a]'
+
+# Command execution time tracking（用 EPOCHREALTIME 替代 EPOCHSECONDS，无 fork）
+typeset -F cmd_start_time=0
+typeset -F cmd_elapsed=0
 
 preexec() {
-    cmd_start_time=$(( $(date +%s) ))
+    cmd_start_time=$EPOCHREALTIME
 }
 
 precmd() {
-    if [[ $cmd_start_time -gt 0 ]]; then
-        local cmd_end_time=$(date +%s)
-        cmd_elapsed=$(( cmd_end_time - cmd_start_time ))
+    vcs_info
+    if (( cmd_start_time > 0 )); then
+        cmd_elapsed=$(( EPOCHREALTIME - cmd_start_time ))
         cmd_start_time=0
     else
         cmd_elapsed=0
@@ -19,19 +26,17 @@ precmd() {
 }
 
 function _cmd_exec_time() {
-    if [[ $cmd_elapsed -ge 5 ]]; then
-        local mins=$(( cmd_elapsed / 60 ))
-        local secs=$(( cmd_elapsed % 60 ))
-        if [[ $mins -gt 0 ]]; then
-            echo "${mins}m ${secs}s"
-        else
-            echo "${secs}s"
-        fi
-    fi
-}
+    # 只显示 >= 1s 的命令耗时
+    (( cmd_elapsed < 1.0 )) && return
 
-function _git_branch() {
-    git branch 2> /dev/null | sed -n -e 's/^\* \(.*\)/[\1]/p'
+    typeset -i mins=$(( cmd_elapsed / 60 ))
+    local secs=$(( cmd_elapsed - mins * 60 ))
+
+    if (( mins > 0 )); then
+        printf '%dm %.1fs' $mins $secs
+    else
+        printf '%.1fs' $secs
+    fi
 }
 
 function _collapsed_pwd() {
@@ -85,5 +90,5 @@ function _collapsed_pwd() {
 }
 
 setopt PROMPT_SUBST
-export PROMPT='%F{green}%n@%F{white}%m:%F{cyan}$(_collapsed_pwd)%F{green}$(_git_branch)%F{white}> '
+export PROMPT='%F{green}%n@%F{white}%m:%F{cyan}$(_collapsed_pwd)%F{green}${vcs_info_msg_0_}%F{white}> '
 export RPROMPT='%F{red}%(?..%?)%f $(_cmd_exec_time)'

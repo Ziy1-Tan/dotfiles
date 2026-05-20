@@ -1,3 +1,11 @@
+# fzf PATH
+[[ ! "$PATH" == */.fzf/bin* ]] && export PATH="${PATH:+${PATH}:}$HOME/.fzf/bin"
+
+# fzf shell integration: key bindings + completions
+# Guard with -t 1 (real TTY) to avoid zinit's options-restore
+# triggering "can't change option: zle" in non-TTY interactive shells
+[[ -o interactive && -t 1 ]] && source <(fzf --zsh 2>/dev/null)
+
 # Check if fd is installed before using it
 if command -v fd >/dev/null 2>&1; then
   export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden --follow --exclude={.git,.idea,.vscode,node_modules,.cache,.conan}"

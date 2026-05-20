@@ -1,6 +1,7 @@
 source "$HOME/.config/zsh/env.zsh"
 
-HISDUP=erase
+# History dedup: erase all duplicates (not just consecutive), OMZL::history.zsh adds more opts
+setopt HIST_IGNORE_ALL_DUPS
 setopt sharehistory
 
 ### Added by Zinit's installer
@@ -21,13 +22,6 @@ if command -v brew >/dev/null 2>&1; then
     FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 fi
 
-autoload -Uz compinit
-if [[ -f "$HOME/.zcompdump" && $(( EPOCHSECONDS - $(stat -c %Y "$HOME/.zcompdump" 2>/dev/null || echo 0) )) -lt 86400 ]]; then
-    compinit -C -d "$HOME/.zcompdump"
-else
-    compinit -d "$HOME/.zcompdump"
-fi
-
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=23"
 export YSU_MODE=BESTMATCH
 
@@ -41,22 +35,33 @@ zinit light zsh-users/zsh-syntax-highlighting
 
 zinit light MichaelAquilina/zsh-you-should-use
 
+zinit snippet OMZL::git.zsh
 zinit snippet OMZP::sudo/sudo.plugin.zsh
 zinit snippet OMZP::colored-man-pages/colored-man-pages.plugin.zsh
 zinit snippet OMZP::git/git.plugin.zsh
 
-zinit snippet OMZL::git.zsh
 zinit snippet OMZL::completion.zsh
 zinit snippet OMZL::history.zsh
 zinit snippet OMZL::key-bindings.zsh
 zinit snippet OMZL::theme-and-appearance.zsh
 
 autoload -Uz compinit
-if [[ -f "$HOME/.zcompdump" && $(( EPOCHSECONDS - $(stat -c %Y "$HOME/.zcompdump" 2>/dev/null || echo 0) )) -lt 86400 ]]; then
-    compinit -C -d "$HOME/.zcompdump"
-else
-    compinit -d "$HOME/.zcompdump"
-fi
+() {
+    local dump="$HOME/.zcompdump"
+    local dump_mtime=0
+    if [[ -f "$dump" ]]; then
+        if [[ "$OSTYPE" == darwin* ]]; then
+            dump_mtime=$(stat -f %m "$dump" 2>/dev/null || echo 0)
+        else
+            dump_mtime=$(stat -c %Y "$dump" 2>/dev/null || echo 0)
+        fi
+    fi
+    if (( EPOCHSECONDS - dump_mtime < 86400 )); then
+        compinit -C -d "$dump"
+    else
+        compinit -d "$dump"
+    fi
+}
 
 zinit cdreplay -q
 
@@ -65,7 +70,7 @@ eval "$(uv generate-shell-completion zsh 2>/dev/null)"
 eval "$(uvx --generate-shell-completion zsh 2>/dev/null)"
 
 # Load fzf only if it's installed
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# NOTE: ~/.fzf.zsh removed - fzf init consolidated in fzf.zsh with TTY guard
 
 [ -f "$HOME/.config/zsh/fzf.zsh" ] && source "$HOME/.config/zsh/fzf.zsh"
 [ -f "$HOME/.config/zsh/prompt.zsh" ] && source "$HOME/.config/zsh/prompt.zsh"
