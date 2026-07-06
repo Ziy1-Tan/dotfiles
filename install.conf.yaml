@@ -29,7 +29,6 @@
     ~/.vimrc: vimrc
     ~/.tmux.conf: tmux.conf
     ~/.gitconfig: gitconfig
-    ~/.ssh/config: .ssh/config
     ~/.m2/settings.xml: settings.xml
     ~/.config/:
       glob: true

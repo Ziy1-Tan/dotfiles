@@ -25,25 +25,43 @@ fi
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=23"
 export YSU_MODE=BESTMATCH
 
+# ── 同步加载 ───────────────────────────────────────────────
+# blockf: 防止 zsh-completions 直接写 fpath，由 zinit 管理
 zinit ice blockf
 zinit light zsh-users/zsh-completions
 
+# OMZ lib/plugin（顺序敏感：git.zsh 须在 git plugin 前）
+zinit snippet OMZL::git.zsh
+zinit snippet OMZP::git/git.plugin.zsh
+zinit snippet OMZL::completion.zsh   # zstyle/zmodload，须在 compinit 前
+zinit snippet OMZL::history.zsh      # setopt history，须在 OMZL 前
+zinit snippet OMZL::key-bindings.zsh # bindkey，须在 ZLE 初始化前
+zinit snippet OMZL::theme-and-appearance.zsh  # LS_COLORS / 终端标题
+
+# ── 异步加载（wait="0"：首次 prompt 渲染后按注册顺序加载）─
+# autosuggestions 需要最先拿到 ZLE，所以排在 async 队列头
 zinit ice lucid wait="0" atload="_zsh_autosuggest_start"
 zinit light zsh-users/zsh-autosuggestions
-zinit ice lucid wait="0"
-zinit light zsh-users/zsh-syntax-highlighting
 
+# 纯 alias/hook 插件，无 ZLE 依赖，可完全异步
+zinit ice lucid wait="0"
 zinit light MichaelAquilina/zsh-you-should-use
 
-zinit snippet OMZL::git.zsh
-zinit snippet OMZP::sudo/sudo.plugin.zsh
-zinit snippet OMZP::colored-man-pages/colored-man-pages.plugin.zsh
-zinit snippet OMZP::git/git.plugin.zsh
+zinit ice lucid wait="0"
+zinit snippet OMZP::sudo/sudo.plugin.zsh          # Esc-Esc 加 sudo（ZLE widget）
 
-zinit snippet OMZL::completion.zsh
-zinit snippet OMZL::history.zsh
-zinit snippet OMZL::key-bindings.zsh
-zinit snippet OMZL::theme-and-appearance.zsh
+zinit ice lucid wait="0"
+zinit snippet OMZP::colored-man-pages/colored-man-pages.plugin.zsh
+
+zinit ice lucid wait="0"
+zinit snippet OMZP::kubectl/kubectl.plugin.zsh    # k kgp kex 等 aliases
+
+zinit ice lucid wait="0"
+zinit snippet OMZP::docker/docker.plugin.zsh      # dps dex 等 aliases
+
+# syntax-highlighting 必须最后加载：它在 zle -N 时 wrap 所有已注册 widget
+zinit ice lucid wait="0"
+zinit light zsh-users/zsh-syntax-highlighting
 
 autoload -Uz compinit
 () {

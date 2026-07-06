@@ -29,10 +29,14 @@ function _cmd_exec_time() {
     # 只显示 >= 1s 的命令耗时
     (( cmd_elapsed < 1.0 )) && return
 
-    typeset -i mins=$(( cmd_elapsed / 60 ))
-    local secs=$(( cmd_elapsed - mins * 60 ))
+    typeset -i total_secs=$(( cmd_elapsed ))
+    typeset -i hrs=$(( total_secs / 3600 ))
+    typeset -i mins=$(( (total_secs % 3600) / 60 ))
+    local secs=$(( cmd_elapsed - hrs * 3600 - mins * 60 ))
 
-    if (( mins > 0 )); then
+    if (( hrs > 0 )); then
+        printf '%dh %dm %.1fs' $hrs $mins $secs
+    elif (( mins > 0 )); then
         printf '%dm %.1fs' $mins $secs
     else
         printf '%.1fs' $secs
