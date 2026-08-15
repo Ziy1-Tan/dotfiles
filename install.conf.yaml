@@ -16,7 +16,6 @@
       recursive: true
 
 - create:
-    - ~/.m2
     - ~/.ssh
     - ~/.zsh
     - ~/.vim/plugged
@@ -25,11 +24,9 @@
 - link:
     ~/.zshrc: zshrc
     ~/.zprofile: zprofile
-    ~/.ideavimrc: ideavimrc
     ~/.vimrc: vimrc
     ~/.tmux.conf: tmux.conf
     ~/.gitconfig: gitconfig
-    ~/.m2/settings.xml: settings.xml
     ~/.config/:
       glob: true
       path: config/*
@@ -96,6 +93,22 @@
         if [ ! -f ~/.vim/autoload/plug.vim ]; then
           mkdir -p ~/.vim/autoload
           curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        fi
+
+    # fd 被 fzf.zsh 的默认搜索命令引用，必须安装。
+    # Linux 用 apt（包名 fd-find，二进制是 fdfind，软链成 fd 放到 ~/.local/bin）；
+    # macOS 用 brew。不要在 Linux 上走 Linuxbrew——拉取 ghcr.io 在国内网络会挂起。
+    - description: Installing fd (apt on Linux / brew on macOS)
+      command: |
+        if command -v fd >/dev/null 2>&1; then
+          echo "fd already installed"
+        elif [ "$(uname)" = "Linux" ]; then
+          sudo apt-get install -y fd-find >/dev/null 2>&1 && {
+            mkdir -p "$HOME/.local/bin"
+            ln -sf "$(command -v fdfind)" "$HOME/.local/bin/fd"
+          } || echo "WARN: could not install fd-find (fzf will fall back to find)"
+        else
+          brew install fd 2>/dev/null || echo "WARN: could not brew install fd"
         fi
 
     - description: Installing zinit

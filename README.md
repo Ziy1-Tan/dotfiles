@@ -5,11 +5,11 @@ Powered by [dotbot](https://github.com/anishathalye/dotbot)
 ## Features
 
 - **Cross-platform**: Ubuntu / macOS
-- **Auto-bootstrap**: zsh, curl, Homebrew, Miniconda
+- **Auto-bootstrap**: zsh, curl, Homebrew
 - **Shell**: zsh with layered startup files and zinit plugins
-- **Tools**: fzf, zoxide, vim-plug, zinit
-- **Languages**: Conda (Python), nvm (Node.js), Go, Rust
-- **Editors**: Vim, Alacritty, Tmux, IDEA Vim
+- **Tools**: fzf, zoxide, fd, vim-plug, zinit
+- **Languages**: Python (uv), Node.js (nvm), Go, Rust
+- **Editors**: Vim, Alacritty, Tmux
 
 ## Directory Structure
 
@@ -22,8 +22,6 @@ dotfiles/
 ├── vimrc                   # Vim config
 ├── tmux.conf               # Tmux config
 ├── gitconfig               # Git config
-├── ideavimrc               # IDEA Vim plugin config
-├── settings.xml            # Maven settings
 ├── config/
 │   ├── alacritty/
 │   │   └── alacritty.toml
@@ -47,8 +45,6 @@ dotfiles/
 | `tmux.conf` | Tmux terminal multiplexer |
 | `gitconfig` | Git aliases and settings |
 | `.ssh/config` | SSH client configuration |
-| `ideavimrc` | IDEA Vim plugin keymappings |
-| `settings.xml` | Maven repository settings |
 | `config/zsh/env.zsh` | Shared environment variables and PATH setup |
 | `config/zsh/fzf.zsh` | FZF defaults and completion helpers |
 | `config/zsh/prompt.zsh` | Prompt theme |
@@ -70,12 +66,11 @@ git submodule update --init --recursive
 1. **Cache sudo**: One-time password for system changes
 2. **Bootstrap**: Install zsh, curl, Homebrew
 3. **Setup shell**: Switch default shell to zsh
-4. **Install Conda**: Miniconda with zsh auto-init
-5. **Link configs**: Symlink startup files and `~/.config/*` modules
-6. **Install tools**: zoxide, fzf, vim-plug, zinit
+4. **Link configs**: Symlink startup files and `~/.config/*` modules
+5. **Install tools**: zoxide, fzf, fd, vim-plug, zinit
 
 ## Zsh Layout
 
 - `zprofile` is for login-shell setup.
-- `zshrc` handles interactive startup in one place, including zinit, compinit, conda, nvm, bun, zoxide, fzf, prompt, aliases, and the local override.
+- `zshrc` handles interactive startup in one place, including zinit, compinit, nvm, bun, zoxide, fzf, uv completions, prompt, aliases, and the local override.
 - Copy `config/zsh/local.zsh.example` to `~/.config/zsh/local.zsh` for machine-specific settings you do not want committed.

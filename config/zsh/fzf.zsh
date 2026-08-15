@@ -2,9 +2,17 @@
 [[ ! "$PATH" == */.fzf/bin* ]] && export PATH="${PATH:+${PATH}:}$HOME/.fzf/bin"
 
 # fzf shell integration: key bindings + completions
+# 缓存集成脚本（仅 fzf 更新时重新生成），避免每次启动 fork fzf 子进程
 # Guard with -t 1 (real TTY) to avoid zinit's options-restore
 # triggering "can't change option: zle" in non-TTY interactive shells
-[[ -o interactive && -t 1 ]] && source <(fzf --zsh 2>/dev/null)
+if [[ -o interactive && -t 1 ]] && command -v fzf >/dev/null 2>&1; then
+  _fzf_int_file="$HOME/.cache/zsh/fzf-integration.zsh"
+  if [[ ! -f "$_fzf_int_file" ]] || [[ "$(command -v fzf)" -nt "$_fzf_int_file" ]]; then
+    fzf --zsh > "$_fzf_int_file" 2>/dev/null
+  fi
+  [[ -f "$_fzf_int_file" ]] && source "$_fzf_int_file"
+  unset _fzf_int_file
+fi
 
 # Check if fd is installed before using it
 if command -v fd >/dev/null 2>&1; then

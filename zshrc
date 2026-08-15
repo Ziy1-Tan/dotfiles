@@ -4,6 +4,11 @@ source "$HOME/.config/zsh/env.zsh"
 setopt HIST_IGNORE_ALL_DUPS
 setopt sharehistory
 
+setopt AUTO_CD             # 直接输入目录名即可进入
+setopt EXTENDED_GLOB        # 增强 glob（^ / # / ~）
+setopt INTERACTIVE_COMMENTS # 交互式 shell 允许 # 注释
+setopt NO_BEEP              # 关闭错误提示音
+
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
@@ -39,6 +44,16 @@ zinit snippet OMZL::history.zsh      # setopt history，须在 OMZL 前
 zinit snippet OMZL::key-bindings.zsh # bindkey，须在 ZLE 初始化前
 zinit snippet OMZL::theme-and-appearance.zsh  # LS_COLORS / 终端标题
 
+# 先输入再按 ↑ 匹配历史前缀（zsh4humans 同款交互）
+# 同步加载（该插件在 zinit turbo 下 widget 不注册，必须同步）；在 syntax-highlighting 之前
+zinit ice lucid compile
+zinit light zsh-users/zsh-history-substring-search
+# 插件只注册 widget，不自动绑键——显式绑定 ↑/↓（兼容 CSI 与应用模式两种转义）
+bindkey '\e[A' history-substring-search-up
+bindkey '\e[B' history-substring-search-down
+bindkey '\eOA' history-substring-search-up
+bindkey '\eOB' history-substring-search-down
+
 # ── 异步加载（wait="0"：首次 prompt 渲染后按注册顺序加载）─
 # autosuggestions 需要最先拿到 ZLE，所以排在 async 队列头
 zinit ice lucid wait="0" atload="_zsh_autosuggest_start" compile
@@ -64,10 +79,12 @@ zinit snippet OMZP::sudo/sudo.plugin.zsh          # Esc-Esc 加 sudo（ZLE widge
 zinit ice lucid wait="0" compile
 zinit snippet OMZP::colored-man-pages/colored-man-pages.plugin.zsh
 
-zinit ice lucid wait="0" compile
+# kubectl/docker 是工具相关 alias 插件：仅当对应命令存在才加载。
+# （alias 型插件无法用 wait"-0" 按需触发，用 if 条件门控更可靠）
+zinit ice lucid wait="0" compile if'(( ${+commands[kubectl]} ))'
 zinit snippet OMZP::kubectl/kubectl.plugin.zsh    # k kgp kex 等 aliases
 
-zinit ice lucid wait="0" compile
+zinit ice lucid wait="0" compile if'(( ${+commands[docker]} ))'
 zinit snippet OMZP::docker/docker.plugin.zsh      # dps dex 等 aliases
 
 # syntax-highlighting 必须最后加载：它在 zle -N 时 wrap 所有已注册 widget
@@ -77,6 +94,21 @@ zinit light zsh-users/zsh-syntax-highlighting
 # fzf-tab: 用 fzf 替换 zsh 原生补全，需放在 syntax-highlighting 之后
 zinit ice lucid wait="0" compile
 zinit light Aloxaf/fzf-tab
+
+# uv/uvx 补全：缓存为 #compdef 文件放入 fpath，由 compinit 懒加载
+# （uv 生成的补全 ~500KB，每次启动 eval 会拖慢 ~120ms；懒加载首次按 Tab 才解析）
+# 仅在 uv 更新或缓存缺失时重新生成；重新生成时删 dump 强制重建索引
+if command -v uv >/dev/null 2>&1; then
+    uv_comp_dir="$HOME/.cache/zsh/completions"
+    if [[ ! -f "$uv_comp_dir/_uv" ]] || [[ "$(command -v uv)" -nt "$uv_comp_dir/_uv" ]]; then
+        mkdir -p "$uv_comp_dir" 2>/dev/null
+        uv generate-shell-completion zsh > "$uv_comp_dir/_uv" 2>/dev/null
+        uvx --generate-shell-completion zsh > "$uv_comp_dir/_uvx" 2>/dev/null
+        rm -f "$HOME/.zcompdump"   # 让 compinit 重建索引，纳入新补全
+    fi
+    fpath=("$uv_comp_dir" "${fpath[@]}")
+    unset uv_comp_dir
+fi
 
 autoload -Uz compinit
 () {
@@ -110,11 +142,11 @@ zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':fzf-tab:*' switch-group 'ctrl-space' 'ctrl-/'
 
 # 文件/目录补全时显示预览
-zstyle ':fzf-tab:complete:(cd|ls|ll|cat|bat|vim|nvim|code|less|more):*' \
-    fzf-preview 'bat --color=always --style=numbers $realpath 2>/dev/null || ls -la $realpath'
+zstyle ':fzf-tab:complete:(cd|ls|ll|cat|vim|nvim|code|less|more):*' \
+    fzf-preview 'ls -la $realpath'
 
-# cd 补全时显示目录树预览
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath 2>/dev/null || ls -1 $realpath'
+# cd 补全时显示目录内容
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -1 $realpath'
 
 # kill/ps 补全时显示进程信息
 zstyle ':fzf-tab:complete:(kill|ps):*' fzf-preview 'ps -p $word -o pid,user,comm,args 2>/dev/null'
@@ -137,11 +169,6 @@ zstyle ':fzf-tab:complete:docker:*' \
 # kubectl 补全预览
 zstyle ':fzf-tab:complete:kubectl:*' fzf-sort fzf-size
 
-# uv - Python 版本和环境管理 (must be after compinit)
-if command -v uv >/dev/null 2>&1; then
-    eval "$(uv generate-shell-completion zsh)"
-    eval "$(uvx --generate-shell-completion zsh)"
-fi
 
 # Load fzf only if it's installed
 # NOTE: ~/.fzf.zsh removed - fzf init consolidated in fzf.zsh with TTY guard
@@ -189,3 +216,7 @@ export _ZO_DOCTOR=0
 eval "$(zoxide init --cmd cd zsh)"
 
 [ -f "$HOME/.config/zsh/local.zsh" ] && source "$HOME/.config/zsh/local.zsh"
+
+# 保证 sourcing zshrc 成功返回（否则最后一条 `[ -f ] && source` 在文件缺失时返回 1，
+# 会让 `zsh -i -c exit` 报退出码 1，可能被 CI/脚本误判为失败）
+:

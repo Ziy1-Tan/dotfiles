@@ -1,80 +1,45 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## What this is
 
-## Overview
+A [dotbot](https://github.com/anishathalye/dotbot)-managed dotfiles repo (zsh / vim /
+tmux / git / terminal). `./install` bootstraps and symlinks everything; the intent is
+to run unmodified on Ubuntu and macOS.
 
-This is a dotfiles repository managed by [dotbot](https://github.com/anishathalye/dotbot). It contains configuration files for a Linux/macOS development environment.
+## Conventions
 
-## Installation
+- **No hardcoded paths**: use `$HOME`, never `/home/<user>`.
+- **Startup boundaries**: `zprofile` = login shell (brew shellenv); `zshrc` =
+  interactive composition. Don't move logic across the boundary.
+- **Machine-specific settings** go in `~/.config/zsh/local.zsh` (copy of
+  `local.zsh.example`), never in versioned modules. It can override
+  `PROXY_HOST` / `PROXY_PORT`, consumed by the `setproxy` function in `alias.zsh`.
+- **Optional tool sources need existence checks**: `[ -f ... ] && source ...` or
+  `command -v`.
+- **GNU/BSD pairs that must stay handled** (Ubuntu vs macOS): `ls --color=auto`
+  vs `ls -lhG`; `stat -c %Y` vs `stat -f %m`; `readlink -f` (Linux) vs
+  `/usr/libexec/java_home` (macOS); `nproc` vs `sysctl -n hw.ncpu`.
+- **fd install differs per OS** (see the install step in `install.conf.yaml`): Linux uses
+  apt `fd-find` + a `fdfind → fd` symlink into `~/.local/bin` (which is on PATH); macOS uses
+  brew. `command -v fd` in `fzf.zsh` needs the binary to literally be named `fd`.
 
-```bash
-git clone https://github.com/Ziy1-Tan/dotfiles.git
-cd dotfiles
-git submodule update --init --recursive
-./install
-```
+## zshrc ordering (fragile, keep in this order)
 
-The `install` script runs dotbot which:
-1. Caches sudo credentials (one-time password prompt)
-2. Cleans old symlinks
-3. Creates required directories (`~/.m2`, `~/.ssh`, `~/.zsh`, `~/.vim/plugged`, `~/.config`)
-4. Symlinks config files to the home directory
-5. Bootstraps system: zsh, curl, brew, chsh, miniconda
-6. Installs tools: zoxide, fzf, vim-plug, zinit
+- The uv/uvx completion block must stay **before** `autoload -Uz compinit`: it drops
+  `#compdef` files into `~/.cache/zsh/completions` and prepends that dir to `fpath`.
+  It deletes `~/.zcompdump` only when uv is updated, forcing a reindex.
+- `zsh-syntax-highlighting` must load **last** (it wraps every registered ZLE widget);
+  `fzf-tab` after it; `zsh-history-substring-search` before it.
+- `zsh-history-substring-search` must load **synchronously** (its widgets don't register
+  under zinit turbo `wait="0"`) and needs explicit `bindkey` lines — the plugin only
+  defines widgets, it doesn't bind keys.
+- `zshrc` ends with `:` so sourcing it returns 0 (`zsh -i -c exit` must not return 1).
+- fzf keybindings/completions are cached to `~/.cache/zsh/fzf-integration.zsh`
+  (regenerated when the fzf binary is newer) to avoid a per-startup subprocess.
 
-## Architecture
+## Bootstrap gotchas
 
-- `install`: bootstrap script, caches sudo, then runs dotbot
-- `install.conf.yaml`: Dotbot configuration defining link, create, and shell tasks
-- `zprofile`: login-shell setup
-- `zshrc`: interactive shell entrypoint, includes zinit, compinit, tool init, and sources files from `~/.config/zsh/`
-- `config/zsh/`: shared zsh modules plus optional local override template
-- `dotbot/`: git submodule for the dotbot installer tool
-
-## Key Configurations
-
-| File | Purpose |
-|------|---------|
-| `zprofile` | Login-shell setup, mainly Homebrew shellenv |
-| `zshrc` | Interactive shell config that assembles zsh modules |
-| `vimrc` | Vim editor config |
-| `tmux.conf` | Tmux terminal multiplexer |
-| `gitconfig` | Git configuration with aliases |
-| `.ssh/config` | SSH client configuration |
-| `config/alacritty/alacritty.toml` | Alacritty terminal config |
-
-## Plugin Managers
-
-- **zinit**: Zsh plugin manager
-- **vim-plug**: Vim plugin manager, installed during dotbot setup
-
-## Environment Tools
-
-- **conda**: Python environment manager (miniconda3)
-- **nvm**: Node.js version manager
-- **bun**: JavaScript runtime
-- **zoxide**: Smarter `cd` command
-- **fzf**: Fuzzy finder
-
-## Key Aliases
-
-```bash
-s       # neofetch
-ll      # ls -lh --color=auto
-sz      # source ~/.zshrc
-cmb     # cmake --build build -j 12
-setproxy/unsetproxy  # proxy management
-t/ta/td # tmux commands
-```
-
-## Development Notes
-
-- **No hardcoded paths**: use `$HOME`, not `/home/username`
-- **Keep startup boundaries clean**: `zprofile` for login, `zshrc` for interactive composition
-- **Machine-specific settings belong in local override**: use `~/.config/zsh/local.zsh`, not shared versioned modules
-- **Dotbot shell commands have no TTY**: `sudo -v` must run in `install` before dotbot, shell commands inside yaml rely on cached credentials
-- **chsh path mismatch**: compare `basename "$SHELL"` not the full path
-- **Shell change**: Linux uses `sudo usermod -s`, macOS uses `sudo chsh -s`
-- **Optional tool sources need existence checks**: for example `[ -f "$HOME/.cargo/env" ] && source ...`
-- Java, Maven, and CUDA paths are auto-detected for Linux/macOS
+- dotbot shell commands have no TTY: `sudo -v` runs in `install` before dotbot, and
+  yaml shell steps rely on the cached credentials.
+- Shell-change check compares `basename "$SHELL"`, not the full path.
+- Linux uses `sudo usermod -s`, macOS uses `sudo chsh -s`.
