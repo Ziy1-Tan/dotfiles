@@ -39,7 +39,9 @@ to run unmodified on Ubuntu and macOS.
 
 ## Bootstrap gotchas
 
-- dotbot shell commands have no TTY: `sudo -v` runs in `install` before dotbot, and
-  yaml shell steps rely on the cached credentials.
+- dotbot shell commands have no TTY: yaml shell steps rely on cached sudo credentials.
+  `install` only prompts for sudo when `needs_sudo()` finds a root-requiring step
+  (apt / usermod / chsh / brew installer); re-runs on a configured machine are
+  passwordless, and any existing sudo cache is reused.
 - Shell-change check compares `basename "$SHELL"`, not the full path.
 - Linux uses `sudo usermod -s`, macOS uses `sudo chsh -s`.

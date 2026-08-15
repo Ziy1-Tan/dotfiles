@@ -10,11 +10,41 @@ BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 cd "${BASEDIR}"
 
-# Cache sudo credentials before dotbot runs (dotbot has no TTY for password input)
-echo "Please enter your sudo password (needed for system setup):"
-sudo -v
-# Keep sudo alive in background until this script finishes
-while true; do sudo -n true; sleep 50; kill -0 "$$" || exit; done 2>/dev/null &
+# ── sudo 仅在确实需要 root 时提示 ──────────────────────────────
+# 与 install.conf.yaml 中的 guard 一一对应：若本轮没有任何需要 root
+# 的操作（apt / usermod / chsh / 安装 brew），则完全免输密码。
+needs_sudo() {
+    # Linux: apt 安装 zsh/curl
+    if [ "$(uname)" = "Linux" ] && { ! command -v zsh >/dev/null 2>&1 || ! command -v curl >/dev/null 2>&1; }; then
+        return 0
+    fi
+    # 安装 Homebrew（其安装脚本内部需要 sudo）
+    if ! command -v brew >/dev/null 2>&1; then
+        return 0
+    fi
+    # 切换默认 shell 到 zsh
+    if [ "$(basename "${SHELL:-}")" != "zsh" ]; then
+        return 0
+    fi
+    # Linux: apt 安装 fd
+    if [ "$(uname)" = "Linux" ] && ! command -v fd >/dev/null 2>&1; then
+        return 0
+    fi
+    return 1
+}
+
+SUDO_KEEPER_PID=""
+if needs_sudo; then
+    # 已有有效 sudo 缓存则直接复用，不弹密码
+    if ! sudo -n true 2>/dev/null; then
+        echo "Please enter your sudo password (needed for system setup):"
+        sudo -v
+    fi
+    # 保持 sudo 凭据在脚本运行期间有效（dotbot 无 TTY，不能在 yaml 里输密码）
+    ( while true; do sudo -n true; sleep 50; kill -0 "$$" 2>/dev/null || exit; done ) &
+    SUDO_KEEPER_PID=$!
+    trap 'kill "$SUDO_KEEPER_PID" 2>/dev/null' EXIT
+fi
 
 git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
 git submodule update --init --recursive "${DOTBOT_DIR}"
