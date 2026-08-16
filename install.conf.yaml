@@ -16,6 +16,8 @@
       recursive: true
 
 - create:
+    # ~/.ssh 目录保留（放密钥），但 ~/.ssh/config 是机器本地的，
+    # 不进仓库（已 gitignore），每台机器自己维护。
     - ~/.ssh
     - ~/.zsh
     - ~/.vim/plugged

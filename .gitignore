@@ -1,2 +1,3 @@
 *.zwc
 config/zsh/local.zsh
+.ssh/config
