@@ -1,39 +1,8 @@
 # dotfiles
 
+Ubuntu / MacOS 
+
 Powered by [dotbot](https://github.com/anishathalye/dotbot)
-
-## Features
-
-- **Cross-platform**: Ubuntu / macOS
-- **Auto-bootstrap**: zsh, curl, Homebrew
-- **Shell**: zsh with layered startup files and zinit plugins
-- **Tools**: fzf, zoxide, fd, vim-plug, zinit
-- **Languages**: Python (uv), Node.js (nvm), Go, Rust
-- **Editors**: Vim, Alacritty, Tmux
-
-## Directory Structure
-
-```text
-dotfiles/
-├── install                 # Bootstrap script
-├── install.conf.yaml       # Dotbot configuration
-├── zprofile                # Login-shell setup
-├── zshrc                   # Interactive shell orchestrator
-├── vimrc                   # Vim config
-├── tmux.conf               # Tmux config
-├── gitconfig               # Git config
-├── config/
-│   ├── alacritty/
-│   │   └── alacritty.toml
-│   └── zsh/
-│       ├── alias.zsh           # Aliases only
-│       ├── env.zsh             # Shared environment exports
-│       ├── fzf.zsh             # FZF defaults and helpers
-│       ├── local.zsh.example   # Machine-specific override template
-│       └── prompt.zsh          # Prompt theme
-└── .ssh/
-    └── config              # SSH client config
-```
 
 ## Configuration Files
 
@@ -50,7 +19,6 @@ dotfiles/
 | `config/zsh/prompt.zsh` | Prompt theme |
 | `config/zsh/alias.zsh` | Shell aliases |
 | `config/zsh/local.zsh.example` | Template for machine-specific overrides |
-| `config/alacritty/alacritty.toml` | Alacritty terminal config |
 
 ## Quick Start
 
@@ -68,9 +36,3 @@ git submodule update --init --recursive
 3. **Setup shell**: Switch default shell to zsh
 4. **Link configs**: Symlink startup files and `~/.config/*` modules
 5. **Install tools**: zoxide, fzf, fd, vim-plug, zinit
-
-## Zsh Layout
-
-- `zprofile` is for login-shell setup.
-- `zshrc` handles interactive startup in one place, including zinit, compinit, nvm, bun, zoxide, fzf, uv completions, prompt, aliases, and the local override.
-- Copy `config/zsh/local.zsh.example` to `~/.config/zsh/local.zsh` for machine-specific settings you do not want committed.
