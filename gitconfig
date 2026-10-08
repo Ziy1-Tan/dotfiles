@@ -1,14 +1,17 @@
-# This is Git's per-user configuration file.
 [user]
-# Please adapt and uncomment the following lines:
 name = Ziy1-Tan
 email = ajb459684460@gmail.com
+
+[includeIf "gitdir:~/gongfeng/"]
+	path = ~/.gitconfig-gongfeng
 [safe]
 	directory = *
 [color]
 	ui = auto
 [core]
 	editor = vim
+	hooksPath = ~/.git-hooks
+	quotepath = false
 [alias]
 	cm = commit
 	co = checkout
