@@ -1,2 +1,4 @@
 *.zwc
 config/zsh/local.zsh
+result
+.direnv

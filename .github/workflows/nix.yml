@@ -1,0 +1,17 @@
+name: Nix
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - name: Check flake
+        run: nix flake check --impure
+      - name: Build Home Manager activation package
+        run: nix build --impure .#homeConfigurations.default.activationPackage
