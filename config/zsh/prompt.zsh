@@ -1,19 +1,17 @@
 autoload -U colors && colors
 autoload -Uz vcs_info
-zmodload zsh/datetime  # 提供 $EPOCHREALTIME（float，微秒精度）
+zmodload zsh/datetime  # $EPOCHREALTIME (float, microsecond precision)
 
-# vcs_info: only git, only branch name in brackets
+# vcs_info: git only, just the branch name in brackets
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git:*' formats '[%b]'
 zstyle ':vcs_info:git:*' actionformats '[%b|%a]'
 
-# Command execution time tracking（用 EPOCHREALTIME 替代 EPOCHSECONDS，无 fork）
+# Command timing from $EPOCHREALTIME (microsecond precision, no fork)
 typeset -F cmd_start_time=0
 typeset -F cmd_elapsed=0
 
-preexec() {
-    cmd_start_time=$EPOCHREALTIME
-}
+preexec() { cmd_start_time=$EPOCHREALTIME }
 
 precmd() {
     vcs_info
@@ -26,8 +24,7 @@ precmd() {
 }
 
 function _cmd_exec_time() {
-    # 只显示 >= 1s 的命令耗时
-    (( cmd_elapsed < 1.0 )) && return
+    (( cmd_elapsed < 1.0 )) && return   # only show commands that took >= 1s
 
     typeset -i total_secs=$(( cmd_elapsed ))
     typeset -i hrs=$(( total_secs / 3600 ))
@@ -43,11 +40,11 @@ function _cmd_exec_time() {
     fi
 }
 
+# Collapse each intermediate path element to its first character, keeping the
+# last element intact (e.g. ~/dotfiles/config/zsh -> ~/d/c/zsh).
 function _collapsed_pwd() {
-    local pwd="${1:-$PWD}"
-    local home="$HOME"
+    local pwd="${1:-$PWD}" home="$HOME"
     local size=${#home}
-    [[ -z "$pwd" ]] && return
     if [[ "$pwd" == "/" ]]; then
         echo "/"
         return
@@ -62,7 +59,7 @@ function _collapsed_pwd() {
         local elem=${elements[$i]}
         if [[ ${#elem} > 1 ]]; then
             if [[ "$elem" == .* ]]; then
-                elements[$i]=${${elem//./}[1]}   # 取第一个非.字符
+                elements[$i]=${${elem//./}[1]}   # first non-dot character
             else
                 elements[$i]=${elem[1]}
             fi
