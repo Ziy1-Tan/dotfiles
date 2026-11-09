@@ -94,6 +94,13 @@ fi
 autoload -Uz compinit
 () {
     local dump="$HOME/.zcompdump" mtime
+    # zinit symlinks plugin completions into its completions/ dir; when upstream
+    # removes one (e.g. _sdd from zsh-completions), the dangling link makes
+    # compinit abort with "no such file or directory". Prune those links first.
+    local comp_dir="$HOME/.local/share/zinit/completions" link
+    for link in "$comp_dir"/_*(N@); do
+        [[ -e "$link" ]] || command rm -f -- "$link"
+    done
     # Reuse the dump when it is under a day old: -C skips compinit's fpath
     # security check. zsh/stat avoids forking stat(1) and its GNU/macOS flag split.
     zmodload -F zsh/stat b:zstat 2>/dev/null
@@ -157,11 +164,13 @@ nvm() {
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-export _ZO_DOCTOR=0
-eval "$(zoxide init --cmd cd zsh)"
-
-[[ -f "$HOME/.config/zsh/local.zsh" ]] && source "$HOME/.config/zsh/local.zsh"
-
 # Keep user-local binaries after version-manager binaries.
+# This has to run before anything below needs a ~/.local/bin tool.
 path=(${path:#$HOME/.local/bin})
 path+=("$HOME/.local/bin")
+
+if (( $+commands[zoxide] )); then
+    eval "$(zoxide init --cmd cd zsh)"
+fi
+
+[[ -f "$HOME/.config/zsh/local.zsh" ]] && source "$HOME/.config/zsh/local.zsh"
