@@ -4,10 +4,10 @@ source "$HOME/.config/zsh/env.zsh"
 # sessions. OMZL::history.zsh (loaded below) adds further options.
 setopt HIST_IGNORE_ALL_DUPS sharehistory
 
-setopt AUTO_CD              # type a bare directory name to cd into it
+setopt AUTO_CD
 setopt EXTENDED_GLOB        # ^ / # / ~ glob operators
-setopt INTERACTIVE_COMMENTS # allow # comments at the interactive prompt
-setopt NO_BEEP              # no beep on error
+setopt INTERACTIVE_COMMENTS
+setopt NO_BEEP
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -110,7 +110,7 @@ zinit cdreplay -q
 # ── fzf-tab ──────────────────────────────────────────────────────────────────
 # fzf-tab routes completion through fzf. `fzf-preview` sets the preview pane per
 # command; `fzf-sort fzf-size` opts out of fzf's re-sorting to keep zsh's
-# relevance order; `${(P)word}` expands the parameter being completed.
+# relevance order.
 zstyle ':fzf-tab:*' fzf-flags --height=50% --border --color=hl:yellow,hl+:yellow:bold
 zstyle ':fzf-tab:*' prefix ''
 zstyle ':completion:*:descriptions' format '[%d]'
@@ -144,15 +144,14 @@ export NVM_DIR="$HOME/.nvm"
     [[ -n "$node_bin" && -d "$node_bin" ]] && export PATH="$node_bin:$PATH"
 }
 
-# nvm.sh is slow, so load it (once) on first use of any node-family command.
-_lazy_load_nvm() {
-    unset -f _lazy_load_nvm nvm node npm npx pnpm yarn corepack
+# nvm.sh is slow, so load it on first call to nvm. Until then node, npm and the
+# rest resolve to the default version through the PATH entry above.
+nvm() {
+    unset -f nvm
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
     [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+    nvm "$@"
 }
-for cmd in nvm node npm npx pnpm yarn corepack; do
-    eval "$cmd() { _lazy_load_nvm; $cmd \"\$@\"; }"
-done
 
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 export BUN_INSTALL="$HOME/.bun"
@@ -163,6 +162,6 @@ eval "$(zoxide init --cmd cd zsh)"
 
 [[ -f "$HOME/.config/zsh/local.zsh" ]] && source "$HOME/.config/zsh/local.zsh"
 
-# Keep this file's exit status 0: with local.zsh absent the line above returns 1,
-# which would make `zsh -i -c exit` look like a failure to scripts and CI.
-:
+# Keep user-local binaries after version-manager binaries.
+path=(${path:#$HOME/.local/bin})
+path+=("$HOME/.local/bin")

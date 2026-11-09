@@ -16,7 +16,6 @@
       recursive: true
 
 - create:
-    - ~/.zsh
     - ~/.vim/plugged
     - ~/.config
 
