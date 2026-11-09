@@ -1,7 +1,4 @@
 set nocompatible
-filetype on
-filetype indent on
-filetype plugin on
 filetype plugin indent on
 
 set encoding=utf-8
@@ -26,11 +23,8 @@ set smartcase
 
 set mouse=a
 set clipboard^=unnamed,unnamedplus
-set encoding=utf-8
-" enable 256 colors
 set t_Co=256
 
-" transform tab to whitespace
 set expandtab
 set tabstop=2
 set softtabstop=2

@@ -1,4 +1,3 @@
-# fzf PATH
 [[ ! "$PATH" == */.fzf/bin* ]] && export PATH="${PATH:+${PATH}:}$HOME/.fzf/bin"
 
 # fzf shell integration (key bindings + completions), cached to a file so we
@@ -7,14 +6,12 @@
 # "can't change option: zle" in non-TTY interactive shells.
 if [[ -o interactive && -t 1 ]] && (( $+commands[fzf] )); then
     _fzf_int_file="$HOME/.cache/zsh/fzf-integration.zsh"
-    # Regenerate only when fzf is newer than the cache.
     [[ ! -f "$_fzf_int_file" || "$commands[fzf]" -nt "$_fzf_int_file" ]] \
         && fzf --zsh > "$_fzf_int_file" 2>/dev/null
     [[ -f "$_fzf_int_file" ]] && source "$_fzf_int_file"
     unset _fzf_int_file
 fi
 
-# Prefer fd for the default search; fall back to find if it isn't installed.
 if (( $+commands[fd] )); then
     export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden --follow --exclude={.git,.idea,.vscode,node_modules,.cache,.conan}"
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"

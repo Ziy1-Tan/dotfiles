@@ -2,7 +2,7 @@ autoload -U colors && colors
 autoload -Uz vcs_info
 zmodload zsh/datetime  # $EPOCHREALTIME (float, microsecond precision)
 
-# vcs_info: git only, just the branch name in brackets
+# vcs_info: git only
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git:*' formats '[%b]'
 zstyle ':vcs_info:git:*' actionformats '[%b|%a]'
@@ -24,7 +24,7 @@ precmd() {
 }
 
 function _cmd_exec_time() {
-    (( cmd_elapsed < 1.0 )) && return   # only show commands that took >= 1s
+    (( cmd_elapsed < 1.0 )) && return
 
     typeset -i total_secs=$(( cmd_elapsed ))
     typeset -i hrs=$(( total_secs / 3600 ))

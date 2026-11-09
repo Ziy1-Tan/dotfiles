@@ -5,7 +5,7 @@ export EDITOR=vim
 
 export GOPATH=$HOME/go
 export GOPROXY=https://mirrors.aliyun.com/goproxy/,direct
-export PATH=$HOME/.local/bin:$GOPATH/bin:$PATH
+export PATH=$GOPATH/bin:$PATH
 
 case "$(uname)" in
 Darwin)
