@@ -1,0 +1,45 @@
+# 字体
+font-size = 18
+font-family = Google Sans Code
+font-family = SauceCodePro Nerd Font
+#font-family = FiraCode Nerd Font
+font-family = PingFang SC
+font-family = Apple Color Emoji
+
+# 背景透明度
+background-opacity = 1.0
+
+# 颜色方案
+theme = Tomorrow Night
+
+# 窗口大小
+window-width = 108
+window-height = 28
+
+# 标签栏
+window-show-tab-bar = always
+window-new-tab-position = end
+
+# 光标
+shell-integration-features = no-cursor
+cursor-style = block
+
+# 滚动
+scrollback-limit = 1000000
+scrollbar = system
+
+# 鼠标选中自动复制
+selection-word-chars = \t'"│`|:;,()[]{}<>$
+
+# 继承工作目录
+tab-inherit-working-directory = true
+window-inherit-working-directory = true
+
+# 启用 URL 点击
+link-url = true
+
+# Shift+Enter 发送 Esc[13;2u
+keybind = shift+enter=text:\x1b[13;2u
+
+copy-on-select = clipboard
+mouse-shift-capture = true

@@ -1,0 +1,9 @@
+{{- /* gui=false skips casks, fonts and the Dock layout. Only macOS asks: Linux has no GUI step, and a prompt would fail without a TTY. */ -}}
+{{- $gui := false -}}
+{{- if eq .chezmoi.os "darwin" -}}{{- $gui = promptBoolOnce . "gui" "gui" true -}}{{- end -}}
+# Plain files become symlinks into this repo, so editing ~/.zshrc edits git.
+mode = "symlink"
+sourceDir = {{ .chezmoi.workingTree | quote }}
+
+[data]
+    gui = {{ $gui }}

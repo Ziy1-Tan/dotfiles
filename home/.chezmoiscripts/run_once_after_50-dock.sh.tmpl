@@ -1,0 +1,17 @@
+{{ if and (eq .chezmoi.os "darwin") .gui -}}
+#!/bin/bash
+set -euo pipefail
+{{ includeTemplate "brew-env.sh" . }}
+
+# run_once: the Dock is hand-tuned afterwards, so later edits to dock.yaml must not wipe it.
+# Rebuild from scratch so the result doesn't depend on the previous Dock.
+dockutil --remove all --no-restart
+{{ range .dock -}}
+{{ if eq . "spacer" -}}
+dockutil --add '' --type small-spacer --section apps --no-restart
+{{ else -}}
+if [ -e {{ . | quote }} ]; then dockutil --add {{ . | quote }} --no-restart; else echo "dock: skipping missing {{ . }}" >&2; fi
+{{ end -}}
+{{ end -}}
+killall Dock
+{{ end -}}
