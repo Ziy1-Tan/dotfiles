@@ -36,7 +36,7 @@ home/
 │   ├── packages.yaml       # brew / apt / cask lists
 │   └── dock.yaml           # Dock order
 ├── .chezmoiscripts/        # run in filename order
-│   ├── 10-packages         # Homebrew or apt; casks and fonts only if gui
+│   ├── 10-packages         # brew everywhere; apt (Linux) only bootstraps brew; casks/fonts if gui
 │   ├── 20-default-shell    # chsh to zsh
 │   ├── 30-runtimes         # uv, nvm + LTS node, vim-plug
 │   ├── 40-macos-defaults   # defaults write, pmset

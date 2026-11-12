@@ -1,25 +1,34 @@
 #!/bin/bash
 set -euo pipefail
-{{ if eq .chezmoi.os "darwin" -}}
+{{- if eq .chezmoi.os "darwin" }}
 [ -x /opt/homebrew/bin/brew ] || [ -x /usr/local/bin/brew ] \
   || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-{{ includeTemplate "brew-env.sh" . }}
-brew bundle --no-upgrade --file=/dev/stdin <<'BREWFILE'
-{{ range .packages.brew }}brew "{{ . }}"
-{{ end -}}
-{{ if .gui }}{{ range .packages.cask }}cask "{{ . }}"
-{{ end }}{{ end -}}
-BREWFILE
-{{- else if eq .chezmoi.os "linux" -}}
+{{- else }}
 command -v apt-get >/dev/null || { echo "only apt-based Linux is supported" >&2; exit 1; }
 SUDO=""; [ "$(id -u)" -eq 0 ] || SUDO=sudo
 $SUDO apt-get update -qq
 DEBIAN_FRONTEND=noninteractive $SUDO apt-get install -y -qq {{ .packages.apt | join " " }} >/dev/null
-# Debian ships fd as fdfind.
-mkdir -p "$HOME/.local/bin"
-ln -sf "$(command -v fdfind)" "$HOME/.local/bin/fd"
-if [ ! -x "$HOME/.fzf/bin/fzf" ]; then
-  git clone -q --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
-  "$HOME/.fzf/install" --bin >/dev/null
-fi
+[ -x /home/linuxbrew/.linuxbrew/bin/brew ] \
+  || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 {{- end }}
+# brew is the only CLI package manager on every platform; apt (Linux) only
+# installs brew's own dependencies. Never apt-install zsh-ecosystem tools:
+# Ubuntu 22.04's zoxide 0.4.3 generates a self-recursive `cd` wrapper.
+for brew_bin in /opt/homebrew/bin/brew /home/linuxbrew/.linuxbrew/bin/brew /usr/local/bin/brew; do
+  if [ -x "$brew_bin" ]; then eval "$("$brew_bin" shellenv)"; break; fi
+done
+brew bundle --no-upgrade --file=/dev/stdin <<'BREWFILE'
+{{- range .packages.brew }}
+brew "{{ . }}"
+{{- end }}
+{{- if eq .chezmoi.os "darwin" }}
+{{- range .packages.brew_darwin }}
+brew "{{ . }}"
+{{- end }}
+{{- if .gui }}
+{{- range .packages.cask }}
+cask "{{ . }}"
+{{- end }}
+{{- end }}
+{{- end }}
+BREWFILE

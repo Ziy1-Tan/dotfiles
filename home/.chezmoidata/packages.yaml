@@ -1,7 +1,11 @@
 packages:
-  brew: [zsh, curl, fzf, fd, ripgrep, zoxide, tmux, tlrc, dockutil]
-  # fzf is cloned instead: apt's is too old for `fzf --zsh` (needs 0.48+).
-  apt: [zsh, curl, git, vim, tmux, fd-find, ripgrep, zoxide, tldr, libatomic1]
+  # brew is the only CLI package manager on every platform; apt (Linux) exists
+  # only to bootstrap brew's own dependencies. Never apt-install zsh-ecosystem
+  # tools: Ubuntu 22.04's zoxide 0.4.3 generates a self-recursive `cd` wrapper,
+  # and its fd/ripgrep are years behind upstream.
+  brew: [fzf, fd, ripgrep, zoxide, tlrc, tmux]
+  brew_darwin: [dockutil]
+  apt: [zsh, curl, git, vim, build-essential]
   # Only apps already managed by cask on this machine; the rest are downloaded
   # from the vendor (see README).
   cask:

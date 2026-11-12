@@ -2,9 +2,12 @@
 set -euo pipefail
 [ "$(basename "${SHELL:-}")" = zsh ] && exit 0
 SUDO=""; [ "$(id -u)" -eq 0 ] || SUDO=sudo
-# Homebrew's zsh isn't in /etc/shells, so chsh would refuse it on macOS.
 {{ if eq .chezmoi.os "darwin" -}}
+# Homebrew's zsh isn't in /etc/shells, so chsh would refuse it on macOS.
 $SUDO chsh -s /bin/zsh "$(id -un)"
 {{- else -}}
-$SUDO chsh -s "$(command -v zsh)" "$(id -un)"
+# chsh refuses any shell not listed in /etc/shells (e.g. a brew-installed zsh).
+zsh_bin="$(command -v zsh)"
+grep -qxF "$zsh_bin" /etc/shells || echo "$zsh_bin" | $SUDO tee -a /etc/shells >/dev/null
+$SUDO chsh -s "$zsh_bin" "$(id -un)"
 {{- end }}

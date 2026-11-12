@@ -2,11 +2,11 @@
 # Assert that a machine bootstrapped with chezmoi ended up in the expected state.
 # Usage: test/check.sh <repo-dir>
 set -euo pipefail
-repo="$(cd "$1" && pwd)"
+repo="$(cd "$1" && pwd -P)"   # -P: any path into the repo (incl. symlinks) must resolve
 fail() { echo "FAIL: $*" >&2; exit 1; }
 
 export PATH="$HOME/.local/bin:$HOME/.fzf/bin:$PATH"
-for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew; do
+for brew_bin in /opt/homebrew/bin/brew /home/linuxbrew/.linuxbrew/bin/brew /usr/local/bin/brew; do
   if [ -x "$brew_bin" ]; then eval "$("$brew_bin" shellenv)"; break; fi
 done
 
