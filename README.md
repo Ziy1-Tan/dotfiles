@@ -1,68 +1,52 @@
 # dotfiles
 
-Ubuntu / MacOS 
+Ubuntu / macOS, managed by [chezmoi](https://www.chezmoi.io).
 
-Powered by [dotbot](https://github.com/anishathalye/dotbot)
-
-## Features
-
-- **Cross-platform**: Ubuntu / macOS
-- **Auto-bootstrap**: zsh, curl, Homebrew
-- **Shell**: zsh with layered startup files and zinit plugins
-- **Tools**: fzf, zoxide, fd, vim-plug, zinit
-- **Languages**: Python (uv), Node.js (nvm), Go, Rust
-- **Editors**: Vim, Alacritty, Tmux
-
-## Directory Structure
-
-```text
-dotfiles/
-├── install                 # Bootstrap script
-├── install.conf.yaml       # Dotbot configuration
-├── zprofile                # Login-shell setup
-├── zshrc                   # Interactive shell orchestrator
-├── vimrc                   # Vim config
-├── tmux.conf               # Tmux config
-├── gitconfig               # Git config
-├── config/
-│   ├── alacritty/
-│   │   └── alacritty.toml
-│   └── zsh/
-│       ├── alias.zsh           # Aliases only
-│       ├── env.zsh             # Shared environment exports
-│       ├── fzf.zsh             # FZF defaults and helpers
-│       ├── local.zsh.example   # Machine-specific override template
-│       └── prompt.zsh          # Prompt theme
-```
-
-## Configuration Files
-
-| File | Purpose |
-|------|---------|
-| `zprofile` | Login shell setup, mainly Homebrew shellenv |
-| `zshrc` | Interactive shell entrypoint that sources modular config |
-| `vimrc` | Vim editor config |
-| `tmux.conf` | Tmux terminal multiplexer |
-| `gitconfig` | Git aliases and settings |
-| `config/zsh/env.zsh` | Shared environment variables and PATH setup |
-| `config/zsh/fzf.zsh` | FZF defaults and completion helpers |
-| `config/zsh/prompt.zsh` | Prompt theme |
-| `config/zsh/alias.zsh` | Shell aliases |
-| `config/zsh/local.zsh.example` | Template for machine-specific overrides |
-
-## Quick Start
+## Quick start
 
 ```bash
-git clone https://github.com/Ziy1-Tan/dotfiles.git
-cd dotfiles
-git submodule update --init --recursive
-./install
+sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin
+~/.local/bin/chezmoi init --apply Ziy1-Tan/dotfiles
 ```
 
-## What ./install Does
+On macOS `init` asks one question, `gui` (casks, fonts, Dock layout; default yes). Linux never asks. To answer without a prompt: `chezmoi init --promptBool gui=false --apply Ziy1-Tan/dotfiles`.
 
-1. **Cache sudo**: One-time password for system changes
-2. **Bootstrap**: Install zsh, curl, Homebrew
-3. **Setup shell**: Switch default shell to zsh
-4. **Link configs**: Symlink startup files and `~/.config/*` modules
-5. **Install tools**: zoxide, fzf, fd, vim-plug, zinit
+Files are symlinked into the clone (`~/.local/share/chezmoi`), so editing `~/.zshrc` edits git
+directly. Day to day:
+
+| Command | Effect |
+|---------|--------|
+| `chezmoi diff` | Preview what `apply` would change |
+| `chezmoi apply` | Reconcile `~` with the repo; re-runs only scripts whose content changed |
+| `chezmoi edit ~/.zshrc` | Edit a managed file through its source path |
+| `chezmoi cd` | Open a shell in the repo |
+
+## Layout
+
+`.chezmoiroot` points chezmoi at `home/`; names there map to `~` (`dot_` → `.`).
+
+```text
+home/
+├── .chezmoi.toml.tmpl      # the `gui` prompt, symlink mode
+├── .chezmoidata/
+│   ├── packages.yaml       # brew / apt / cask lists
+│   └── dock.yaml           # Dock order
+├── .chezmoiscripts/        # run in filename order
+│   ├── 10-packages         # Homebrew or apt; casks and fonts only if gui
+│   ├── 20-default-shell    # chsh to zsh
+│   ├── 30-runtimes         # uv, nvm + LTS node, vim-plug
+│   ├── 40-macos-defaults   # defaults write, pmset
+│   └── 50-dock             # dockutil layout (macOS, gui only)
+├── dot_zshrc  dot_zprofile  dot_vimrc  dot_tmux.conf  dot_gitconfig
+└── dot_config/
+    ├── alacritty/
+    ├── ghostty/
+    ├── herdr/              # config.toml only; logs, sockets and sessions stay local
+    └── zsh/                # env, alias, fzf, prompt; local.zsh is created once
+test/check.sh               # post-install assertions
+```
+
+## Machine-local config
+
+`~/.config/zsh/local.zsh` is created from a template on first apply and never overwritten. Put
+proxy settings, tokens and tool-installer PATH lines there; it is not tracked.

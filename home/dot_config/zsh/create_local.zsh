@@ -1,4 +1,4 @@
-# Copy this file to ~/.config/zsh/local.zsh for machine-specific settings.
+# Created once by chezmoi as ~/.config/zsh/local.zsh and never overwritten. Untracked machine-specific settings go here.
 
 # Example: WSL host home path
 # export HOST_HOME=/mnt/c/Users/yourname

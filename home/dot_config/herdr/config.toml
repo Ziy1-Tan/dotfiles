@@ -1,0 +1,13 @@
+onboarding = false
+[ui]
+agent_panel_sort = "priority"
+show_agent_labels_on_pane_borders = true
+prompt_new_tab_name = false
+
+status_indicators = "symbols"
+[theme]
+name = "terminal"
+auto_switch = false
+
+[ui.toast]
+delivery = "herdr"

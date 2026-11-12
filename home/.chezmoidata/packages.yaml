@@ -1,0 +1,19 @@
+packages:
+  brew: [zsh, curl, fzf, fd, ripgrep, zoxide, tmux, tlrc, dockutil]
+  # fzf is cloned instead: apt's is too old for `fzf --zsh` (needs 0.48+).
+  apt: [zsh, curl, git, vim, tmux, fd-find, ripgrep, zoxide, tldr, libatomic1]
+  # Only apps already managed by cask on this machine; the rest are downloaded
+  # from the vendor (see README).
+  cask:
+    - ghostty
+    - raycast
+    - rectangle
+    - hiddenbar
+    - maccy
+    - snipaste
+    - itsycal
+    - betterdisplay
+    - obsidian
+    - font-fira-code-nerd-font
+    - font-sauce-code-pro-nerd-font
+    - font-caskaydia-cove-nerd-font

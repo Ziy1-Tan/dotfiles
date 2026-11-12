@@ -141,14 +141,19 @@ export NVM_DIR="$HOME/.nvm"
 # Put nvm's default node on PATH now, cheaply, so `#!/usr/bin/env node` shebangs
 # work without triggering the lazy load below. The heavy nvm.sh stays deferred.
 () {
-    local alias_file="$NVM_DIR/alias/default" alias_val node_bin
-    [[ -f "$alias_file" ]] || return
-    alias_val=$(<"$alias_file")
-    # Follow one level of indirection (e.g. "lts/*" -> "22").
-    [[ -f "$NVM_DIR/alias/$alias_val" ]] && alias_val=$(<"$NVM_DIR/alias/$alias_val")
+    local alias_val
+    local -a node_bins
+    alias_val=$(<"$NVM_DIR/alias/default") 2>/dev/null || return
+    # Resolve alias chains such as default -> lts/* -> lts/lithium -> v22.x.
+    while [[ -f "$NVM_DIR/alias/$alias_val" ]]; do
+        alias_val=$(<"$NVM_DIR/alias/$alias_val")
+    done
     alias_val="${alias_val//[[:space:]]/}"
-    node_bin=$(ls -d "$NVM_DIR/versions/node/v${alias_val}"*/bin 2>/dev/null | sort -V | tail -1)
-    [[ -n "$node_bin" && -d "$node_bin" ]] && export PATH="$node_bin:$PATH"
+    alias_val="${alias_val#v}"
+    # (N) keeps an unresolved alias from erroring; (nO) sorts numerically, newest first.
+    node_bins=("$NVM_DIR"/versions/node/v${alias_val}*/bin(N))
+    node_bins=(${(nO)node_bins})
+    (( $#node_bins )) && export PATH="${node_bins[1]}:$PATH"
 }
 
 # nvm.sh is slow, so load it on first call to nvm. Until then node, npm and the

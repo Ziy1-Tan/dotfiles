@@ -26,3 +26,9 @@ unsetproxy() {
 alias t="tmux"
 alias ta="tmux a -d -t 0"
 alias td="tmux detach"
+
+alias ce='claude'
+alias ced='claude --dangerously-skip-permissions'
+alias cedc='claude --dangerously-skip-permissions --continue'
+alias cedr='claude --dangerously-skip-permissions --resume'
+alias cx='codex'

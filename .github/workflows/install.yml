@@ -1,0 +1,47 @@
+name: install
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 3 * * 1" # weekly, to catch upstream installers breaking
+
+jobs:
+  install:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.runner }}
+    container: ${{ matrix.container }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Bare image: closest to a freshly provisioned apt machine (root, no sudo).
+          - name: ubuntu-24.04
+            runner: ubuntu-24.04
+            container: ubuntu:24.04
+          - name: macos-15
+            runner: macos-15
+    env:
+      TERM: xterm-256color
+      HOMEBREW_NO_AUTO_UPDATE: "1"
+      HOMEBREW_NO_INSTALL_CLEANUP: "1"
+    steps:
+      - name: Base packages (container only)
+        if: matrix.container
+        run: apt-get update -qq && apt-get install -y -qq git curl ca-certificates
+
+      - uses: actions/checkout@v4
+
+      - name: Install chezmoi
+        run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$HOME/.local/bin"
+
+      # gui=false: casks, fonts and the Dock layout are slow and not what this tests.
+      - name: chezmoi init --apply
+        run: |
+          "$HOME/.local/bin/chezmoi" init --source "$GITHUB_WORKSPACE" \
+            --promptBool gui=false --apply --verbose
+
+      - name: Check installed state
+        run: test/check.sh "$GITHUB_WORKSPACE"

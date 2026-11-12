@@ -1,0 +1,25 @@
+#!/bin/bash
+set -euo pipefail
+{{ if eq .chezmoi.os "darwin" -}}
+[ -x /opt/homebrew/bin/brew ] || [ -x /usr/local/bin/brew ] \
+  || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+{{ includeTemplate "brew-env.sh" . }}
+brew bundle --no-upgrade --file=/dev/stdin <<'BREWFILE'
+{{ range .packages.brew }}brew "{{ . }}"
+{{ end -}}
+{{ if .gui }}{{ range .packages.cask }}cask "{{ . }}"
+{{ end }}{{ end -}}
+BREWFILE
+{{- else if eq .chezmoi.os "linux" -}}
+command -v apt-get >/dev/null || { echo "only apt-based Linux is supported" >&2; exit 1; }
+SUDO=""; [ "$(id -u)" -eq 0 ] || SUDO=sudo
+$SUDO apt-get update -qq
+DEBIAN_FRONTEND=noninteractive $SUDO apt-get install -y -qq {{ .packages.apt | join " " }} >/dev/null
+# Debian ships fd as fdfind.
+mkdir -p "$HOME/.local/bin"
+ln -sf "$(command -v fdfind)" "$HOME/.local/bin/fd"
+if [ ! -x "$HOME/.fzf/bin/fzf" ]; then
+  git clone -q --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
+  "$HOME/.fzf/install" --bin >/dev/null
+fi
+{{- end }}
