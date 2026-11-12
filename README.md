@@ -6,12 +6,16 @@ Ubuntu / macOS, managed by [chezmoi](https://www.chezmoi.io).
 
 ```bash
 sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin
-~/.local/bin/chezmoi init --apply Ziy1-Tan/dotfiles
+~/.local/bin/chezmoi -S ~/github/dotfiles init --apply Ziy1-Tan/dotfiles
 ```
+
+The source directory is `~/github/dotfiles`, **not** chezmoi's default `~/.local/share/chezmoi`;
+always pass `-S ~/github/dotfiles` on `init`. The generated config records it (`sourceDir`), so
+later commands need no flag.
 
 On macOS `init` asks one question, `gui` (casks, fonts, Dock layout; default yes). Linux never asks. To answer without a prompt: `chezmoi init --promptBool gui=false --apply Ziy1-Tan/dotfiles`.
 
-Files are symlinked into the clone (`~/.local/share/chezmoi`), so editing `~/.zshrc` edits git
+Files are symlinked into the clone (`~/github/dotfiles`), so editing `~/.zshrc` edits git
 directly. Day to day:
 
 | Command | Effect |
