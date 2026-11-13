@@ -9,14 +9,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin
 ~/.local/bin/chezmoi -S ~/github/dotfiles init --apply Ziy1-Tan/dotfiles
 ```
 
-The source directory is `~/github/dotfiles`, **not** chezmoi's default `~/.local/share/chezmoi`;
-always pass `-S ~/github/dotfiles` on `init`. The generated config records it (`sourceDir`), so
-later commands need no flag.
-
-On macOS `init` asks one question, `gui` (casks, fonts, Dock layout; default yes). Linux never asks. To answer without a prompt: `chezmoi init --promptBool gui=false --apply Ziy1-Tan/dotfiles`.
-
-Files are symlinked into the clone (`~/github/dotfiles`), so editing `~/.zshrc` edits git
-directly. Day to day:
+Day to day:
 
 | Command | Effect |
 |---------|--------|
@@ -35,10 +28,11 @@ home/
 ├── .chezmoidata/
 │   ├── packages.yaml       # brew / apt / cask lists
 │   └── dock.yaml           # Dock order
+├── .chezmoiexternal.toml   # zinit and vim-plug, fetched by chezmoi
 ├── .chezmoiscripts/        # run in filename order
 │   ├── 10-packages         # brew everywhere; apt (Linux) only bootstraps brew; casks/fonts if gui
 │   ├── 20-default-shell    # chsh to zsh
-│   ├── 30-runtimes         # uv, nvm + LTS node, vim-plug
+│   ├── 30-runtimes         # uv, nvm + LTS node
 │   ├── 40-macos-defaults   # defaults write, pmset
 │   └── 50-dock             # dockutil layout (macOS, gui only)
 ├── dot_zshrc  dot_zprofile  dot_vimrc  dot_tmux.conf  dot_gitconfig

@@ -26,6 +26,9 @@ done
 [ -f "$HOME/.config/zsh/local.zsh" ] && [ ! -L "$HOME/.config/zsh/local.zsh" ] \
   || fail "local.zsh should be a regular file"
 
+[ -f "$HOME/.local/share/zinit/zinit.git/zinit.zsh" ] || fail "zinit not fetched"
+[ -f "$HOME/.vim/autoload/plug.vim" ] || fail "vim-plug not fetched"
+
 echo "--- target state matches source"
 chezmoi verify || fail "chezmoi verify reported drift"
 
@@ -37,11 +40,10 @@ if printf '%s' "$out" | grep -qE 'packages|default-shell|runtimes|macos-defaults
 fi
 
 echo "--- interactive zsh starts cleanly"
-export TERM="${TERM:-xterm-256color}" # CI has no TERM; zinit's installer calls tput
+export TERM="${TERM:-xterm-256color}" # CI has no TERM; zinit prints with tput
 zsh -i -c exit </dev/null >/dev/null 2>&1 || true # first start lets zinit clone its plugins
 err="$(zsh -i -c exit </dev/null 2>&1 >/dev/null)" || fail "zsh -i exited non-zero"
 [ -z "$err" ] || { printf '%s\n' "$err"; fail "zsh -i wrote to stderr"; }
-[ -d "$HOME/.local/share/zinit/zinit.git" ] || fail "zinit not installed"
 
 if [ "$(uname)" = Darwin ]; then
   echo "--- macOS defaults"

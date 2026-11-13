@@ -1,0 +1,9 @@
+# No refreshPeriod: fetched once, never auto-updated under a working shell.
+[".local/share/zinit/zinit.git"]
+    type = "git-repo"
+    url = "https://github.com/zdharma-continuum/zinit.git"
+    clone.args = ["--depth", "1"]
+
+[".vim/autoload/plug.vim"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
