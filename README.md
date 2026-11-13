@@ -27,7 +27,6 @@ home/
 ├── .chezmoi.toml.tmpl      # the `gui` prompt, symlink mode
 ├── .chezmoidata/
 │   ├── packages.yaml       # brew / apt / cask lists
-│   └── dock.yaml           # Dock order
 ├── .chezmoiexternal.toml   # zinit and vim-plug, fetched by chezmoi
 ├── .chezmoiscripts/        # run in filename order
 │   ├── 10-packages         # brew everywhere; apt (Linux) only bootstraps brew; casks/fonts if gui
