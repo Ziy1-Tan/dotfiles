@@ -8,12 +8,21 @@ done
 # run_once because the Dock gets hand-tuned afterwards and must not be wiped.
 # Start from empty so the result doesn't depend on the previous Dock.
 dockutil --remove all --no-restart
-{{ range .dock -}}
-{{ if eq . "spacer" -}}
+
+# dockutil exits 0 for a missing app and leaves a dead icon, so test first.
+[ -e "/System/Applications/System Settings.app" ] && dockutil --add "/System/Applications/System Settings.app" --no-restart
+[ -e "/System/Applications/Music.app" ] && dockutil --add "/System/Applications/Music.app" --no-restart
+[ -e "/Applications/QQMusic.app" ] && dockutil --add "/Applications/QQMusic.app" --no-restart
+[ -e "/Applications/Google Chrome.app" ] && dockutil --add "/Applications/Google Chrome.app" --no-restart
 dockutil --add '' --type small-spacer --section apps --no-restart
-{{ else -}}
-if [ -e {{ . | quote }} ]; then dockutil --add {{ . | quote }} --no-restart; else echo "dock: skipping missing {{ . }}" >&2; fi
-{{ end -}}
-{{ end -}}
+[ -e "/Applications/TT switch.app" ] && dockutil --add "/Applications/TT switch.app" --no-restart
+[ -e "/Applications/Visual Studio Code.app" ] && dockutil --add "/Applications/Visual Studio Code.app" --no-restart
+[ -e "/Applications/Ghostty.app" ] && dockutil --add "/Applications/Ghostty.app" --no-restart
+dockutil --add '' --type small-spacer --section apps --no-restart
+[ -e "/Applications/WeChat.app" ] && dockutil --add "/Applications/WeChat.app" --no-restart
+[ -e "/Applications/QQ.app" ] && dockutil --add "/Applications/QQ.app" --no-restart
+[ -e "/Applications/Obsidian.app" ] && dockutil --add "/Applications/Obsidian.app" --no-restart
+
+# Keep this last: if the final `[ -e ] &&` line were missing its app, the script would exit 1.
 killall Dock
 {{ end -}}
