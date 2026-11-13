@@ -1,4 +1,4 @@
-# Created once by chezmoi as ~/.config/zsh/local.zsh and never overwritten. Untracked machine-specific settings go here.
+# Copied once to ~/.config/zsh/local.zsh and never overwritten. The copy is untracked.
 
 # Example: WSL host home path
 # export HOST_HOME=/mnt/c/Users/yourname

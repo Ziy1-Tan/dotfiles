@@ -26,7 +26,7 @@ export YSU_MODE=BESTMATCH
 # Everything here must exist before compinit (below) and before ZLE starts, so
 # none of it can be turbo-loaded.
 #
-# blockf keeps zsh-completions from writing to fpath itself — zinit manages it.
+# blockf stops zsh-completions from writing to fpath; zinit manages it.
 zinit blockf compile light-mode for zsh-users/zsh-completions
 
 # OMZ libs/plugins. Order matters: git.zsh before the git plugin, completion.zsh
@@ -42,7 +42,7 @@ zinit for \
 # Prefix-aware history search on ↑ (zsh4humans-style). Must load synchronously
 # (its widgets don't register under turbo) and before syntax-highlighting.
 zinit lucid compile light-mode for zsh-users/zsh-history-substring-search
-# The plugin only registers widgets — bind them here.
+# The plugin registers widgets but binds no keys.
 bindkey '\e[A' history-substring-search-up
 bindkey '\e[B' history-substring-search-down
 bindkey '\eOA' history-substring-search-up

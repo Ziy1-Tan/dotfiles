@@ -1,4 +1,4 @@
-# Initial Dock only: applied once on first bootstrap, never re-applied. Left to right; "spacer" is a small spacer tile.
+# Applied once, on first bootstrap. "spacer" is a small gap between groups.
 dock:
   - /System/Applications/System Settings.app
   - /System/Applications/Music.app
