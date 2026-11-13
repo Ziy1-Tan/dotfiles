@@ -1,7 +1,9 @@
 {{ if and (eq .chezmoi.os "darwin") .gui -}}
 #!/bin/bash
 set -euo pipefail
-{{ includeTemplate "brew-env.sh" . }}
+for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew; do
+  if [ -x "$brew_bin" ]; then eval "$("$brew_bin" shellenv)"; break; fi
+done
 
 # run_once: the Dock is hand-tuned afterwards, so later edits to dock.yaml must not wipe it.
 # Rebuild from scratch so the result doesn't depend on the previous Dock.
