@@ -29,6 +29,9 @@ done
 [ -f "$HOME/.local/share/zinit/zinit.git/zinit.zsh" ] || fail "zinit not fetched"
 [ -f "$HOME/.vim/autoload/plug.vim" ] || fail "vim-plug not fetched"
 
+echo "--- brew tools resolve in a non-login interactive shell"
+zsh -i -c 'command -v brew zoxide fd >/dev/null' </dev/null >/dev/null 2>&1 || fail "brew tools missing from PATH without a login shell"
+
 echo "--- target state matches source"
 chezmoi verify || fail "chezmoi verify reported drift"
 

@@ -1,3 +1,5 @@
+source "$HOME/.config/zsh/brew.zsh"
+
 export LANG=en_US.UTF-8
 export EDITOR=vim
 
