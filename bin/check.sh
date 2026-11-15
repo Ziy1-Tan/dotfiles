@@ -1,6 +1,6 @@
 #!/bin/bash
 # Assert that a machine bootstrapped with chezmoi ended up in the expected state.
-# Usage: test/check.sh <repo-dir>
+# Usage: bin/check.sh <repo-dir>
 set -euo pipefail
 repo="$(cd "$1" && pwd -P)"   # -P: any path into the repo (incl. symlinks) must resolve
 fail() { echo "FAIL: $*" >&2; exit 1; }
@@ -21,7 +21,13 @@ echo "--- managed files are symlinks into the repo"
 for f in .zshrc .zprofile .vimrc .tmux.conf .gitconfig .config/zsh/env.zsh .config/zsh/alias.zsh; do
   target="$(readlink "$HOME/$f" || true)"
   [ -n "$target" ] || fail "~/$f is not a symlink"
-  case "$target" in "$repo"/home/*) ;; *) fail "~/$f -> $target (outside $repo)" ;; esac
+  case "$target" in "$repo"/*) ;; *) fail "~/$f -> $target (outside $repo)" ;; esac
+done
+managed="$(chezmoi managed)"
+for f in README.md LICENSE AGENTS.md Brewfile apt-packages.txt winget.json scoop.json; do
+  if printf '%s\n' "$managed" | grep -qxF "$f"; then
+    fail "repo-only file $f leaked into the target state"
+  fi
 done
 [ -f "$HOME/.config/zsh/local.zsh" ] && [ ! -L "$HOME/.config/zsh/local.zsh" ] \
   || fail "local.zsh should be a regular file"

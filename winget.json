@@ -1,0 +1,43 @@
+{
+  "$schema": "https://aka.ms/winget-packages.schema.2.0.json",
+  "CreationDate": "2026-11-15T00:00:00.000+00:00",
+  "Sources": [
+    {
+      "Packages": [
+        { "PackageIdentifier": "Microsoft.WindowsTerminal" },
+        { "PackageIdentifier": "Microsoft.PowerShell" },
+        { "PackageIdentifier": "Microsoft.VisualStudioCode" },
+        { "PackageIdentifier": "Google.Chrome" },
+        { "PackageIdentifier": "Obsidian.Obsidian" },
+        { "PackageIdentifier": "Tencent.WeChat.Universal" },
+        { "PackageIdentifier": "Tencent.QQ.NT" },
+        { "PackageIdentifier": "Microsoft.PowerToys" },
+        { "PackageIdentifier": "voidtools.Everything" },
+        { "PackageIdentifier": "7zip.7zip" },
+        { "PackageIdentifier": "ClashVergeRev.ClashVergeRev" },
+        { "PackageIdentifier": "Microsoft.WSL" },
+        { "PackageIdentifier": "Canonical.Ubuntu.2204" }
+      ],
+      "SourceDetails": {
+        "Argument": "https://cdn.winget.microsoft.com/cache",
+        "Identifier": "Microsoft.Winget.Source_8wekyb3d8bbwe",
+        "Name": "winget",
+        "Type": "Microsoft.PreIndexed.Package"
+      }
+    },
+    {
+      "Packages": [
+        { "PackageIdentifier": "9P1WXPKB68KX" },
+        { "PackageIdentifier": "9PFHDD62MXS1" },
+        { "PackageIdentifier": "9PFXXSHC64H3" }
+      ],
+      "SourceDetails": {
+        "Argument": "https://storeedgefd.dsx.mp.microsoft.com/v9.0",
+        "Identifier": "StoreEdgeFD",
+        "Name": "msstore",
+        "Type": "Microsoft.Rest"
+      }
+    }
+  ],
+  "WinGetVersion": "1.29.380"
+}

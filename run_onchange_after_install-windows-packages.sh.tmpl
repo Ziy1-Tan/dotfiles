@@ -1,0 +1,34 @@
+{{- if and (eq .chezmoi.os "linux") (contains "microsoft" (.chezmoi.kernel.osrelease | lower)) -}}
+#!/bin/bash
+set -euo pipefail
+
+# winget.json hash: {{ include "winget.json" | sha256sum }}
+# scoop.json hash: {{ include "scoop.json" | sha256sum }}
+
+src={{ .chezmoi.sourceDir | quote }}
+
+# Continue to scoop after a winget failure, but return the failure so the script
+# reruns on the next apply.
+status=0
+
+if command -v winget.exe >/dev/null 2>&1; then
+  winget.exe import \
+    --import-file "$(wslpath -w "$src/winget.json")" \
+    --accept-package-agreements --accept-source-agreements \
+    --ignore-unavailable --no-upgrade || status=$?
+else
+  echo "winget.exe not found; skipping Windows apps" >&2
+fi
+
+if ! command -v powershell.exe >/dev/null 2>&1; then
+  echo "powershell.exe not found; skipping scoop packages" >&2
+elif powershell.exe -NoProfile -Command \
+    "if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) { exit 1 }"; then
+  powershell.exe -NoProfile -ExecutionPolicy Bypass \
+    -Command "scoop import '$(wslpath -w "$src/scoop.json")'" || status=$?
+else
+  echo "scoop not found; skipping scoop packages" >&2
+fi
+
+exit "$status"
+{{- end -}}

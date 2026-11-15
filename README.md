@@ -9,39 +9,18 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin
 ~/.local/bin/chezmoi -S ~/github/dotfiles init --apply Ziy1-Tan/dotfiles
 ```
 
-Day to day:
 
-| Command | Effect |
-|---------|--------|
-| `chezmoi diff` | Preview what `apply` would change |
-| `chezmoi apply` | Reconcile `~` with the repo; re-runs only scripts whose content changed |
-| `chezmoi edit ~/.zshrc` | Edit a managed file through its source path |
-| `chezmoi cd` | Open a shell in the repo |
+## Contents
 
-## Layout
+Managed with [chezmoi](https://www.chezmoi.io/).
 
-`.chezmoiroot` points chezmoi at `home/`; names there map to `~` (`dot_` → `.`).
-
-```text
-home/
-├── .chezmoi.toml.tmpl      # the `gui` prompt, symlink mode
-├── .chezmoidata/
-│   ├── packages.yaml       # brew / apt / cask lists
-├── .chezmoiexternal.toml   # zinit and vim-plug, fetched by chezmoi
-├── .chezmoiscripts/        # run in filename order
-│   ├── 10-packages         # brew everywhere; apt (Linux) only bootstraps brew; casks/fonts if gui
-│   ├── 20-default-shell    # chsh to zsh
-│   ├── 30-runtimes         # uv, nvm + LTS node
-│   ├── 40-macos-defaults   # defaults write, pmset
-│   └── 50-dock             # dockutil layout (macOS, gui only)
-├── dot_zshrc  dot_zprofile  dot_vimrc  dot_tmux.conf  dot_gitconfig
-└── dot_config/
-    ├── alacritty/
-    ├── ghostty/
-    ├── herdr/              # config.toml only; logs, sockets and sessions stay local
-    └── zsh/                # env, alias, fzf, prompt; local.zsh is created once
-test/check.sh               # post-install assertions
-```
+- zsh config: env, aliases, fzf integration and prompt
+- tmux, vim and git config
+- Alacritty, Ghostty and [herdr](https://herdr.dev/) config
+- Package lists: `Brewfile` for Linux and macOS, `apt-packages.txt` for the brew bootstrap
+- Windows packages: `winget.json` and `scoop.json`, imported from WSL
+- Install scripts: packages, default shell, runtimes (uv and nvm), macOS defaults and Dock layout
+- `bin/check.sh` post-install assertions
 
 ## Machine-local config
 
