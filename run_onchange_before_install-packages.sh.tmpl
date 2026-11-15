@@ -6,29 +6,19 @@ set -euo pipefail
 {{- else }}
 command -v apt-get >/dev/null || { echo "only apt-based Linux is supported" >&2; exit 1; }
 SUDO=""; [ "$(id -u)" -eq 0 ] || SUDO=sudo
+# apt-packages.txt hash: {{ include "apt-packages.txt" | sha256sum }}
 $SUDO apt-get update -qq
-DEBIAN_FRONTEND=noninteractive $SUDO apt-get install -y -qq {{ .packages.apt | join " " }} >/dev/null
+mapfile -t apt_packages < {{ joinPath .chezmoi.sourceDir "apt-packages.txt" | quote }}
+DEBIAN_FRONTEND=noninteractive $SUDO apt-get install -y -qq "${apt_packages[@]}" >/dev/null
 [ -x /home/linuxbrew/.linuxbrew/bin/brew ] \
   || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 {{- end }}
-# brew is the only CLI package manager on every platform; apt (Linux) only
-# installs brew's own dependencies. Never apt-install zsh-ecosystem tools:
-# Ubuntu 22.04's zoxide 0.4.3 generates a self-recursive `cd` wrapper.
+# brew is the only CLI package manager on Linux and macOS; apt only installs
+# brew's own dependencies. Never apt-install zsh-ecosystem tools: Ubuntu
+# 22.04's zoxide 0.4.3 generates a self-recursive `cd` wrapper.
 for brew_bin in /opt/homebrew/bin/brew /home/linuxbrew/.linuxbrew/bin/brew /usr/local/bin/brew; do
   if [ -x "$brew_bin" ]; then eval "$("$brew_bin" shellenv)"; break; fi
 done
-brew bundle --no-upgrade --file=/dev/stdin <<'BREWFILE'
-{{- range .packages.brew }}
-brew "{{ . }}"
-{{- end }}
-{{- if eq .chezmoi.os "darwin" }}
-{{- range .packages.brew_darwin }}
-brew "{{ . }}"
-{{- end }}
-{{- if .gui }}
-{{- range .packages.cask }}
-cask "{{ . }}"
-{{- end }}
-{{- end }}
-{{- end }}
-BREWFILE
+# Brewfile hash: {{ include "Brewfile" | sha256sum }}
+export DOTFILES_GUI={{ if .gui }}1{{ else }}0{{ end }}
+brew bundle --no-upgrade --file={{ joinPath .chezmoi.sourceDir "Brewfile" | quote }}

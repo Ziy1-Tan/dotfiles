@@ -44,4 +44,4 @@ jobs:
             --promptBool gui=false --apply --verbose
 
       - name: Check installed state
-        run: test/check.sh "$GITHUB_WORKSPACE"
+        run: bin/check.sh "$GITHUB_WORKSPACE"

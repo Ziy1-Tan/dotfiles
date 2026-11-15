@@ -1,0 +1,17 @@
+{
+  "buckets": [
+    {
+      "Name": "main",
+      "Source": "https://github.com/ScoopInstaller/Main"
+    },
+    {
+      "Name": "nerd-fonts",
+      "Source": "https://github.com/matthewjberger/scoop-nerd-fonts"
+    }
+  ],
+  "apps": [
+    { "Name": "git", "Source": "main" },
+    { "Name": "FiraCode-NF-Mono", "Source": "nerd-fonts" },
+    { "Name": "SourceCodePro-NF-Mono", "Source": "nerd-fonts" }
+  ]
+}
