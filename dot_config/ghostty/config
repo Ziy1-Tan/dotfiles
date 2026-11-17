@@ -1,8 +1,8 @@
 # 字体
 font-size = 18
-font-family = Google Sans Code
-font-family = SauceCodePro Nerd Font
-#font-family = FiraCode Nerd Font
+#font-family = Google Sans Code
+#font-family = SauceCodePro Nerd Font
+font-family = FiraCode Nerd Font
 font-family = PingFang SC
 font-family = Apple Color Emoji
 

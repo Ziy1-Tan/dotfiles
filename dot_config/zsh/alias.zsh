@@ -33,3 +33,21 @@ alias cedc='claude --dangerously-skip-permissions --continue'
 alias cedr='claude --dangerously-skip-permissions --resume'
 alias cx='codex'
 alias che='chezmoi'
+alias cb='codebuddy'
+
+# Run the interactive Codex TUI without the shared app-server daemon. The daemon
+# runs hooks with the environment of the pane that started it, so herdr's
+# SessionStart hook reports the wrong HERDR_PANE_ID for every other pane.
+# --no-daemon is accepted only by the TUI (bare, with a prompt, resume, fork),
+# so known non-TUI subcommands and explicit --no-daemon pass through as-is.
+codex() {
+  if (( ${@[(Ie)--no-daemon]} )); then
+    command codex "$@"
+    return
+  fi
+  case "${1-}" in
+    agents|exec|e|review|login|logout|mcp|plugin|app-server|remote-control|app|completion|update|doctor|sandbox|debug|apply|queue|archive|delete|migrate-rollouts|migrate-nfs-db|unarchive|cloud|exec-server|features|help)
+      command codex "$@" ;;
+    *) command codex --no-daemon "$@" ;;
+  esac
+}
