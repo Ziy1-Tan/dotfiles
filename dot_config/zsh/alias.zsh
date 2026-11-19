@@ -35,6 +35,9 @@ alias cx='codex'
 alias che='chezmoi'
 alias cb='codebuddy'
 
+alias cop='copypath'
+alias rep='copypath'
+
 # Run the interactive Codex TUI without the shared app-server daemon. The daemon
 # runs hooks with the environment of the pane that started it, so herdr's
 # SessionStart hook reports the wrong HERDR_PANE_ID for every other pane.
