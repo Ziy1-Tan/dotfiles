@@ -5,6 +5,7 @@ brew "ripgrep"
 brew "zoxide"
 brew "tlrc"
 brew "tmux"
+brew "gitlint"
 
 brew "dockutil" if OS.mac?
 brew "wl-clipboard" if OS.linux?

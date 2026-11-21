@@ -1,0 +1,6 @@
+[general]
+ignore-merge-commits = true
+contrib = CT1, CC1
+
+[body-max-line-length]
+line-length = 300

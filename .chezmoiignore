@@ -5,6 +5,7 @@ Brewfile
 apt-packages.txt
 winget.json
 scoop.json
+.gitlint
 .claude/
 .comment-baseline
 
