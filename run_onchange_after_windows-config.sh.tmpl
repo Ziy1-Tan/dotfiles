@@ -1,0 +1,10 @@
+{{- if and (eq .chezmoi.os "linux") (contains "microsoft" (.chezmoi.kernel.osrelease | lower)) -}}
+#!/bin/bash
+set -euo pipefail
+export PATH="$HOME/.local/bin:$PATH"
+
+# nushell config.nu hash: {{ include "windows/dot_config/nushell/executable_config.nu" | sha256sum }}
+# nushell env.nu hash: {{ include "windows/dot_config/nushell/executable_env.nu" | sha256sum }}
+chezmoi --config "$HOME/.config/chezmoi/windows.toml" \
+  --persistent-state "$HOME/.cache/chezmoi/windows-state.json" apply
+{{- end -}}
