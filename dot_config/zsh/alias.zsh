@@ -1,10 +1,10 @@
 alias cl="clear"
 alias sz="source ~/.zshrc"
 
-if ls --color=auto >/dev/null 2>&1; then
-    alias ll="ls -lh --color=auto"
-else
+if [[ $OSTYPE == darwin* ]]; then
     alias ll="ls -lhG"
+else
+    alias ll="ls -lh --color=auto"
 fi
 
 setproxy() {

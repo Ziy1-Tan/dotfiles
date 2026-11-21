@@ -11,8 +11,8 @@ source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-if (( $+commands[brew] )); then
-    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+if (( $+commands[brew] )) && [[ -n $HOMEBREW_PREFIX ]]; then
+    FPATH="$HOMEBREW_PREFIX/share/zsh/site-functions:${FPATH}"
 fi
 
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=23"
@@ -21,8 +21,6 @@ export YSU_MODE=BESTMATCH
 zinit blockf compile light-mode for zsh-users/zsh-completions
 
 zinit for \
-    OMZL::git.zsh \
-    OMZP::git/git.plugin.zsh \
     OMZL::completion.zsh \
     OMZL::history.zsh \
     OMZL::key-bindings.zsh \

@@ -1,5 +1,3 @@
-[[ ! "$PATH" == */.fzf/bin* ]] && export PATH="${PATH:+${PATH}:}$HOME/.fzf/bin"
-
 if [[ -o interactive && -t 1 ]] && (( $+commands[fzf] )); then
     _fzf_int_file="$HOME/.cache/zsh/fzf-integration.zsh"
     [[ ! -f "$_fzf_int_file" || "$commands[fzf]" -nt "$_fzf_int_file" ]] \

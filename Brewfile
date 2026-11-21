@@ -1,5 +1,6 @@
 brew "fzf"
 brew "fd"
+brew "go"
 brew "ripgrep"
 brew "zoxide"
 brew "tlrc"
