@@ -7,11 +7,16 @@
     {
       "Name": "nerd-fonts",
       "Source": "https://github.com/matthewjberger/scoop-nerd-fonts"
+    },
+    {
+      "Name": "magpie",
+      "Source": "https://github.com/yetone/magpie-releases"
     }
   ],
   "apps": [
     { "Name": "git", "Source": "main" },
     { "Name": "FiraCode-NF-Mono", "Source": "nerd-fonts" },
-    { "Name": "SourceCodePro-NF-Mono", "Source": "nerd-fonts" }
+    { "Name": "SourceCodePro-NF-Mono", "Source": "nerd-fonts" },
+    { "Name": "magpie-app", "Source": "magpie" }
   ]
 }

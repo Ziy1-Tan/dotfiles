@@ -7,22 +7,22 @@ set -euo pipefail
 
 src={{ .chezmoi.sourceDir | quote }}
 
+PS=/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe
+[ -x "$PS" ] || PS=powershell.exe
 status=0
 
-if command -v winget.exe >/dev/null 2>&1; then
-  winget.exe import \
-    --import-file "$(wslpath -w "$src/winget.json")" \
-    --accept-package-agreements --accept-source-agreements \
-    --ignore-unavailable --no-upgrade || status=$?
+if "$PS" -NoProfile -Command 'Get-Command winget -ErrorAction SilentlyContinue' >/dev/null 2>&1; then
+  "$PS" -NoProfile -Command \
+    "winget import --import-file '$(wslpath -w "$src/winget.json")' \
+      --accept-package-agreements --accept-source-agreements \
+      --ignore-unavailable --no-upgrade" || status=$?
 else
-  echo "winget.exe not found; skipping Windows apps" >&2
+  echo "winget not found; skipping Windows apps" >&2
 fi
 
-if ! command -v powershell.exe >/dev/null 2>&1; then
-  echo "powershell.exe not found; skipping scoop packages" >&2
-elif powershell.exe -NoProfile -Command \
-    "if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) { exit 1 }"; then
-  powershell.exe -NoProfile -ExecutionPolicy Bypass \
+if "$PS" -NoProfile -Command \
+    'if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) { exit 1 }'; then
+  "$PS" -NoProfile -ExecutionPolicy Bypass \
     -Command "scoop import '$(wslpath -w "$src/scoop.json")'" || status=$?
 else
   echo "scoop not found; skipping scoop packages" >&2
