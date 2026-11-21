@@ -1,1 +1,4 @@
 *.zwc
+/bin/lint-comments.sh
+/.comment-baseline
+/.claude/

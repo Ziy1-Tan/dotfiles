@@ -54,7 +54,6 @@ style = "Italic"
 
 [font.normal]
 family = "SauceCodePro Nerd Font Mono"
-#family = "FiraCode Nerd Font Mono"
 style = "Regular"
 
 [scrolling]

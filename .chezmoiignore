@@ -1,4 +1,3 @@
-# Repo-only files. Patterns match target paths, not source paths.
 README.md
 LICENSE
 AGENTS.md
@@ -6,3 +5,5 @@ Brewfile
 apt-packages.txt
 winget.json
 scoop.json
+.claude/
+.comment-baseline

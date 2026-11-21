@@ -1,20 +1,16 @@
 source "$HOME/.config/zsh/env.zsh"
 
-# History: drop all duplicates (not just consecutive ones) and share across
-# sessions. OMZL::history.zsh (loaded below) adds further options.
 setopt HIST_IGNORE_ALL_DUPS sharehistory
 
 setopt AUTO_CD
-setopt EXTENDED_GLOB        # ^ / # / ~ glob operators
+setopt EXTENDED_GLOB
 setopt INTERACTIVE_COMMENTS
 setopt NO_BEEP
 
-# zinit itself is cloned by chezmoi (.chezmoiexternal.toml), not on first shell start.
 source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-# Homebrew's site completions (macOS / Linuxbrew)
 if (( $+commands[brew] )); then
     FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 fi
@@ -22,15 +18,8 @@ fi
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=23"
 export YSU_MODE=BESTMATCH
 
-# ── Synchronous loads ────────────────────────────────────────────────────────
-# Everything here must exist before compinit (below) and before ZLE starts, so
-# none of it can be turbo-loaded.
-#
-# blockf stops zsh-completions from writing to fpath; zinit manages it.
 zinit blockf compile light-mode for zsh-users/zsh-completions
 
-# OMZ libs/plugins. Order matters: git.zsh before the git plugin, completion.zsh
-# before compinit, key-bindings.zsh before ZLE initialises.
 zinit for \
     OMZL::git.zsh \
     OMZP::git/git.plugin.zsh \
@@ -39,21 +28,12 @@ zinit for \
     OMZL::key-bindings.zsh \
     OMZL::theme-and-appearance.zsh
 
-# Prefix-aware history search on ↑ (zsh4humans-style). Must load synchronously
-# (its widgets don't register under turbo) and before syntax-highlighting.
 zinit lucid compile light-mode for zsh-users/zsh-history-substring-search
-# The plugin registers widgets but binds no keys.
 bindkey '\e[A' history-substring-search-up
 bindkey '\e[B' history-substring-search-down
 bindkey '\eOA' history-substring-search-up
 bindkey '\eOB' history-substring-search-down
 
-# ── Turbo loads ──────────────────────────────────────────────────────────────
-# wait="0" defers these until after the first prompt renders, keeping startup
-# fast. Order is load-bearing: autosuggestions needs the ZLE first; clipboard.zsh
-# provides the clipcopy/clippaste that copypath/copybuffer use, so it comes
-# before them; syntax-highlighting wraps every widget registered before it;
-# fzf-tab replaces native completion, so it comes after syntax-highlighting.
 zinit lucid wait="0" compile light-mode for \
     atload"_zsh_autosuggest_start" zsh-users/zsh-autosuggestions \
     MichaelAquilina/zsh-you-should-use \
@@ -67,16 +47,13 @@ zinit lucid wait="0" compile light-mode for \
     zsh-users/zsh-syntax-highlighting \
     Aloxaf/fzf-tab
 
-# uv/uvx completions: generate #compdef files into fpath once, then let compinit
-# pick them up lazily. (uv's completion is ~500 KB; eval-ing it every startup
-# costs ~120 ms.) Regenerate only when uv changes or the cache is missing.
 if (( $+commands[uv] )); then
     uv_comp_dir="$HOME/.cache/zsh/completions"
     if [[ ! -f "$uv_comp_dir/_uv" ]] || [[ "$commands[uv]" -nt "$uv_comp_dir/_uv" ]]; then
         mkdir -p "$uv_comp_dir" 2>/dev/null
         uv generate-shell-completion zsh > "$uv_comp_dir/_uv" 2>/dev/null
         uvx --generate-shell-completion zsh > "$uv_comp_dir/_uvx" 2>/dev/null
-        rm -f "$HOME/.zcompdump"   # force compinit to rebuild its index
+        rm -f "$HOME/.zcompdump"
     fi
     fpath=("$uv_comp_dir" "${fpath[@]}")
     unset uv_comp_dir
@@ -85,15 +62,10 @@ fi
 autoload -Uz compinit
 () {
     local dump="$HOME/.zcompdump" mtime
-    # zinit symlinks plugin completions into its completions/ dir; when upstream
-    # removes one (e.g. _sdd from zsh-completions), the dangling link makes
-    # compinit abort with "no such file or directory". Prune those links first.
     local comp_dir="$HOME/.local/share/zinit/completions" link
     for link in "$comp_dir"/_*(N@); do
         [[ -e "$link" ]] || command rm -f -- "$link"
     done
-    # Reuse the dump when it is under a day old: -C skips compinit's fpath
-    # security check. zsh/stat avoids forking stat(1) and its GNU/macOS flag split.
     zmodload -F zsh/stat b:zstat 2>/dev/null
     mtime=$(zstat +mtime "$dump" 2>/dev/null || echo 0)
     if (( EPOCHSECONDS - mtime < 86400 )); then
@@ -105,10 +77,6 @@ autoload -Uz compinit
 
 zinit cdreplay -q
 
-# ── fzf-tab ──────────────────────────────────────────────────────────────────
-# fzf-tab routes completion through fzf. `fzf-preview` sets the preview pane per
-# command; `fzf-sort fzf-size` opts out of fzf's re-sorting to keep zsh's
-# relevance order.
 zstyle ':fzf-tab:*' fzf-flags --height=50% --border --color=hl:yellow,hl+:yellow:bold
 zstyle ':fzf-tab:*' prefix ''
 zstyle ':completion:*:descriptions' format '[%d]'
@@ -129,26 +97,20 @@ zstyle ':fzf-tab:complete:kubectl:*' fzf-sort fzf-size
 
 export NVM_DIR="$HOME/.nvm"
 
-# Put nvm's default node on PATH now, cheaply, so `#!/usr/bin/env node` shebangs
-# work without triggering the lazy load below. The heavy nvm.sh stays deferred.
 () {
     local alias_val
     local -a node_bins
     alias_val=$(<"$NVM_DIR/alias/default") 2>/dev/null || return
-    # Resolve alias chains such as default -> lts/* -> lts/lithium -> v22.x.
     while [[ -f "$NVM_DIR/alias/$alias_val" ]]; do
         alias_val=$(<"$NVM_DIR/alias/$alias_val")
     done
     alias_val="${alias_val//[[:space:]]/}"
     alias_val="${alias_val#v}"
-    # (N) keeps an unresolved alias from erroring; (nO) sorts numerically, newest first.
     node_bins=("$NVM_DIR"/versions/node/v${alias_val}*/bin(N))
     node_bins=(${(nO)node_bins})
     (( $#node_bins )) && export PATH="${node_bins[1]}:$PATH"
 }
 
-# nvm.sh is slow, so load it on first call to nvm. Until then node, npm and the
-# rest resolve to the default version through the PATH entry above.
 nvm() {
     unset -f nvm
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
@@ -160,8 +122,6 @@ nvm() {
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-# Keep user-local binaries after version-manager binaries.
-# This has to run before anything below needs a ~/.local/bin tool.
 path=(${path:#$HOME/.local/bin})
 path+=("$HOME/.local/bin")
 

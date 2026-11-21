@@ -1,9 +1,5 @@
 [[ ! "$PATH" == */.fzf/bin* ]] && export PATH="${PATH:+${PATH}:}$HOME/.fzf/bin"
 
-# fzf shell integration (key bindings + completions), cached to a file so we
-# don't fork an `fzf --zsh` subprocess on every startup.
-# -t 1 (a real TTY) guards against zinit's option restore triggering
-# "can't change option: zle" in non-TTY interactive shells.
 if [[ -o interactive && -t 1 ]] && (( $+commands[fzf] )); then
     _fzf_int_file="$HOME/.cache/zsh/fzf-integration.zsh"
     [[ ! -f "$_fzf_int_file" || "$commands[fzf]" -nt "$_fzf_int_file" ]] \
@@ -25,7 +21,6 @@ fi
 export FZF_COMPLETION_TRIGGER='\'
 export FZF_DEFAULT_OPTS='--height 80% --info=inline --layout=reverse'
 
-# fzf's completion helpers; $1 is the base path to traverse.
 _fzf_compgen_path() {
     fd --hidden --follow --exclude ".git" . "$1"
 }

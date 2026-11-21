@@ -1,13 +1,11 @@
 autoload -U colors && colors
 autoload -Uz vcs_info
-zmodload zsh/datetime  # $EPOCHREALTIME (float, microsecond precision)
+zmodload zsh/datetime
 
-# vcs_info: git only
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git:*' formats '[%b]'
 zstyle ':vcs_info:git:*' actionformats '[%b|%a]'
 
-# Command timing from $EPOCHREALTIME (microsecond precision, no fork)
 typeset -F cmd_start_time=0
 typeset -F cmd_elapsed=0
 
@@ -40,8 +38,6 @@ function _cmd_exec_time() {
     fi
 }
 
-# Collapse each intermediate path element to its first character, keeping the
-# last element intact (e.g. ~/dotfiles/config/zsh -> ~/d/c/zsh).
 function _collapsed_pwd() {
     local pwd="${1:-$PWD}" home="$HOME"
     local size=${#home}
@@ -59,7 +55,7 @@ function _collapsed_pwd() {
         local elem=${elements[$i]}
         if [[ ${#elem} > 1 ]]; then
             if [[ "$elem" == .* ]]; then
-                elements[$i]=${${elem//./}[1]}   # first non-dot character
+                elements[$i]=${${elem//./}[1]}
             else
                 elements[$i]=${elem[1]}
             fi

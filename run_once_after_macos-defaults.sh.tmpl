@@ -8,7 +8,6 @@ defaults write NSGlobalDomain com.apple.trackpad.scaling -float 0.875
 defaults write NSGlobalDomain com.apple.mouse.scaling -float 2
 defaults write NSGlobalDomain com.apple.swipescrolldirection -bool true
 defaults write NSGlobalDomain AppleInterfaceStyleSwitchesAutomatically -bool true
-# Tap to click needs both domains: the built-in and the Bluetooth trackpad.
 defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
 
@@ -18,7 +17,6 @@ defaults write com.apple.dock tilesize -int 44
 defaults write com.apple.dock magnification -bool true
 defaults write com.apple.dock largesize -int 74
 defaults write com.apple.dock show-recents -bool false
-# Hot corners: top-left Mission Control, bottom-right screen saver.
 defaults write com.apple.dock wvous-tl-corner -int 2
 defaults write com.apple.dock wvous-tl-modifier -int 0
 defaults write com.apple.dock wvous-bl-corner -int 1
@@ -36,6 +34,5 @@ defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 
 killall Dock Finder 2>/dev/null || true
 
-# pmset is system-wide and needs root.
 sudo pmset -a displaysleep 0 sleep 1
 {{ end -}}
