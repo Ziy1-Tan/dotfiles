@@ -82,8 +82,8 @@
   .variant-b .prompt-line { line-height: 2.4; }
 
   /* C is two lines */
-  .variant-c .pre { margin-bottom: 2px; }
-  .variant-c .arrowline { padding-left: 0; }
+  .variant-c .pre { display: block; margin-bottom: 2px; }
+  .variant-c .arrowline { display: block; padding-left: 0; }
 
   .state {
     margin-top: 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
@@ -219,7 +219,8 @@ function VariantB(s) {
 function VariantC(s) {
   const time = state.exit === '0' ? '' : '<span class="dim"> 2.3s</span>';
   const arrowColor = state.exit === '0' ? 'magenta' : 'red-bold';
-  return `<div class="prompt-line"><span class="pre">${rootPrefix('C')}<span class="blue">${s.text}</span><span class="dim-slash">/</span><span class="green">${branch()}</span>${time}</span>`
+  const bareBranch = branch().replace(/^\[|\]$/g, '');
+  return `<div class="prompt-line"><span class="pre">${rootPrefix('C')}<span class="blue">${s.text}</span> <span class="green">${bareBranch}</span>${time}</span>`
        + `<span class="arrowline"><span class="${arrowColor}">${rootEnd('C')}</span> <span class="cmd">git status</span><span class="cursor"></span></span></div>`;
 }
 
