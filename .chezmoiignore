@@ -5,6 +5,7 @@ Brewfile
 apt-packages.txt
 winget.json
 scoop.json
+prototype-prompt-styles.html
 .claude/
 .comment-baseline
 

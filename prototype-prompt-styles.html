@@ -1,0 +1,283 @@
+<!doctype html>
+<!-- PROTOTYPE: three structurally different prompt path styles. Not production code. -->
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PROTOTYPE · zsh prompt path styles</title>
+<style>
+  :root {
+    --bg: #1d1f21;
+    --fg: #c5c8c6;
+    --cyan: #8abeb7;
+    --cyan-bright: #00afff;
+    --shortened: #afafd7;
+    --green: #b5bd68;
+    --red: #cc6666;
+    --blue: #81a2be;
+    --magenta: #b294bb;
+    --yellow: #f0c674;
+    --panel: #26292c;
+    --line: #3a3f44;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 28px 20px 110px;
+    background: #121416;
+    color: var(--fg);
+    font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; }
+  .stamp {
+    display: inline-flex; gap: 8px; align-items: center;
+    padding: 4px 10px; border: 1px solid var(--yellow); border-radius: 999px;
+    color: var(--yellow); font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+  }
+  h1 { font-size: 19px; margin: 14px 0 4px; }
+  .question { color: #8e949b; margin: 0 0 18px; }
+  .before {
+    background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--fg);
+    border-radius: 6px; padding: 12px 14px; margin-bottom: 12px;
+  }
+  .before .label { color: #8e949b; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+  .terminal {
+    background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+    padding: 30px 26px; min-height: 260px; position: relative; overflow: hidden;
+  }
+  .terminal::before {
+    content: ""; position: absolute; left: 0; top: 0; right: 0; height: 30px;
+    background: #25282c; border-bottom: 1px solid var(--line);
+  }
+  .terminal::after {
+    content: "●  ●  ●"; position: absolute; left: 14px; top: 6px; color: #545a61; font-size: 10px; letter-spacing: 4px;
+  }
+  .prompt-line { white-space: pre-wrap; word-break: break-all; font-size: 16px; }
+  .cmd { opacity: .85; }
+  .cursor { display: inline-block; width: 9px; height: 17px; background: var(--fg); vertical-align: -3px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .note { margin-top: 16px; color: #8e949b; font-size: 12px; max-width: 760px; }
+
+  /* shared token classes */
+  .cyan { color: var(--cyan); }
+  .cyan-bold { color: var(--cyan); font-weight: 700; }
+  .anchor { color: var(--cyan-bright); font-weight: 700; }
+  .shortened { color: var(--shortened); }
+  .green { color: var(--green); }
+  .blue { color: var(--blue); }
+  .red { color: var(--red); }
+  .red-bold { color: var(--red); font-weight: 700; }
+  .magenta { color: var(--magenta); font-weight: 700; }
+  .white { color: var(--fg); }
+  .dim { color: #6f757c; }
+  .dim-slash { color: #6f757c; opacity: .55; }
+  .bold { font-weight: 700; }
+
+  /* B uses real segments, not just recoloured text */
+  .seg { display: inline-block; padding: 2px 8px; margin-right: 4px; border-radius: 4px; }
+  .seg-path { background: #24313a; }
+  .seg-git { background: #2d3324; }
+  .seg-root { background: #3a2426; }
+  .seg-end { background: #2a2d30; }
+  .variant-b .prompt-line { line-height: 2.4; }
+
+  /* C is two lines */
+  .variant-c .pre { margin-bottom: 2px; }
+  .variant-c .arrowline { padding-left: 0; }
+
+  .state {
+    margin-top: 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+    padding: 14px 16px; display: grid; grid-template-columns: 150px 1fr; gap: 6px 16px; font-size: 12px;
+  }
+  .state dt { color: #8e949b; }
+  .state dd { margin: 0; color: var(--fg); }
+
+  .controls {
+    margin-top: 14px; display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px;
+  }
+  .controls label { display: inline-flex; gap: 6px; align-items: center; color: #8e949b; }
+  select, input[type="text"] {
+    background: #17191b; color: var(--fg); border: 1px solid var(--line);
+    border-radius: 4px; padding: 4px 6px; font: inherit;
+  }
+
+  /* switcher: deliberately not part of the design being judged */
+  .switcher {
+    position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 12px;
+    background: #f2f2f2; color: #17191b; border-radius: 999px;
+    padding: 7px 10px; box-shadow: 0 6px 24px #000a; font-weight: 700;
+  }
+  .switcher button {
+    border: 0; background: #17191b; color: #f2f2f2; border-radius: 999px;
+    width: 28px; height: 28px; cursor: pointer; font: inherit;
+  }
+  .switcher .label { min-width: 260px; text-align: center; font-size: 12px; }
+  kbd { background: #dedede; border-radius: 3px; padding: 1px 4px; font: inherit; font-size: 10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="stamp">Prototype · throwaway</span>
+  <h1>zsh prompt：路径部分该多亮、多粗？</h1>
+  <p class="question">三个结构上不同的方案，同一个状态。切换看差异；选中后在 issue 里记一句结论，然后删掉本文件。</p>
+
+  <div class="before">
+    <div class="label">Before · 当前已去掉 user@host</div>
+    <div class="prompt-line"><span class="cyan" id="beforePath">~/g/dotfiles</span><span class="green" id="beforeGit">[master]</span><span class="white" id="beforeEnd">&gt; </span><span class="cmd">git status</span></div>
+  </div>
+
+  <div class="terminal" id="stage" aria-live="polite"></div>
+
+  <div class="controls">
+    <label>路径
+      <select id="pathPreset">
+        <option value="repo">~/github/dotfiles</option>
+        <option value="deep">~/github/dotfiles/dot_config/zsh</option>
+        <option value="home">~</option>
+        <option value="varlog">/var/log</option>
+      </select>
+    </label>
+    <label><input type="checkbox" id="isRoot"> root</label>
+    <label><input type="checkbox" id="isDirty"> dirty</label>
+    <label>上次退出码
+      <select id="exitCode"><option>0</option><option>1</option><option>130</option></select>
+    </label>
+  </div>
+
+  <dl class="state" id="state"></dl>
+
+  <p class="note">
+    对照源码默认值：Pure = <code>path blue</code> 普通字重；Starship = <code>bold cyan</code> 整段；
+    p10k = 缩写 <code>103</code>、锚点 <code>39</code> 且 <code>ANCHOR_BOLD=true</code>。
+    你的 alacritty 配置里亮青与普通青都是 <code>#8abeb7</code>，所以单纯换成 bright cyan 不会变亮。
+  </p>
+</div>
+
+<div class="switcher" role="navigation" aria-label="prototype variants">
+  <button id="prev" aria-label="previous variant">←</button>
+  <div class="label" id="switchLabel">A</div>
+  <button id="next" aria-label="next variant">→</button>
+</div>
+
+<script>
+const VARIANTS = [
+  { key: 'A', name: 'Starship · 整段 bold cyan' },
+  { key: 'B', name: 'p10k · 锚点亮粗 + 缩写降噪' },
+  { key: 'C', name: 'Pure · 两行，指示器领衔' },
+];
+
+const $ = (s) => document.querySelector(s);
+const state = { path: 'repo', root: false, dirty: false, exit: '0' };
+
+function collapsed(preset) {
+  const home = '/home/simple';
+  let p = preset === 'repo' ? home + '/github/dotfiles'
+        : preset === 'deep' ? home + '/github/dotfiles/dot_config/zsh'
+        : preset === 'home' ? home
+        : '/var/log';
+  if (p === '/') return { text: '/', parent: '', last: '/' };
+  if (p === home) return { text: '~', parent: '', last: '~' };
+  if (p.startsWith(home + '/')) p = '~' + p.slice(home.length);
+  const parts = p.split('/');
+  for (let i = 0; i < parts.length - 1; i++) {
+    const e = parts[i];
+    if (e.length > 1) parts[i] = e.startsWith('.') ? e.replace(/\./g, '')[0] : e[0];
+  }
+  const text = parts.join('/');
+  const cut = text.lastIndexOf('/');
+  return cut < 0
+    ? { text, parent: '', last: text }
+    : { text, parent: text.slice(0, cut), last: text.slice(cut + 1) };
+}
+
+function branch() { return state.dirty ? '[master*]' : '[master]'; }
+function rootPrefix(variant) {
+  if (!state.root) return '';
+  if (variant === 'C') return '<span class="dim">root@DESKTOP-EC6TT58 </span>';
+  return '<span class="red">root@</span><span class="white">DESKTOP-EC6TT58:</span>';
+}
+function rootEnd(variant) {
+  if (!state.root) return '<span class="white">&gt;</span>';
+  if (variant === 'C') return '<span class="red-bold">❯</span>';
+  return '<span class="red-bold">#</span>';
+}
+
+function VariantA(s) {
+  return `<div class="prompt-line">${rootPrefix('A')}<span class="cyan-bold">${s.text}</span><span class="green">${branch()}</span>${rootEnd('A')} <span class="cmd">git status</span><span class="cursor"></span></div>`;
+}
+
+function VariantB(s) {
+  const mid = s.parent
+    ? `<span class="shortened">${s.parent}/</span><span class="anchor">${s.last}</span>`
+    : `<span class="anchor">${s.text}</span>`;
+  const root = state.root ? `<span class="seg seg-root red-bold">root@DESKTOP-EC6TT58:</span>` : '';
+  return `<div class="prompt-line"><span class="seg seg-path">${mid}</span><span class="seg seg-git green">${branch()}</span>${root}<span class="seg seg-end">${rootEnd('B')}</span> <span class="cmd">git status</span><span class="cursor"></span></div>`;
+}
+
+function VariantC(s) {
+  const time = state.exit === '0' ? '' : '<span class="dim"> 2.3s</span>';
+  const arrowColor = state.exit === '0' ? 'magenta' : 'red-bold';
+  return `<div class="prompt-line"><span class="pre">${rootPrefix('C')}<span class="blue">${s.text}</span><span class="dim-slash">/</span><span class="green">${branch()}</span>${time}</span>`
+       + `<span class="arrowline"><span class="${arrowColor}">${rootEnd('C')}</span> <span class="cmd">git status</span><span class="cursor"></span></span></div>`;
+}
+
+const RENDERERS = { A: VariantA, B: VariantB, C: VariantC };
+
+function currentVariant() {
+  const q = new URLSearchParams(location.search).get('variant');
+  return VARIANTS.some(v => v.key === q) ? q : 'A';
+}
+
+function setUrl(key) {
+  const url = new URL(location.href);
+  url.searchParams.set('variant', key);
+  try { history.replaceState(null, '', url); }
+  catch (_) { location.search = url.search; }
+}
+
+function cycle(delta) {
+  const keys = VARIANTS.map(v => v.key);
+  const i = keys.indexOf(currentVariant());
+  setUrl(keys[(i + delta + keys.length) % keys.length]);
+  render();
+}
+
+function render() {
+  const v = currentVariant();
+  const s = collapsed(state.path);
+  $('#stage').className = 'terminal variant-' + v.toLowerCase();
+  $('#stage').innerHTML = `<div>${RENDERERS[v](s)}</div>`;
+  $('#switchLabel').innerHTML = `${v} · ${VARIANTS.find(x => x.key === v).name} &nbsp;<kbd>←</kbd><kbd>→</kbd>`;
+
+  $('#beforePath').textContent = s.text;
+  $('#beforeGit').textContent = branch();
+
+  const promptText = $('#stage .prompt-line').textContent.replace('git status', '').replace(/\s+$/, '');
+  $('#state').innerHTML = `
+    <dt>variant</dt><dd>${v} — ${VARIANTS.find(x => x.key === v).name}</dd>
+    <dt>path</dt><dd>${s.text} <span class="dim">(parent: ${s.parent || '—'} · anchor: ${s.last})</span></dd>
+    <dt>identity</dt><dd>${state.root ? 'root@DESKTOP-EC6TT58' : 'simple@DESKTOP-EC6TT58 (hidden)'}</dd>
+    <dt>git</dt><dd>master${state.dirty ? ' *' : ''}</dd>
+    <dt>exit / elapsed</dt><dd>${state.exit}${state.exit === '0' ? '' : ' / 2.3s'}</dd>
+    <dt>prompt width</dt><dd>${promptText.length} visible cols</dd>`;
+}
+
+$('#prev').addEventListener('click', () => cycle(-1));
+$('#next').addEventListener('click', () => cycle(1));
+$('#pathPreset').addEventListener('change', e => { state.path = e.target.value; render(); });
+$('#isRoot').addEventListener('change', e => { state.root = e.target.checked; render(); });
+$('#isDirty').addEventListener('change', e => { state.dirty = e.target.checked; render(); });
+$('#exitCode').addEventListener('change', e => { state.exit = e.target.value; render(); });
+window.addEventListener('keydown', e => {
+  const el = document.activeElement;
+  if (el && (el.matches('input, textarea, select') || el.isContentEditable)) return;
+  if (e.key === 'ArrowLeft') { e.preventDefault(); cycle(-1); }
+  if (e.key === 'ArrowRight') { e.preventDefault(); cycle(1); }
+});
+
+render();
+</script>
+</body>
+</html>
