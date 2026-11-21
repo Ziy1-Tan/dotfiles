@@ -3,7 +3,7 @@ set -euo pipefail
 repo="$(cd "$1" && pwd -P)"
 fail() { echo "FAIL: $*" >&2; exit 1; }
 
-export PATH="$HOME/.local/bin:$HOME/.fzf/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 for brew_bin in /opt/homebrew/bin/brew /home/linuxbrew/.linuxbrew/bin/brew /usr/local/bin/brew; do
   if [ -x "$brew_bin" ]; then eval "$("$brew_bin" shellenv)"; break; fi
 done
@@ -16,7 +16,7 @@ fzf --zsh >/dev/null || fail "fzf too old for 'fzf --zsh'"
 [ -s "$HOME/.nvm/nvm.sh" ] && [ -f "$HOME/.nvm/alias/default" ] || fail "nvm or its default node missing"
 
 echo "--- managed files are symlinks into the repo"
-for f in .zshrc .zprofile .vimrc .tmux.conf .gitconfig .config/zsh/env.zsh .config/zsh/alias.zsh; do
+for f in .zshenv .zshrc .zprofile .vimrc .tmux.conf .gitconfig .config/zsh/env.zsh .config/zsh/alias.zsh; do
   target="$(readlink "$HOME/$f" || true)"
   [ -n "$target" ] || fail "~/$f is not a symlink"
   case "$target" in "$repo"/*) ;; *) fail "~/$f -> $target (outside $repo)" ;; esac

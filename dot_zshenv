@@ -1,0 +1,15 @@
+typeset -gU path
+skip_global_compinit=1
+
+if [[ -n $WSL_DISTRO_NAME ]]; then
+    path=(${path:#/mnt/c/*})
+    for _win_dir in \
+        "/mnt/c/Users/admin/AppData/Local/Programs/Microsoft VS Code/bin" \
+        "/mnt/c/Users/admin/scoop/shims"
+    do
+        [[ -d $_win_dir ]] && path+=("$_win_dir")
+    done
+    unset _win_dir
+fi
+
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
