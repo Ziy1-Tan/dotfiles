@@ -6,7 +6,7 @@ on:
   pull_request:
   workflow_dispatch:
   schedule:
-    - cron: "0 3 * * 1" # weekly, to catch upstream installers breaking
+    - cron: "0 3 * * 1"
 
 jobs:
   install:
@@ -17,7 +17,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # Bare image: closest to a freshly provisioned apt machine (root, no sudo).
           - name: ubuntu-24.04
             runner: ubuntu-24.04
             container: ubuntu:24.04
@@ -37,7 +36,6 @@ jobs:
       - name: Install chezmoi
         run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$HOME/.local/bin"
 
-      # gui=false: casks, fonts and the Dock layout are slow and not what this tests.
       - name: chezmoi init --apply
         run: |
           "$HOME/.local/bin/chezmoi" init --source "$GITHUB_WORKSPACE" \

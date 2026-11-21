@@ -13,9 +13,6 @@ DEBIAN_FRONTEND=noninteractive $SUDO apt-get install -y -qq "${apt_packages[@]}"
 [ -x /home/linuxbrew/.linuxbrew/bin/brew ] \
   || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 {{- end }}
-# brew is the only CLI package manager on Linux and macOS; apt only installs
-# brew's own dependencies. Never apt-install zsh-ecosystem tools: Ubuntu
-# 22.04's zoxide 0.4.3 generates a self-recursive `cd` wrapper.
 for brew_bin in /opt/homebrew/bin/brew /home/linuxbrew/.linuxbrew/bin/brew /usr/local/bin/brew; do
   if [ -x "$brew_bin" ]; then eval "$("$brew_bin" shellenv)"; break; fi
 done

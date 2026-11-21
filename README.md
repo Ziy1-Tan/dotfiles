@@ -9,20 +9,17 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin
 ~/.local/bin/chezmoi -S ~/github/dotfiles init --apply Ziy1-Tan/dotfiles
 ```
 
-
 ## Contents
 
-Managed with [chezmoi](https://www.chezmoi.io/).
-
-- zsh config: env, aliases, fzf integration and prompt
-- tmux, vim and git config
-- Alacritty, Ghostty and [herdr](https://herdr.dev/) config
-- Package lists: `Brewfile` for Linux and macOS, `apt-packages.txt` for the brew bootstrap
-- Windows packages: `winget.json` and `scoop.json`, imported from WSL
-- Install scripts: packages, default shell, runtimes (uv and nvm), macOS defaults and Dock layout
+- zsh: env, aliases, fzf integration, prompt
+- tmux, vim, git
+- Alacritty, Ghostty, [herdr](https://herdr.dev/)
+- `Brewfile` for Linux and macOS; `apt-packages.txt` bootstraps brew
+- `winget.json` and `scoop.json`, imported from WSL
+- Install scripts: packages, default shell, runtimes (uv, nvm), macOS defaults, Dock
 - `bin/check.sh` post-install assertions
 
 ## Machine-local config
 
-`~/.config/zsh/local.zsh` is created from a template on first apply and never overwritten. Put
-proxy settings, tokens and tool-installer PATH lines there; it is not tracked.
+- `~/.config/zsh/local.zsh` comes from `dot_config/zsh/create_local.zsh`, is created once and stays untracked.
+- Put proxy settings, tokens and installer PATH lines there.

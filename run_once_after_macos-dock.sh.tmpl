@@ -5,14 +5,11 @@ for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew; do
   if [ -x "$brew_bin" ]; then eval "$("$brew_bin" shellenv)"; break; fi
 done
 
-# dockutil exits 0 for a missing app and leaves a dead icon, so test first.
 add() {
   if [ -e "$1" ]; then dockutil --add "$1" --no-restart; else echo "dock: skipping missing $1" >&2; fi
 }
 gap() { dockutil --add '' --type small-spacer --section apps --no-restart; }
 
-# run_once because the Dock gets hand-tuned afterwards and must not be wiped.
-# Start from empty so the result doesn't depend on the previous Dock.
 dockutil --remove all --no-restart
 
 add "/System/Applications/System Settings.app"

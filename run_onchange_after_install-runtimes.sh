@@ -4,7 +4,6 @@ export PATH="$HOME/.local/bin:$PATH"
 
 command -v uv >/dev/null || curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# PROFILE=/dev/null: zshrc already wires nvm up, so keep the installer out of it.
 if [ ! -s "$HOME/.nvm/nvm.sh" ]; then
   curl -fsSo- https://raw.githubusercontent.com/nvm-sh/nvm/v0.41.0/install.sh | PROFILE=/dev/null bash
 fi

@@ -15,7 +15,6 @@ set showmode
 set wildmenu
 set laststatus=2
 
-" search
 set hlsearch
 set incsearch
 set ignorecase
@@ -36,7 +35,6 @@ let mapleader=' '
 syntax on
 
 
-" plugins
 call plug#begin('~/.vim/plugged')
 
 Plug 'vim-airline/vim-airline'
@@ -47,7 +45,6 @@ Plug 'Lokaltog/vim-easymotion'
 call plug#end()
 
 
-" key mapping
 inoremap jj <esc>
 
 nnoremap J 5j
@@ -57,22 +54,18 @@ nnoremap <leader>wq :wq<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <Backspace> :nohl<CR>
 
-" navigate
 nnoremap <leader>w <c-w>w
 nnoremap <leader>h <c-w>h
 nnoremap <leader>j <c-w>j
 nnoremap <leader>k <c-w>k
 nnoremap <leader>l <c-w>l
 
-" split
 nnoremap <leader>sv :vsplit<CR>
 nnoremap <leader>sh :split<CR>
 
-" copy & paste
 vnoremap <C-y> "+y
 nnoremap <C-p> "*p
 
-" airline
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_left_sep=''

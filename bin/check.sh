@@ -1,8 +1,6 @@
 #!/bin/bash
-# Assert that a machine bootstrapped with chezmoi ended up in the expected state.
-# Usage: bin/check.sh <repo-dir>
 set -euo pipefail
-repo="$(cd "$1" && pwd -P)"   # -P: any path into the repo (incl. symlinks) must resolve
+repo="$(cd "$1" && pwd -P)"
 fail() { echo "FAIL: $*" >&2; exit 1; }
 
 export PATH="$HOME/.local/bin:$HOME/.fzf/bin:$PATH"
@@ -49,8 +47,8 @@ if printf '%s' "$out" | grep -qE 'packages|default-shell|runtimes|macos-defaults
 fi
 
 echo "--- interactive zsh starts cleanly"
-export TERM="${TERM:-xterm-256color}" # CI has no TERM; zinit prints with tput
-zsh -i -c exit </dev/null >/dev/null 2>&1 || true # first start lets zinit clone its plugins
+export TERM="${TERM:-xterm-256color}"
+zsh -i -c exit </dev/null >/dev/null 2>&1 || true
 err="$(zsh -i -c exit </dev/null 2>&1 >/dev/null)" || fail "zsh -i exited non-zero"
 [ -z "$err" ] || { printf '%s\n' "$err"; fail "zsh -i wrote to stderr"; }
 

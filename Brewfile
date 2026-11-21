@@ -1,6 +1,3 @@
-# GUI casks only when the install script exports DOTFILES_GUI=1.
-# brew bundle has no lock file; versions track upstream.
-
 brew "fzf"
 brew "fd"
 brew "ripgrep"

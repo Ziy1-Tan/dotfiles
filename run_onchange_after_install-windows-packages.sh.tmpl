@@ -7,8 +7,6 @@ set -euo pipefail
 
 src={{ .chezmoi.sourceDir | quote }}
 
-# Continue to scoop after a winget failure, but return the failure so the script
-# reruns on the next apply.
 status=0
 
 if command -v winget.exe >/dev/null 2>&1; then
