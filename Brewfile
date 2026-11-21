@@ -7,6 +7,7 @@ brew "tlrc"
 brew "tmux"
 
 brew "dockutil" if OS.mac?
+brew "wl-clipboard" if OS.linux?
 
 if OS.mac? && ENV["DOTFILES_GUI"] == "1"
   cask "ghostty"
