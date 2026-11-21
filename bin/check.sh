@@ -40,8 +40,10 @@ echo "--- target state matches source"
 chezmoi verify || fail "chezmoi verify reported drift"
 if grep -qi microsoft /proc/version 2>/dev/null; then
   echo "--- Windows config matches source"
+  win_home="$("$repo/bin/windows-home.sh")"
   chezmoi --config "$HOME/.config/chezmoi/windows.toml" \
-    --persistent-state "$HOME/.cache/chezmoi/windows-state.json" verify \
+    --persistent-state "$HOME/.cache/chezmoi/windows-state.json" \
+    --destination "$win_home/.config/nushell" verify \
     || fail "Windows config verify reported drift"
 fi
 
