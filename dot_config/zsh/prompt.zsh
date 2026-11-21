@@ -66,5 +66,7 @@ function _collapsed_pwd() {
 }
 
 setopt PROMPT_SUBST
-export PROMPT='%F{green}%n@%F{white}%m:%F{cyan}$(_collapsed_pwd)%F{green}${vcs_info_msg_0_}%F{white}> '
+ctx=''
+(( EUID == 0 )) && ctx='%F{red}root@%F{white}%m:'
+export PROMPT="${ctx}"'%F{cyan}$(_collapsed_pwd)%F{green}${vcs_info_msg_0_}%F{white}%(!.%B#%b.>) '
 export RPROMPT='%F{red}%(?..%?)%f $(_cmd_exec_time)'
