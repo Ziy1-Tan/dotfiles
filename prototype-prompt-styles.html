@@ -81,9 +81,16 @@
   .seg-end { background: #2a2d30; }
   .variant-b .prompt-line { line-height: 2.4; }
 
+  /* RPROMPT, drawn on the command line like zsh does */
+  .line-row { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; }
+  .line-row .left { min-width: 0; }
+  .rprompt { white-space: nowrap; opacity: .9; }
+  .rprompt .code { color: var(--red); font-weight: 700; }
+  .rprompt .elapsed { color: #8e949b; margin-left: 8px; }
+
   /* C is two lines */
   .variant-c .pre { display: block; margin-bottom: 2px; }
-  .variant-c .arrowline { display: block; padding-left: 0; }
+  .variant-c .arrowline { padding-left: 0; }
 
   .state {
     margin-top: 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
@@ -142,7 +149,10 @@
     <label><input type="checkbox" id="isRoot"> root</label>
     <label><input type="checkbox" id="isDirty"> dirty</label>
     <label>上次退出码
-      <select id="exitCode"><option>0</option><option>1</option><option>130</option></select>
+      <select id="exitCode"><option>0</option><option selected>1</option><option>130</option></select>
+    </label>
+    <label>耗时
+      <select id="elapsed"><option>none</option><option selected>1.2s</option><option>12s</option></select>
     </label>
   </div>
 
@@ -169,7 +179,7 @@ const VARIANTS = [
 ];
 
 const $ = (s) => document.querySelector(s);
-const state = { path: 'repo', root: false, dirty: false, exit: '0' };
+const state = { path: 'repo', root: false, dirty: false, exit: '1', elapsed: '1.2s' };
 
 function collapsed(preset) {
   const home = '/home/simple';
@@ -198,6 +208,16 @@ function rootPrefix(variant) {
   if (variant === 'C') return '<span class="dim">root@DESKTOP-EC6TT58 </span>';
   return '<span class="red">root@</span><span class="white">DESKTOP-EC6TT58:</span>';
 }
+function rprompt() {
+  const code = state.exit === '0' ? '' : `<span class="code">${state.exit}</span>`;
+  const elapsed = state.elapsed === 'none' ? '' : `<span class="elapsed">${state.elapsed}</span>`;
+  return (code || elapsed) ? `<span class="rprompt">${code}${elapsed}</span>` : '';
+}
+
+function row(left) {
+  return `<div class="line-row"><span class="left">${left}</span>${rprompt()}</div>`;
+}
+
 function rootEnd(variant) {
   if (!state.root) return '<span class="white">&gt;</span>';
   if (variant === 'C') return '<span class="red-bold">❯</span>';
@@ -205,7 +225,7 @@ function rootEnd(variant) {
 }
 
 function VariantA(s) {
-  return `<div class="prompt-line">${rootPrefix('A')}<span class="cyan-bold">${s.text}</span><span class="green">${branch()}</span>${rootEnd('A')} <span class="cmd">git status</span><span class="cursor"></span></div>`;
+  return `<div class="prompt-line">${row(`${rootPrefix('A')}<span class="cyan-bold">${s.text}</span><span class="green">${branch()}</span>${rootEnd('A')} <span class="cmd">git status</span><span class="cursor"></span>`)}</div>`;
 }
 
 function VariantB(s) {
@@ -213,15 +233,14 @@ function VariantB(s) {
     ? `<span class="shortened">${s.parent}/</span><span class="anchor">${s.last}</span>`
     : `<span class="anchor">${s.text}</span>`;
   const root = state.root ? `<span class="seg seg-root red-bold">root@DESKTOP-EC6TT58:</span>` : '';
-  return `<div class="prompt-line"><span class="seg seg-path">${mid}</span><span class="seg seg-git green">${branch()}</span>${root}<span class="seg seg-end">${rootEnd('B')}</span> <span class="cmd">git status</span><span class="cursor"></span></div>`;
+  return `<div class="prompt-line">${row(`<span class="seg seg-path">${mid}</span><span class="seg seg-git green">${branch()}</span>${root}<span class="seg seg-end">${rootEnd('B')}</span> <span class="cmd">git status</span><span class="cursor"></span>`)}</div>`;
 }
 
 function VariantC(s) {
-  const time = state.exit === '0' ? '' : '<span class="dim"> 2.3s</span>';
   const arrowColor = state.exit === '0' ? 'magenta' : 'red-bold';
   const bareBranch = branch().replace(/^\[|\]$/g, '');
-  return `<div class="prompt-line"><span class="pre">${rootPrefix('C')}<span class="blue">${s.text}</span> <span class="green">${bareBranch}</span>${time}</span>`
-       + `<span class="arrowline"><span class="${arrowColor}">${rootEnd('C')}</span> <span class="cmd">git status</span><span class="cursor"></span></span></div>`;
+  return `<div class="prompt-line"><span class="pre">${rootPrefix('C')}<span class="blue">${s.text}</span> <span class="green">${bareBranch}</span></span>`
+       + row(`<span class="arrowline"><span class="${arrowColor}">${rootEnd('C')}</span> <span class="cmd">git status</span><span class="cursor"></span></span>`) + `</div>`;
 }
 
 const RENDERERS = { A: VariantA, B: VariantB, C: VariantC };
@@ -255,13 +274,13 @@ function render() {
   $('#beforePath').textContent = s.text;
   $('#beforeGit').textContent = branch();
 
-  const promptText = $('#stage .prompt-line').textContent.replace('git status', '').replace(/\s+$/, '');
+  const promptText = $('#stage .left').textContent.replace('git status', '').replace(/\s+$/, '');
   $('#state').innerHTML = `
     <dt>variant</dt><dd>${v} — ${VARIANTS.find(x => x.key === v).name}</dd>
     <dt>path</dt><dd>${s.text} <span class="dim">(parent: ${s.parent || '—'} · anchor: ${s.last})</span></dd>
     <dt>identity</dt><dd>${state.root ? 'root@DESKTOP-EC6TT58' : 'simple@DESKTOP-EC6TT58 (hidden)'}</dd>
     <dt>git</dt><dd>master${state.dirty ? ' *' : ''}</dd>
-    <dt>exit / elapsed</dt><dd>${state.exit}${state.exit === '0' ? '' : ' / 2.3s'}</dd>
+    <dt>exit / elapsed</dt><dd>${state.exit} / ${state.elapsed}${v === 'C' && state.exit !== '0' ? ' <span class="dim">(arrow + RPROMPT both signal it)</span>' : ''}</dd>
     <dt>prompt width</dt><dd>${promptText.length} visible cols</dd>`;
 }
 
@@ -271,6 +290,7 @@ $('#pathPreset').addEventListener('change', e => { state.path = e.target.value; 
 $('#isRoot').addEventListener('change', e => { state.root = e.target.checked; render(); });
 $('#isDirty').addEventListener('change', e => { state.dirty = e.target.checked; render(); });
 $('#exitCode').addEventListener('change', e => { state.exit = e.target.value; render(); });
+$('#elapsed').addEventListener('change', e => { state.elapsed = e.target.value; render(); });
 window.addEventListener('keydown', e => {
   const el = document.activeElement;
   if (el && (el.matches('input, textarea, select') || el.isContentEditable)) return;
