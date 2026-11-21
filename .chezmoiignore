@@ -7,3 +7,7 @@ winget.json
 scoop.json
 .claude/
 .comment-baseline
+
+{{- if ne .chezmoi.os "windows" }}
+.config/nushell
+{{- end }}

@@ -5,18 +5,22 @@
     {
       "Packages": [
         { "PackageIdentifier": "Microsoft.WindowsTerminal" },
-        { "PackageIdentifier": "Microsoft.PowerShell" },
         { "PackageIdentifier": "Microsoft.VisualStudioCode" },
         { "PackageIdentifier": "Google.Chrome" },
         { "PackageIdentifier": "Obsidian.Obsidian" },
         { "PackageIdentifier": "Tencent.WeChat.Universal" },
         { "PackageIdentifier": "Tencent.QQ.NT" },
         { "PackageIdentifier": "Microsoft.PowerToys" },
-        { "PackageIdentifier": "voidtools.Everything" },
         { "PackageIdentifier": "7zip.7zip" },
         { "PackageIdentifier": "ClashVergeRev.ClashVergeRev" },
         { "PackageIdentifier": "Microsoft.WSL" },
-        { "PackageIdentifier": "Canonical.Ubuntu.2204" }
+        { "PackageIdentifier": "Canonical.Ubuntu.2204" },
+        { "PackageIdentifier": "Nushell.Nushell" },
+        { "PackageIdentifier": "sharkdp.fd" },
+        { "PackageIdentifier": "junegunn.fzf" },
+        { "PackageIdentifier": "BurntSushi.ripgrep.MSVC" },
+        { "PackageIdentifier": "ajeetdsouza.zoxide" },
+        { "PackageIdentifier": "Neovim.Neovim" }
       ],
       "SourceDetails": {
         "Argument": "https://cdn.winget.microsoft.com/cache",
