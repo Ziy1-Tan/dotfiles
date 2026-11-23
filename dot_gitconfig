@@ -14,11 +14,10 @@ email = ajb459684460@gmail.com
 	quotepath = false
 [alias]
 	cm = commit
-	co = checkout
-	ac = !git add -A && git commit
+	ch = checkout
+	sw = switch
+	wt = worktree
 	lo = log --oneline
-	sh = stash
-	shp = stash pop
 [http]
 	postBuffer = 524288000
 [https]
