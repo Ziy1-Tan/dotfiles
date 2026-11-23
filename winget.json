@@ -20,7 +20,9 @@
         { "PackageIdentifier": "junegunn.fzf" },
         { "PackageIdentifier": "BurntSushi.ripgrep.MSVC" },
         { "PackageIdentifier": "ajeetdsouza.zoxide" },
-        { "PackageIdentifier": "Neovim.Neovim" }
+        { "PackageIdentifier": "Neovim.Neovim" },
+        { "PackageIdentifier": "Snipaste.Snipaste" },
+        { "PackageIdentifier": "Raycast.Raycast" }
       ],
       "SourceDetails": {
         "Argument": "https://cdn.winget.microsoft.com/cache",
@@ -31,9 +33,7 @@
     },
     {
       "Packages": [
-        { "PackageIdentifier": "9P1WXPKB68KX" },
-        { "PackageIdentifier": "9PFHDD62MXS1" },
-        { "PackageIdentifier": "9PFXXSHC64H3" }
+        { "PackageIdentifier": "9PFHDD62MXS1" }
       ],
       "SourceDetails": {
         "Argument": "https://storeedgefd.dsx.mp.microsoft.com/v9.0",

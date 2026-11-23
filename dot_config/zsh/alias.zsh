@@ -45,3 +45,12 @@ codex() {
     *) command codex --no-daemon "$@" ;;
   esac
 }
+
+npx-skill-add() {
+  local repo="$1"; shift
+  local skill_args=()
+  if [[ $# -gt 0 && "$1" != -* ]]; then
+    skill_args=(--skill "$1"); shift
+  fi
+  npx skills add "$repo" "${skill_args[@]}" "$@" -g -y -a claude-code codex pi codebuddy
+}

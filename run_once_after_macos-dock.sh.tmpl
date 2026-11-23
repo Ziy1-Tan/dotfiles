@@ -1,6 +1,8 @@
 {{ if and (eq .chezmoi.os "darwin") .gui -}}
 #!/bin/bash
 set -euo pipefail
+marker="$HOME/.local/state/dotfiles/macos-dock-initialized"
+if [ -e "$marker" ]; then exit 0; fi
 for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew; do
   if [ -x "$brew_bin" ]; then eval "$("$brew_bin" shellenv)"; break; fi
 done
@@ -17,7 +19,6 @@ add "/System/Applications/Music.app"
 add "/Applications/QQMusic.app"
 add "/Applications/Google Chrome.app"
 gap
-add "/Applications/TT switch.app"
 add "/Applications/Visual Studio Code.app"
 add "/Applications/Ghostty.app"
 gap
@@ -25,5 +26,6 @@ add "/Applications/WeChat.app"
 add "/Applications/QQ.app"
 add "/Applications/Obsidian.app"
 
+mkdir -p "${marker%/*}" && touch "$marker"
 killall Dock
 {{ end -}}
