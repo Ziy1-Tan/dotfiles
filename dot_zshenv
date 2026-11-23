@@ -4,6 +4,7 @@ skip_global_compinit=1
 if [[ -n $WSL_DISTRO_NAME ]]; then
     path=(${path:#/mnt/c/*})
     for _win_dir in \
+        "/mnt/c/Windows/System32/WindowsPowerShell/v1.0" \
         "/mnt/c/Users/admin/AppData/Local/Programs/Microsoft VS Code/bin" \
         "/mnt/c/Users/admin/scoop/shims"
     do

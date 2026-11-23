@@ -4,3 +4,4 @@ repos:
     hooks:
       - id: gitlint
         stages: [commit-msg]
+        args: ["--contrib", "CC1,CT1", "--staged", "--msg-filename"]
