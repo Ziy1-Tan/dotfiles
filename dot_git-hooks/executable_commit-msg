@@ -1,4 +1,0 @@
-#!/bin/sh
-[ -f .gitlint ] || exit 0
-command -v gitlint >/dev/null 2>&1 || exit 0
-exec gitlint --msg-filename "$1"

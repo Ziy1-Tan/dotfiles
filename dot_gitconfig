@@ -10,8 +10,8 @@ email = ajb459684460@gmail.com
 	ui = auto
 [core]
 	editor = vim
-	hooksPath = ~/.git-hooks
 	quotepath = false
+	hooksPath = ~/.git-hooks
 [alias]
 	cm = commit
 	ch = checkout

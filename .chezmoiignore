@@ -6,6 +6,7 @@ apt-packages.txt
 winget.json
 scoop.json
 .gitlint
+.pre-commit-config.yaml
 .claude/
 .comment-baseline
 
