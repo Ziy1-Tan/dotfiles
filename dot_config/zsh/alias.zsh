@@ -46,7 +46,7 @@ codex() {
   esac
 }
 
-npx-skill-add() {
+npx-skills-add() {
   local repo="$1"; shift
   local skill_args=()
   if [[ $# -gt 0 && "$1" != -* ]]; then
@@ -54,3 +54,5 @@ npx-skill-add() {
   fi
   npx skills add "$repo" "${skill_args[@]}" "$@" -g -y -a claude-code codex pi codebuddy
 }
+
+alias nsa="npx-skills-add"
