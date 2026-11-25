@@ -23,4 +23,5 @@ if OS.mac? && ENV["DOTFILES_GUI"] == "1"
   cask "font-fira-code-nerd-font"
   cask "font-sauce-code-pro-nerd-font"
   cask "font-google-sans-code"
+  cask "font-symbols-only-nerd-font"
 end
